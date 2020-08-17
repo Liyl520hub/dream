@@ -1,0 +1,31 @@
+R_DEF: Internal format may change without notice
+local
+color color_0879FC
+color color_333333
+color color_999999
+color color_FF4E21
+color white
+drawable commom_bg_tip
+drawable common_finish_black
+drawable common_loding
+drawable common_rotate_loding
+drawable common_shape_loding_bg
+drawable common_shape_toast
+drawable empty_error_view_no_integral
+drawable empty_error_view_no_network
+drawable empty_error_view_no_order
+drawable empty_error_view_no_transaction
+drawable empty_error_view_server_under_maintance
+id default_toolbar
+id default_toolbar_left_image
+id default_toolbar_right_image
+id default_toolbar_right_image_rl
+id default_toolbar_title
+id tv_right
+id tvcontent
+id view_empty_error_image
+id view_empty_error_tip
+layout common_dialog_loading
+layout common_view_default_toolbar
+layout common_view_empty_error
+style CustomDialog
