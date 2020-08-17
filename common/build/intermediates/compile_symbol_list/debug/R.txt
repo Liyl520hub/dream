@@ -389,8 +389,15 @@ int color cardview_shadow_end_color 0x0
 int color cardview_shadow_start_color 0x0
 int color color_0879FC 0x0
 int color color_333333 0x0
+int color color_488AFA 0x0
+int color color_5072bb38 0x0
+int color color_666666 0x0
+int color color_72BB38 0x0
 int color color_999999 0x0
+int color color_B7B7B7 0x0
+int color color_D8D8D8 0x0
 int color color_FF4E21 0x0
+int color color_FF8527 0x0
 int color dim_foreground_disabled_material_dark 0x0
 int color dim_foreground_disabled_material_light 0x0
 int color dim_foreground_material_dark 0x0

@@ -4,6 +4,7 @@ package com.dream.cleaner.utils;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import androidx.annotation.CallSuper;
 import androidx.annotation.UiThread;
 import butterknife.Unbinder;
@@ -24,8 +25,9 @@ public class H5Activity_ViewBinding implements Unbinder {
   public H5Activity_ViewBinding(H5Activity target, View source) {
     this.target = target;
 
-    target.mHwebview_wb = Utils.findRequiredViewAsType(source, R.id.my_web_view, "field 'mHwebview_wb'", WebView.class);
+    target.mWebview = Utils.findRequiredViewAsType(source, R.id.my_web_view, "field 'mWebview'", WebView.class);
     target.pb = Utils.findRequiredViewAsType(source, R.id.progress_bar, "field 'pb'", ProgressBar.class);
+    target.tvContent = Utils.findRequiredViewAsType(source, R.id.tv_content, "field 'tvContent'", TextView.class);
   }
 
   @Override
@@ -35,7 +37,8 @@ public class H5Activity_ViewBinding implements Unbinder {
     if (target == null) throw new IllegalStateException("Bindings already cleared.");
     this.target = null;
 
-    target.mHwebview_wb = null;
+    target.mWebview = null;
     target.pb = null;
+    target.tvContent = null;
   }
 }

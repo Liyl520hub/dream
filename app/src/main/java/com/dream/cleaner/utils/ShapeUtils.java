@@ -12,6 +12,13 @@ import com.blankj.utilcode.util.Utils;
  * desc   :代码编写shape
  */
 public class ShapeUtils {
+
+
+    public static int getColor(int color) {
+        return ResourcesCompat.getColor(Utils.getApp().getResources(), color, null);
+    }
+
+
     /**
      * 根据参数返回shape （GradientDrawable）
      *

@@ -5,6 +5,9 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 
+import com.blankj.utilcode.util.ResourceUtils;
+import com.dream.cleaner.R;
+
 import java.util.Random;
 
 /**
@@ -17,11 +20,7 @@ public class CodeUtils {
 
     //随机数数组
     private static final char[] CHARS = {
-            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'j', 'k', 'm',
-            'n', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
-            'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'
+            '0', '1', '2', '3', '4', '5', '6', '7', '8', '9'
     };
     //验证码默认随机数的个数
     private static final int DEFAULT_CODE_LENGTH = 4;
@@ -30,11 +29,11 @@ public class CodeUtils {
     private static final int DEFAULT_FONT_SIZE = 25;
 
     //默认线条的条数
-    private static final int DEFAULT_LINE_NUMBER = 5;
+    private static final int DEFAULT_LINE_NUMBER = 0;
 
     //padding值
     private static final int
-            BASE_PADDING_LEFT = 10, RANGE_PADDING_LEFT = 15,
+            BASE_PADDING_LEFT = 15, RANGE_PADDING_LEFT = 20,
             BASE_PADDING_TOP = 15, RANGE_PADDING_TOP = 20;
 
     //验证码的默认宽高
@@ -70,7 +69,7 @@ public class CodeUtils {
         //绘制新的验证码
         code = createCode();
         //设置背景色
-        c.drawColor(Color.WHITE);
+        c.drawColor(ShapeUtils.getColor(R.color.color_D8D8D8));
         //创建画笔
         Paint paint = new Paint();
         paint.setAntiAlias(true);
@@ -78,8 +77,9 @@ public class CodeUtils {
         paint.setTextSize(font_size);
         //画验证码
         for (int i = 0; i < code.length(); i++) {
-            randomTextStyle(paint);
+//            randomTextStyle(paint);
             randomPadding();
+            paint.setColor(ShapeUtils.getColor(R.color.color_333333));
             //绘制显示文字
             c.drawText(code.charAt(i) + "", padding_left, padding_top, paint);
         }
@@ -148,8 +148,10 @@ public class CodeUtils {
 
     //随机生成padding值
     private void randomPadding() {
-        padding_left += base_padding_left + random.nextInt(range_padding_left);
-        padding_top = base_padding_top + random.nextInt(range_padding_top);
+//        padding_left += base_padding_left + random.nextInt(range_padding_left);
+//        padding_top = base_padding_top + random.nextInt(range_padding_top);
+        padding_left += base_padding_left ;
+        padding_top = base_padding_top +15;
     }
 
 

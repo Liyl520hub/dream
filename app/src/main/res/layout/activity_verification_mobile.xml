@@ -4,74 +4,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_mobile_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
-        android:text="手机号码"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/et_mobile"
+    <LinearLayout
+        android:id="@+id/ll_mobile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="71dp"
+        android:layout_marginRight="45dp"
         android:background="@drawable/login_bg_edit_text"
-        android:inputType="phone"
-        android:maxLength="11"
-        android:padding="8dp"
-        android:textSize="16sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_mobile_title" />
+        android:orientation="horizontal"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <TextView
-        android:id="@+id/tv_password_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="30dp"
-        android:text="图片验证码"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_mobile" />
+
+        <TextView
+            android:id="@+id/tv_mobile_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.28"
+            android:paddingLeft="10dp"
+            android:paddingTop="13.5dp"
+            android:paddingBottom="13.5dp"
+            android:text="手机号"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/et_mobile"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.72"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp" />
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_verification"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="45dp"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_password_title">
+        app:layout_constraintTop_toBottomOf="@+id/ll_mobile">
 
-        <EditText
-            android:id="@+id/et_local_code"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
             android:layout_weight="1"
             android:background="@drawable/login_bg_edit_text"
-            android:maxLength="18"
-            android:padding="8dp"
-            android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_password_title" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="图形验证码"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp" />
+
+
+            <EditText
+                android:id="@+id/et_local_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:inputType="phone"
+                android:maxLength="4"
+                android:paddingLeft="5dp"
+                android:paddingTop="13.5dp"
+                android:paddingBottom="13.5dp"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_password_title" />
+
+
+        </LinearLayout>
+
 
         <ImageView
             android:id="@+id/iv_local_code"
-            android:layout_width="100dp"
+            android:layout_width="91dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="10dp"
             app:layout_constraintLeft_toRightOf="@+id/et_password"
             app:layout_constraintRight_toRightOf="parent" />
 
@@ -83,43 +110,63 @@
         android:id="@+id/ll_mobile_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ll_verification">
 
-        <EditText
-            android:id="@+id/et_mobile_code"
+        <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="10dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="45dp"
             android:layout_weight="1"
             android:background="@drawable/login_bg_edit_text"
-            android:digits="1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.+-/*~#$%()@="
-            android:inputType="textPassword"
-            android:maxLength="18"
-            android:padding="8dp"
-            android:textSize="16sp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_password_title" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingLeft="10dp"
+                android:text="验证码"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_mobile_code"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:digits="1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM.+-/*~#$%()@="
+                android:inputType="phone"
+                android:maxLength="6"
+                android:padding="8dp"
+                android:paddingTop="13.5dp"
+                android:paddingBottom="13.5dp"
+                android:textColor="@color/color_333333"
+                android:textSize="16sp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_password_title" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_get_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="16dp"
-            android:background="@color/color_999999"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:text="获取验证码"
-            android:textColor="@color/color_333333"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="45dp"
+            android:background="@color/color_72BB38"
+            android:paddingLeft="10.5dp"
+            android:paddingTop="14.5dp"
+            android:paddingRight="10.5dp"
+            android:paddingBottom="14.5dp"
+            android:text="收取验证码"
+            android:textColor="@color/white"
             app:layout_constraintLeft_toRightOf="@+id/et_password"
             app:layout_constraintRight_toRightOf="parent" />
 
@@ -129,13 +176,14 @@
 
     <TextView
         android:id="@+id/tv_submit"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:paddingLeft="26dp"
-        android:paddingTop="8dp"
-        android:paddingRight="26dp"
-        android:paddingBottom="8dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="45dp"
+        android:gravity="center"
+        android:paddingTop="14dp"
+        android:paddingBottom="14dp"
         android:text="下一步"
         android:textColor="@color/white"
         android:textSize="18sp"

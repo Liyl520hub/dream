@@ -16,7 +16,7 @@ import java.lang.Override;
 public class ResetPasswordActivity_ViewBinding implements Unbinder {
   private ResetPasswordActivity target;
 
-  private View view7f08014a;
+  private View view7f080150;
 
   @UiThread
   public ResetPasswordActivity_ViewBinding(ResetPasswordActivity target) {
@@ -28,14 +28,12 @@ public class ResetPasswordActivity_ViewBinding implements Unbinder {
     this.target = target;
 
     View view;
-    target.tvMobileTitle = Utils.findRequiredViewAsType(source, R.id.tv_mobile_title, "field 'tvMobileTitle'", TextView.class);
-    target.etMobile = Utils.findRequiredViewAsType(source, R.id.et_mobile, "field 'etMobile'", EditText.class);
-    target.tvPasswordTitle = Utils.findRequiredViewAsType(source, R.id.tv_password_title, "field 'tvPasswordTitle'", TextView.class);
     target.etPassword = Utils.findRequiredViewAsType(source, R.id.et_password, "field 'etPassword'", EditText.class);
+    target.etPasswordAgain = Utils.findRequiredViewAsType(source, R.id.et_password_again, "field 'etPasswordAgain'", EditText.class);
     target.tvTip = Utils.findRequiredViewAsType(source, R.id.tv_tip, "field 'tvTip'", TextView.class);
     view = Utils.findRequiredView(source, R.id.tv_submit, "field 'tvSubmit' and method 'onViewClicked'");
     target.tvSubmit = Utils.castView(view, R.id.tv_submit, "field 'tvSubmit'", TextView.class);
-    view7f08014a = view;
+    view7f080150 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -51,14 +49,12 @@ public class ResetPasswordActivity_ViewBinding implements Unbinder {
     if (target == null) throw new IllegalStateException("Bindings already cleared.");
     this.target = null;
 
-    target.tvMobileTitle = null;
-    target.etMobile = null;
-    target.tvPasswordTitle = null;
     target.etPassword = null;
+    target.etPasswordAgain = null;
     target.tvTip = null;
     target.tvSubmit = null;
 
-    view7f08014a.setOnClickListener(null);
-    view7f08014a = null;
+    view7f080150.setOnClickListener(null);
+    view7f080150 = null;
   }
 }

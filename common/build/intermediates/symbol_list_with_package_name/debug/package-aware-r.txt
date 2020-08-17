@@ -390,8 +390,15 @@ color cardview_shadow_end_color
 color cardview_shadow_start_color
 color color_0879FC
 color color_333333
+color color_488AFA
+color color_5072bb38
+color color_666666
+color color_72BB38
 color color_999999
+color color_B7B7B7
+color color_D8D8D8
 color color_FF4E21
+color color_FF8527
 color dim_foreground_disabled_material_dark
 color dim_foreground_disabled_material_light
 color dim_foreground_material_dark

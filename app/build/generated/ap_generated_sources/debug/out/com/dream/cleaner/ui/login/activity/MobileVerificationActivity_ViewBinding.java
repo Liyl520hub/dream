@@ -18,11 +18,11 @@ import java.lang.Override;
 public class MobileVerificationActivity_ViewBinding implements Unbinder {
   private MobileVerificationActivity target;
 
-  private View view7f08009f;
+  private View view7f0800a0;
 
-  private View view7f080143;
+  private View view7f080149;
 
-  private View view7f08014a;
+  private View view7f080150;
 
   @UiThread
   public MobileVerificationActivity_ViewBinding(MobileVerificationActivity target) {
@@ -35,13 +35,11 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
     this.target = target;
 
     View view;
-    target.tvMobileTitle = Utils.findRequiredViewAsType(source, R.id.tv_mobile_title, "field 'tvMobileTitle'", TextView.class);
     target.etMobile = Utils.findRequiredViewAsType(source, R.id.et_mobile, "field 'etMobile'", EditText.class);
-    target.tvPasswordTitle = Utils.findRequiredViewAsType(source, R.id.tv_password_title, "field 'tvPasswordTitle'", TextView.class);
     target.etLocalCode = Utils.findRequiredViewAsType(source, R.id.et_local_code, "field 'etLocalCode'", EditText.class);
     view = Utils.findRequiredView(source, R.id.iv_local_code, "field 'ivLocalCode' and method 'onViewClicked'");
     target.ivLocalCode = Utils.castView(view, R.id.iv_local_code, "field 'ivLocalCode'", ImageView.class);
-    view7f08009f = view;
+    view7f0800a0 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -52,7 +50,7 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
     target.etMobileCode = Utils.findRequiredViewAsType(source, R.id.et_mobile_code, "field 'etMobileCode'", EditText.class);
     view = Utils.findRequiredView(source, R.id.tv_get_code, "field 'tvGetCode' and method 'onViewClicked'");
     target.tvGetCode = Utils.castView(view, R.id.tv_get_code, "field 'tvGetCode'", TextView.class);
-    view7f080143 = view;
+    view7f080149 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -62,7 +60,7 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
     target.llMobileCode = Utils.findRequiredViewAsType(source, R.id.ll_mobile_code, "field 'llMobileCode'", LinearLayout.class);
     view = Utils.findRequiredView(source, R.id.tv_submit, "field 'tvSubmit' and method 'onViewClicked'");
     target.tvSubmit = Utils.castView(view, R.id.tv_submit, "field 'tvSubmit'", TextView.class);
-    view7f08014a = view;
+    view7f080150 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -78,9 +76,7 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
     if (target == null) throw new IllegalStateException("Bindings already cleared.");
     this.target = null;
 
-    target.tvMobileTitle = null;
     target.etMobile = null;
-    target.tvPasswordTitle = null;
     target.etLocalCode = null;
     target.ivLocalCode = null;
     target.llVerification = null;
@@ -89,11 +85,11 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
     target.llMobileCode = null;
     target.tvSubmit = null;
 
-    view7f08009f.setOnClickListener(null);
-    view7f08009f = null;
-    view7f080143.setOnClickListener(null);
-    view7f080143 = null;
-    view7f08014a.setOnClickListener(null);
-    view7f08014a = null;
+    view7f0800a0.setOnClickListener(null);
+    view7f0800a0 = null;
+    view7f080149.setOnClickListener(null);
+    view7f080149 = null;
+    view7f080150.setOnClickListener(null);
+    view7f080150 = null;
   }
 }

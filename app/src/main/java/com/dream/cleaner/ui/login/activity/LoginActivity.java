@@ -88,7 +88,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-        tvLogin.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.color_0879FC, ConvertUtils.dp2px(4), 0, 0));
+        checkSubmitTv();
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -98,6 +98,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 showTipOrGone("");
+                checkSubmitTv();
             }
 
             @Override
@@ -119,10 +120,19 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             contractCheckbox.setChecked(false);
         }
         SpannableStringBuilder spannable = new SpannableStringBuilder("登录即表示同意用户协议、隐私条款");
-        setMspan(spannable, 7, 11, true);
+        setMspan(spannable, 7, 12, true);
         setMspan(spannable, 12, 16, false);
         tvAgreement.setText(spannable);
         tvAgreement.setMovementMethod(LinkMovementMethod.getInstance());
+    }
+
+    /**
+     * 输入框不为空则变颜色
+     */
+    private void checkSubmitTv() {
+        boolean b = !StringUtils.isEmpty(etMobile.getText().toString()) && !StringUtils.isEmpty(etPassword.getText().toString());
+        tvLogin.setBackground(ShapeUtils.getDiyGradientDrawable(b?R.color.color_72BB38:R.color.color_5072bb38, 0, 0, 0));
+        tvLogin.setClickable(b);
     }
 
 
@@ -170,7 +180,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
      * @param content 文本为空即是隐藏
      */
     private void showTipOrGone(String content) {
-        tvTip.setVisibility(StringUtils.isEmpty(content) ? View.GONE : View.VISIBLE);
+        tvTip.setVisibility(StringUtils.isEmpty(content) ? View.INVISIBLE : View.VISIBLE);
         tvTip.setText(content);
     }
 
@@ -179,8 +189,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             @Override
             public void onClick(@NonNull View widget) {
                 Bundle bundle = new Bundle();
-                bundle.putString("weburl", "http://www.baidu.com");
-                bundle.putString("titleStr", isPrivacy ? "服务协议" : "隐私条款");
+                bundle.putString("weburl", "content");
+                bundle.putString("titleStr", isPrivacy ? "用户协议" : "隐私条款");
                 UiUtil.openActivity(LoginActivity.this, H5Activity.class, bundle);
             }
 
@@ -188,7 +198,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
             public void updateDrawState(@NonNull TextPaint ds) {
                 super.updateDrawState(ds);
                 //设置颜色
-                ds.setColor(Color.parseColor("#47b579"));
+                ds.setColor(Color.parseColor("#488AFA"));
                 //去掉下划线
                 ds.setUnderlineText(true);
             }

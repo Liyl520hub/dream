@@ -1,6 +1,8 @@
 package com.dream.cleaner.ui.login.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -8,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.RegexUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.common.base.BaseActivity;
@@ -25,14 +28,10 @@ import butterknife.OnClick;
  * desc   :重置密码
  */
 public class ResetPasswordActivity extends BaseActivity {
-    @BindView(R.id.tv_mobile_title)
-    TextView tvMobileTitle;
-    @BindView(R.id.et_mobile)
-    EditText etMobile;
-    @BindView(R.id.tv_password_title)
-    TextView tvPasswordTitle;
     @BindView(R.id.et_password)
     EditText etPassword;
+    @BindView(R.id.et_password_again)
+    EditText etPasswordAgain;
     @BindView(R.id.tv_tip)
     TextView tvTip;
     @BindView(R.id.tv_submit)
@@ -54,24 +53,49 @@ public class ResetPasswordActivity extends BaseActivity {
 
     @Override
     protected MyToolbar getMyToolbar() {
-        return new ToolbarBackTitle(this, "手机号验证");
+        return new ToolbarBackTitle(this, "密码重置");
     }
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-        tvSubmit.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.color_0879FC, ConvertUtils.dp2px(4), 0, 0));
+        checkSubmitTv();
+        TextWatcher textWatcher = new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkSubmitTv();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
+        etPassword.addTextChangedListener(textWatcher);
+        etPasswordAgain.addTextChangedListener(textWatcher);
     }
 
+    /**
+     * 输入框不为空则变颜色
+     */
+    private void checkSubmitTv() {
+        boolean b = !StringUtils.isEmpty(etPassword.getText().toString()) && !StringUtils.isEmpty(etPasswordAgain.getText().toString());
+        tvSubmit.setBackground(ShapeUtils.getDiyGradientDrawable(b?R.color.color_72BB38:R.color.color_5072bb38, 0, 0, 0));
+        tvSubmit.setClickable(b);
 
+    }
     @OnClick(R.id.tv_submit)
     public void onViewClicked() {
-        String pwd = etMobile.getText().toString();
+        String pwd = etPassword.getText().toString();
         if (!RegexUtils.isMatch(parr, pwd)) {
             SuperToast.showShortMessage("请输入6-12位密码，仅包含数字或字母");
             return;
         }
-        String pwdAgain = etPassword.getText().toString();
+        String pwdAgain = etPasswordAgain.getText().toString();
         if (!pwdAgain.equals(pwd)) {
             SuperToast.showShortMessage("两次密码不一致");
             return;

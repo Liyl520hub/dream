@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
+import com.dream.cleaner.base.GlobalApp;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.widget.ToolbarBackTitle;
@@ -33,9 +34,11 @@ import butterknife.BindView;
 public class H5Activity extends BaseActivity {
 
     @BindView(R.id.my_web_view)
-    WebView mHwebview_wb;
+    WebView mWebview;
     @BindView(R.id.progress_bar)
     ProgressBar pb;
+    @BindView(R.id.tv_content)
+    TextView tvContent;
     private String weburl;
     private String titleStr;
     private ToolbarBackTitle toolbarBackTitle;
@@ -81,9 +84,22 @@ public class H5Activity extends BaseActivity {
                 toolbarBackTitle.setTitle(titleStr);
             }
         }
+        if ("content".equals(weburl)) {
+            mWebview.setVisibility(View.GONE);
+            pb.setVisibility(View.GONE);
+            tvContent.setVisibility(View.VISIBLE);
+            tvContent.setText(("用户协议".equals(titleStr)) ? GlobalApp.USER_AGREEMENT : GlobalApp.RIGHTS_OF_PRIVACY);
+        } else {
+            tvContent.setVisibility(View.GONE);
+            pb.setVisibility(View.VISIBLE);
+            mWebview.setVisibility(View.VISIBLE);
+            initWebView();
+        }
+    }
 
+    private void initWebView() {
         //得到webview设置
-        WebSettings webSettings = mHwebview_wb.getSettings();
+        WebSettings webSettings = mWebview.getSettings();
         //允许使用javascript
         webSettings.setJavaScriptEnabled(true);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -91,9 +107,10 @@ public class H5Activity extends BaseActivity {
         }
         webSettings.setDomStorageEnabled(true);
         //加载服务器上的页面
-        mHwebview_wb.loadUrl(weburl);
+
+        mWebview.loadUrl(weburl);
         //加上下面这段代码可以使网页中的链接不以浏览器的方式打开
-        mHwebview_wb.setWebViewClient(new WebViewClient() {
+        mWebview.setWebViewClient(new WebViewClient() {
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView webView, String url) {
                 return super.shouldInterceptRequest(webView, url);
@@ -109,7 +126,7 @@ public class H5Activity extends BaseActivity {
         });
 
 
-        mHwebview_wb.setWebChromeClient(new WebChromeClient() {
+        mWebview.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 if (pb != null) {
@@ -125,14 +142,15 @@ public class H5Activity extends BaseActivity {
                 super.onProgressChanged(view, newProgress);
             }
         });
+
     }
 
     private void initView() {
-        mHwebview_wb.setOnKeyListener(new View.OnKeyListener() {
+        mWebview.setOnKeyListener(new View.OnKeyListener() {
 
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if ((keyCode == KeyEvent.KEYCODE_BACK) && mHwebview_wb.canGoBack()) {
+                if ((keyCode == KeyEvent.KEYCODE_BACK) && mWebview.canGoBack()) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -148,14 +166,14 @@ public class H5Activity extends BaseActivity {
     }
 
     private void webViewGoBack() {
-        mHwebview_wb.goBack();
+        mWebview.goBack();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (mHwebview_wb != null) {
-            mHwebview_wb.destroy();
+        if (mWebview != null) {
+            mWebview.destroy();
         }
     }
 }

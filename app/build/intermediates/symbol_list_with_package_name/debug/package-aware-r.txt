@@ -822,8 +822,15 @@ color colorPrimary
 color colorPrimaryDark
 color color_0879FC
 color color_333333
+color color_488AFA
+color color_5072bb38
+color color_666666
+color color_72BB38
 color color_999999
+color color_B7B7B7
+color color_D8D8D8
 color color_FF4E21
+color color_FF8527
 color design_bottom_navigation_shadow_color
 color design_box_stroke_color
 color design_dark_default_color_background
@@ -1615,6 +1622,7 @@ id et_local_code
 id et_mobile
 id et_mobile_code
 id et_password
+id et_password_again
 id exitUntilCollapsed
 id expand_activities_button
 id expanded_menu
@@ -1646,6 +1654,7 @@ id invisible
 id italic
 id item_touch_helper_previous_elevation
 id iv_local_code
+id iv_logo
 id labeled
 id largeLabel
 id left
@@ -1653,7 +1662,10 @@ id line1
 id line3
 id listMode
 id list_item
+id ll_mobile
 id ll_mobile_code
+id ll_password
+id ll_password_again
 id ll_remember
 id ll_verification
 id load_more_load_complete_view
@@ -1809,6 +1821,7 @@ id transition_position
 id transition_scene_layoutid_cache
 id transition_transform
 id tv_agreement
+id tv_content
 id tv_get_code
 id tv_login
 id tv_mobile_title
@@ -1972,6 +1985,7 @@ layout text_view_with_line_height_from_layout
 layout text_view_with_line_height_from_style
 layout text_view_with_theme_line_height
 layout text_view_without_line_height
+mipmap app_logo
 mipmap checkbox_login_check
 mipmap checkbox_login_uncheck
 mipmap ic_launcher

@@ -1,6 +1,8 @@
 package com.dream.cleaner.ui.login.activity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.utils.CodeUtils;
 import com.dream.cleaner.utils.ShapeUtils;
@@ -28,12 +31,9 @@ import butterknife.OnClick;
  * desc   :重置密码
  */
 public class MobileVerificationActivity extends BaseActivity {
-    @BindView(R.id.tv_mobile_title)
-    TextView tvMobileTitle;
+
     @BindView(R.id.et_mobile)
     EditText etMobile;
-    @BindView(R.id.tv_password_title)
-    TextView tvPasswordTitle;
     @BindView(R.id.et_local_code)
     EditText etLocalCode;
     @BindView(R.id.iv_local_code)
@@ -62,16 +62,40 @@ public class MobileVerificationActivity extends BaseActivity {
 
     @Override
     protected MyToolbar getMyToolbar() {
-        return new ToolbarBackTitle(this, "手机号验证");
+        return new ToolbarBackTitle(this, "手机验证");
     }
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
         codeUtils = CodeUtils.getInstance();
         ivLocalCode.setImageBitmap(codeUtils.createBitmap());
-        tvSubmit.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.color_0879FC, ConvertUtils.dp2px(4), 0, 0));
+        checkSubmitTv();
+        etMobileCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                checkSubmitTv();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
+    /**
+     * 输入框不为空则变颜色
+     */
+    private void checkSubmitTv() {
+        boolean b = !StringUtils.isEmpty(etMobileCode.getText().toString());
+        tvSubmit.setBackground(ShapeUtils.getDiyGradientDrawable(b ? R.color.color_72BB38 : R.color.color_5072bb38, 0, 0, 0));
+        tvSubmit.setClickable(b);
+    }
 
     @OnClick({R.id.iv_local_code, R.id.tv_get_code, R.id.tv_submit})
     public void onViewClicked(View view) {

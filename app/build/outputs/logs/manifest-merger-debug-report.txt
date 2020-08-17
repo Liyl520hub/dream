@@ -132,9 +132,9 @@ MERGED from [me.jessyan:autosize:1.2.1] /Users/joy/.gradle/caches/transforms-2/f
 	android:label
 		ADDED from /Users/joy/Documents/android_space/android_project/dream/app/src/main/AndroidManifest.xml:19:9-41
 	android:roundIcon
-		ADDED from /Users/joy/Documents/android_space/android_project/dream/app/src/main/AndroidManifest.xml:20:9-54
+		ADDED from /Users/joy/Documents/android_space/android_project/dream/app/src/main/AndroidManifest.xml:20:9-45
 	android:icon
-		ADDED from /Users/joy/Documents/android_space/android_project/dream/app/src/main/AndroidManifest.xml:18:9-43
+		ADDED from /Users/joy/Documents/android_space/android_project/dream/app/src/main/AndroidManifest.xml:18:9-40
 	android:allowBackup
 		ADDED from /Users/joy/Documents/android_space/android_project/dream/app/src/main/AndroidManifest.xml:17:9-35
 	android:theme

@@ -60,6 +60,10 @@
         "source": "/Users/joy/Documents/android_space/android_project/dream/app/build/generated/res/pngs/debug/drawable-xxhdpi/ic_launcher_background.png"
     },
     {
+        "merged": "/Users/joy/Documents/android_space/android_project/dream/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_app_logo.png.flat",
+        "source": "/Users/joy/Documents/android_space/android_project/dream/app/src/main/res/mipmap-xxxhdpi/app_logo.png"
+    },
+    {
         "merged": "/Users/joy/Documents/android_space/android_project/dream/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_checkbox_login_uncheck.png.flat",
         "source": "/Users/joy/Documents/android_space/android_project/dream/app/src/main/res/mipmap-xxhdpi/checkbox_login_uncheck.png"
     },
@@ -122,6 +126,10 @@
     {
         "merged": "/Users/joy/Documents/android_space/android_project/dream/app/build/intermediates/res/merged/debug/drawable-anydpi-v21_ic_launcher_background.xml.flat",
         "source": "/Users/joy/Documents/android_space/android_project/dream/app/build/generated/res/pngs/debug/drawable-anydpi-v21/ic_launcher_background.xml"
+    },
+    {
+        "merged": "/Users/joy/Documents/android_space/android_project/dream/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_app_logo.png.flat",
+        "source": "/Users/joy/Documents/android_space/android_project/dream/app/src/main/res/mipmap-xxhdpi/app_logo.png"
     },
     {
         "merged": "/Users/joy/Documents/android_space/android_project/dream/app/build/intermediates/res/merged/debug/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
