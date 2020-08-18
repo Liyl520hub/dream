@@ -57,6 +57,8 @@ public class MainActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         setDoubleClickExit(true);
         MainAdapter mainAdapter = new MainAdapter(this, getFragments());
+        myViewPager.setAdapter(mainAdapter);
+        myViewPager.setUserInputEnabled(false);
         initTabLayout();
 
 
@@ -88,7 +90,6 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-//        myViewPager.setUserInputEnabled(false);
 
     }
 
