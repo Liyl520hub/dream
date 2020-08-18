@@ -21,9 +21,9 @@ public class LoginActivity_ViewBinding implements Unbinder {
 
   private View view7f080062;
 
-  private View view7f08014a;
-
   private View view7f08014e;
+
+  private View view7f080152;
 
   @UiThread
   public LoginActivity_ViewBinding(LoginActivity target) {
@@ -54,7 +54,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.llRemember = Utils.findRequiredViewAsType(source, R.id.ll_remember, "field 'llRemember'", LinearLayout.class);
     view = Utils.findRequiredView(source, R.id.tv_login, "field 'tvLogin' and method 'onViewClicked'");
     target.tvLogin = Utils.castView(view, R.id.tv_login, "field 'tvLogin'", TextView.class);
-    view7f08014a = view;
+    view7f08014e = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -64,7 +64,7 @@ public class LoginActivity_ViewBinding implements Unbinder {
     target.tvAgreement = Utils.findRequiredViewAsType(source, R.id.tv_agreement, "field 'tvAgreement'", TextView.class);
     view = Utils.findRequiredView(source, R.id.tv_reset_password, "field 'tvResetPassword' and method 'onViewClicked'");
     target.tvResetPassword = Utils.castView(view, R.id.tv_reset_password, "field 'tvResetPassword'", TextView.class);
-    view7f08014e = view;
+    view7f080152 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -95,9 +95,9 @@ public class LoginActivity_ViewBinding implements Unbinder {
 
     view7f080062.setOnClickListener(null);
     view7f080062 = null;
-    view7f08014a.setOnClickListener(null);
-    view7f08014a = null;
     view7f08014e.setOnClickListener(null);
     view7f08014e = null;
+    view7f080152.setOnClickListener(null);
+    view7f080152 = null;
   }
 }

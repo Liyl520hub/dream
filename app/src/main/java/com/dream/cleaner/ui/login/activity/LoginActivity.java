@@ -19,7 +19,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -34,7 +33,6 @@ import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
-import com.dream.common.http.HttpCustomDialog;
 import com.dream.common.http.error.ErrorType;
 
 import butterknife.BindView;
@@ -109,10 +107,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         etMobile.addTextChangedListener(textWatcher);
         etPassword.addTextChangedListener(textWatcher);
         if ("1".equals(SPUtils.getInstance().getString(GlobalApp.REMEMBER_PASSWORD))) {
-            String mobile = SPUtils.getInstance().getString(GlobalApp.USER_LOGIN_MOBILE,"");
+            String mobile = SPUtils.getInstance().getString(GlobalApp.USER_LOGIN_MOBILE, "");
             etMobile.setText(mobile);
             etMobile.setSelection(mobile.length());
-            String pwd = SPUtils.getInstance().getString(GlobalApp.USER_LOGIN_PASSWORD,"");
+            String pwd = SPUtils.getInstance().getString(GlobalApp.USER_LOGIN_PASSWORD, "");
             etPassword.setText(pwd);
             etPassword.setSelection(pwd.length());
             contractCheckbox.setChecked(true);
@@ -131,7 +129,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
      */
     private void checkSubmitTv() {
         boolean b = !StringUtils.isEmpty(etMobile.getText().toString()) && !StringUtils.isEmpty(etPassword.getText().toString());
-        tvLogin.setBackground(ShapeUtils.getDiyGradientDrawable(b?R.color.color_72BB38:R.color.color_5072bb38, 0, 0, 0));
+        tvLogin.setBackground(ShapeUtils.getDiyGradientDrawable(b ? R.color.color_72BB38 : R.color.color_5072bb38, 0, 0, 0));
         tvLogin.setClickable(b);
     }
 
@@ -170,7 +168,9 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 } else {
                     SPUtils.getInstance().put(GlobalApp.REMEMBER_PASSWORD, "0");
                 }
-              mPresenter.userLogin(mobile,password);
+                UiUtil.openActivity(this, MainActivity.class);
+                finish();
+//              mPresenter.userLogin(mobile,password);
                 break;
             default:
         }

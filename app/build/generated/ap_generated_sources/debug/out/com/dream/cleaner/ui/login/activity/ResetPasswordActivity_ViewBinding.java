@@ -16,7 +16,7 @@ import java.lang.Override;
 public class ResetPasswordActivity_ViewBinding implements Unbinder {
   private ResetPasswordActivity target;
 
-  private View view7f080150;
+  private View view7f080154;
 
   @UiThread
   public ResetPasswordActivity_ViewBinding(ResetPasswordActivity target) {
@@ -33,7 +33,7 @@ public class ResetPasswordActivity_ViewBinding implements Unbinder {
     target.tvTip = Utils.findRequiredViewAsType(source, R.id.tv_tip, "field 'tvTip'", TextView.class);
     view = Utils.findRequiredView(source, R.id.tv_submit, "field 'tvSubmit' and method 'onViewClicked'");
     target.tvSubmit = Utils.castView(view, R.id.tv_submit, "field 'tvSubmit'", TextView.class);
-    view7f080150 = view;
+    view7f080154 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -54,7 +54,7 @@ public class ResetPasswordActivity_ViewBinding implements Unbinder {
     target.tvTip = null;
     target.tvSubmit = null;
 
-    view7f080150.setOnClickListener(null);
-    view7f080150 = null;
+    view7f080154.setOnClickListener(null);
+    view7f080154 = null;
   }
 }

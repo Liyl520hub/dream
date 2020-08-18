@@ -20,9 +20,9 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
 
   private View view7f0800a0;
 
-  private View view7f080149;
+  private View view7f08014d;
 
-  private View view7f080150;
+  private View view7f080154;
 
   @UiThread
   public MobileVerificationActivity_ViewBinding(MobileVerificationActivity target) {
@@ -50,7 +50,7 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
     target.etMobileCode = Utils.findRequiredViewAsType(source, R.id.et_mobile_code, "field 'etMobileCode'", EditText.class);
     view = Utils.findRequiredView(source, R.id.tv_get_code, "field 'tvGetCode' and method 'onViewClicked'");
     target.tvGetCode = Utils.castView(view, R.id.tv_get_code, "field 'tvGetCode'", TextView.class);
-    view7f080149 = view;
+    view7f08014d = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -60,7 +60,7 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
     target.llMobileCode = Utils.findRequiredViewAsType(source, R.id.ll_mobile_code, "field 'llMobileCode'", LinearLayout.class);
     view = Utils.findRequiredView(source, R.id.tv_submit, "field 'tvSubmit' and method 'onViewClicked'");
     target.tvSubmit = Utils.castView(view, R.id.tv_submit, "field 'tvSubmit'", TextView.class);
-    view7f080150 = view;
+    view7f080154 = view;
     view.setOnClickListener(new DebouncingOnClickListener() {
       @Override
       public void doClick(View p0) {
@@ -87,9 +87,9 @@ public class MobileVerificationActivity_ViewBinding implements Unbinder {
 
     view7f0800a0.setOnClickListener(null);
     view7f0800a0 = null;
-    view7f080149.setOnClickListener(null);
-    view7f080149 = null;
-    view7f080150.setOnClickListener(null);
-    view7f080150 = null;
+    view7f08014d.setOnClickListener(null);
+    view7f08014d = null;
+    view7f080154.setOnClickListener(null);
+    view7f080154 = null;
   }
 }

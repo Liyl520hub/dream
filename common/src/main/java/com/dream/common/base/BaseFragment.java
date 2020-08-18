@@ -12,9 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.blankj.utilcode.util.ClickUtils;
-import com.dream.common.R;
-import com.dream.common.http.error.ErrorCode;
 import com.dream.common.utils.TUtil;
 
 import butterknife.ButterKnife;
@@ -94,7 +91,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         initPresenter();
         initView();
         isCreateView = true;
-        beforlazyLoad();
+//        beforlazyLoad();
     }
 
     @Override
@@ -126,16 +123,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     /**
      * 懒加载方法 子类具体实现要做什么
      */
-    protected abstract void lazyLoad();
+//    protected abstract void lazyLoad();
 
-    /**
-     * 懒加载方法调用前的判断
-     */
-    private void beforlazyLoad() {
-        if (isCreateView && isUIVisible) {
-            lazyLoad();
-        }
-    }
+//    /**
+//     * 懒加载方法调用前的判断
+//     */
+//    private void beforlazyLoad() {
+//        if (isCreateView && isUIVisible) {
+//            lazyLoad();
+//        }
+//    }
 
 
 }
