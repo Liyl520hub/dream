@@ -88,7 +88,7 @@ public class MainActivity extends BaseActivity {
 
             }
         });
-        myViewPager.setUserInputEnabled(false);
+//        myViewPager.setUserInputEnabled(false);
 
     }
 
