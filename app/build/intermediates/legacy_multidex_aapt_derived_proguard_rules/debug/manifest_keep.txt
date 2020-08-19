@@ -1,4 +1,0 @@
-# Referenced at /Users/joy/Documents/android_space/android_project/dream/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml:21
--keep class androidx.core.app.CoreComponentFactory { <init>(); }
-# Referenced at /Users/joy/Documents/android_space/android_project/dream/app/build/intermediates/merged_manifests/debug/AndroidManifest.xml:21
--keep class com.dream.cleaner.base.MyApplication { <init>(); }

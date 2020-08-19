@@ -69,6 +69,8 @@ dependencies {
     //viewpager2
     api rootProject.ext.dependencies.viewpager2
     api rootProject.ext.dependencies.material
+    //BasePopup 弹框
+    api rootProject.ext.dependencies.BasePopup
 
 
 

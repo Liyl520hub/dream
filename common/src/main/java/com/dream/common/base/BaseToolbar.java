@@ -8,15 +8,11 @@ import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.res.ResourcesCompat;
 
-
 import com.blankj.utilcode.util.ClickUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.LogUtils;
 import com.dream.common.R;
-import com.dream.common.baserx.RxClickTransformer;
 import com.dream.common.callback.MyToolbar;
-
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by Administrator on 2018/3/27 0027.
@@ -118,7 +114,6 @@ public abstract class BaseToolbar implements MyToolbar {
 
     @Override
     public void getTitleLeftView(ImageView mImageView) {
-        LogUtils.e("getTitleTextView");
     }
 
     /**

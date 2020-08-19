@@ -58,6 +58,8 @@ ext {
             //viewpager2  20200401发布的
             "viewpager2"                   : 'androidx.viewpager2:viewpager2:1.0.0',
             "material"                     : 'com.google.android.material:material:1.0.0',
+            //BasePopup 弹框
+            "BasePopup"                    : 'com.github.razerdp:BasePopup:2.2.6',
 
     ]
 }

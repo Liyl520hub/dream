@@ -133,6 +133,7 @@
     <orderEntry type="library" name="Gradle: com.blankj:utilcodex:1.29.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: me.jessyan:autosize:1.2.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife:10.2.3@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.razerdp:BasePopup:2.2.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment:1.2.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-ui:1.0.0@aar" level="project" />

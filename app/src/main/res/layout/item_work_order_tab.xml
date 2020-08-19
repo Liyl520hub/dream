@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_marginTop="5dp"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_order_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="13dp"
+        android:text="新订单"
+        android:textColor="@color/color_72BB38"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_order_type_imge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="13dp"
+        android:background="@drawable/bg_work_order_type"
+        android:paddingLeft="5.5dp"
+        android:paddingRight="5.5dp"
+        android:text="次单"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_order_type"
+        app:layout_constraintLeft_toRightOf="@+id/tv_order_type"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_order_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginRight="15dp"
+        android:text="200元"
+        android:textColor="@color/color_C50000"
+        android:textSize="17sp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:drawableLeft="@mipmap/icon_address"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="亦城财富中心1号楼A座1008"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order_type" />
+
+    <TextView
+        android:id="@+id/tv_bei_zhu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_beizhu"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="日常保洁"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_time"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="2020-07-11  11:30-13:00"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_bei_zhu" />
+
+    <TextView
+        android:id="@+id/tv_ju_li"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_juli"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="3dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="2.5KM"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginRight="15dp"
+        android:background="@color/color_72BB38"
+        android:drawablePadding="7dp"
+        android:gravity="center"
+        android:paddingTop="11.5dp"
+        android:paddingBottom="11.5dp"
+        android:text="接单"
+        android:textColor="@color/white"
+        android:textSize="17sp"
+        android:layout_marginBottom="18dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_ju_li" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
