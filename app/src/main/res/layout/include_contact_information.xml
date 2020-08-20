@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:layout_marginTop="5dp"
+    android:paddingBottom="20dp">
+    <!--联系方式-->
+
+    <TextView
+        android:id="@+id/tv_contact_information_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="16dp"
+        android:text="联系方式"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_contact_information_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_lxfs_head"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="16dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="李先生"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_title" />
+
+    <TextView
+        android:id="@+id/tv_contact_information_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_lxfs_mobile"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="5.5dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="13333333333"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_name" />
+
+
+    <TextView
+        android:id="@+id/tv_contact_information_call_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5.5dp"
+        android:paddingLeft="13.5dp"
+        android:paddingTop="2.5dp"
+        android:paddingRight="13.5dp"
+        android:paddingBottom="2.5dp"
+        android:text="去导航"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_contact_information_mobile"
+        app:layout_constraintLeft_toRightOf="@+id/tv_contact_information_mobile" />
+
+    <TextView
+        android:id="@+id/tv_contact_information_bei_zhu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_lxfs_bei_zhu"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="5.5dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="不要吸烟，一定要打扫干净"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_mobile" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -16,8 +16,10 @@ import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.dream.cleaner.R;
 import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
+import com.dream.cleaner.ui.main.activity.TaskDetailsActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderTabFragmentAdapter;
 import com.dream.cleaner.utils.ShapeUtils;
+import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.cleaner.widget.pop.PopWorkOrder;
 import com.dream.common.base.BaseFragment;
@@ -77,16 +79,27 @@ public class WorkOrderTabFragment extends BaseFragment {
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 popTip = new PopTip.Builder()
-                        .setType(1)
+                        .setType(2)
                         .setMsg(
-                                "您还未达到用户指定地址" +
-                                "请您尽快到达，才能继续操作")
+                                "接单确认")
                         .setSubmitClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 popTip.dismiss();
                             }
-                        }).build(getActivity());
+                        }).setCancelClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                popTip.dismiss();
+                            }
+                        })
+                        .setYesClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                UiUtil.openActivity(getActivity(), TaskDetailsActivity.class);
+                            }
+                        })
+                        .build(getActivity());
                 popTip.showPopupWindow();
 
             }

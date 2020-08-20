@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginTop="5dp"
+    android:paddingBottom="20dp"
+    android:background="@color/white"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <!--订单信息-->
+
+    <TextView
+        android:id="@+id/tv_order_info_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingTop="16dp"
+        android:text="订单信息"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_order_info_call_mobile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5.5dp"
+        android:layout_marginRight="15dp"
+        android:paddingLeft="13.5dp"
+        android:paddingTop="2.5dp"
+        android:paddingRight="13.5dp"
+        android:paddingBottom="2.5dp"
+        android:text="待服务"
+        android:textColor="@color/color_72BB38"
+        android:textSize="17sp"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_order_info_title"
+        app:layout_constraintRight_toRightOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_order_info_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_order_code"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="16dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="12312395"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order_info_title" />
+
+
+    <TextView
+        android:id="@+id/tv_order_info_price"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_order_price"
+        android:drawablePadding="7dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="5.5dp"
+        android:paddingRight="15dp"
+        android:paddingBottom="3dp"
+        android:text="200"
+        android:textColor="@color/color_333333"
+        android:textSize="17sp"
+        app:layout_constraintTop_toBottomOf="@+id/tv_order_info_name" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
