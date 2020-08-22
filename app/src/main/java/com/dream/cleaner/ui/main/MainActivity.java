@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity {
     ViewPager2 myViewPager;
     @BindView(R.id.my_tab_layout)
     TabLayout myTabLayout;
+    private ToolbarTitle toolbarTitle;
 
     @Override
     protected int getLayoutId() {
@@ -50,7 +51,8 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected MyToolbar getMyToolbar() {
-        return new ToolbarTitle(this, "壹佳保洁");
+        toolbarTitle = new ToolbarTitle(this, "壹佳保洁");
+        return toolbarTitle;
     }
 
     @Override
@@ -76,6 +78,32 @@ public class MainActivity extends BaseActivity {
         myTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
+                int position = tab.getPosition();
+                switch (position) {
+                    case 0: {
+                        toolbarTitle.setTitle("壹佳保洁");
+
+                    }
+                    break;
+                    case 1: {
+                        toolbarTitle.setTitle("计划");
+
+                    }
+                    break;
+                    case 2: {
+                        toolbarTitle.setTitle("消息通知");
+
+                    }
+                    break;
+                    case 3: {
+                        toolbarTitle.setTitle("个人中心");
+                    }
+                    break;
+                    default:
+                }
+
+                if (position == 3) {
+                }
                 setTabState(tab.getPosition());
 
             }

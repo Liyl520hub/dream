@@ -14,6 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:tabBackground="@android:color/transparent"
         app:tabIndicatorFullWidth="false"
+        app:tabIndicatorColor="@color/color_72BB38"
         app:tabMode="scrollable"
         app:tabRippleColor="@android:color/transparent"
         app:tabSelectedTextColor="@color/color_72BB38"

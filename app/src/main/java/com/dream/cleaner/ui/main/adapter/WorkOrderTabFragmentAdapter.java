@@ -23,6 +23,7 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, WorkOrderTabBean workOrderTabBean) {
-
+        //赋值
+        baseViewHolder.setText(R.id.tv_address,"dddd");
     }
 }
