@@ -13,7 +13,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import com.dream.cleaner.R;
 import com.dream.cleaner.ui.main.adapter.MainAdapter;
 import com.dream.cleaner.ui.main.fragment.WorkOrderFragment;
-import com.dream.cleaner.ui.my.fragment.UserInfoFragment;
+import com.dream.cleaner.ui.my.fragment.UserFragment;
 import com.dream.cleaner.ui.news.fragment.NewsFragment;
 import com.dream.cleaner.ui.plan.fragment.PlanFragment;
 import com.dream.cleaner.widget.DataGenerator;
@@ -126,11 +126,11 @@ public class MainActivity extends BaseActivity {
         WorkOrderFragment workOrderFragment = new WorkOrderFragment();
         PlanFragment planFragment = new PlanFragment();
         NewsFragment newsFragment = new NewsFragment();
-        UserInfoFragment userInfoFragment = new UserInfoFragment();
+        UserFragment userFragment = new UserFragment();
         fragments.add(workOrderFragment);
         fragments.add(planFragment);
         fragments.add(newsFragment);
-        fragments.add(userInfoFragment);
+        fragments.add(userFragment);
         return fragments;
     }
 
