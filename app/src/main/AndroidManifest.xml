@@ -44,6 +44,7 @@
         <activity android:name=".ui.my.activity.UserInfoActivity" />
         <activity android:name=".ui.my.activity.MyIncomeActivity" />
         <activity android:name=".ui.my.activity.SettingActivity" />
+        <activity android:name=".ui.my.activity.StopReceivingOrdersActivity" />
     </application>
 
 </manifest>

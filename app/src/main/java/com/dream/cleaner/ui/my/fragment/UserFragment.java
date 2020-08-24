@@ -11,6 +11,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.dream.cleaner.R;
 import com.dream.cleaner.ui.my.activity.MyIncomeActivity;
 import com.dream.cleaner.ui.my.activity.SettingActivity;
+import com.dream.cleaner.ui.my.activity.StopReceivingOrdersActivity;
 import com.dream.cleaner.ui.my.activity.UserInfoActivity;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseFragment;
@@ -99,6 +100,7 @@ public class UserFragment extends BaseFragment {
             case R.id.ll_wu_liao:
                 break;
             case R.id.ll_zan_ting:
+                UiUtil.openActivity(getActivity(), StopReceivingOrdersActivity.class);
                 break;
             case R.id.ll_setting:
                 UiUtil.openActivity(getActivity(), SettingActivity.class);
