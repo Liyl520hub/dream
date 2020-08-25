@@ -71,7 +71,8 @@ dependencies {
     api rootProject.ext.dependencies.material
     //BasePopup 弹框
     api rootProject.ext.dependencies.BasePopup
-
-
-
+    //ndroid-PickerView 三级滚轮
+    api rootProject.ext.dependencies.Android_PickerView
+    //日历
+    api rootProject.ext.dependencies.calendarview
 }

@@ -134,6 +134,8 @@
     <orderEntry type="library" name="Gradle: me.jessyan:autosize:1.2.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife:10.2.3@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.razerdp:BasePopup:2.2.6@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.contrarywind:Android-PickerView:4.1.9@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.haibin:calendarview:3.6.9@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.fragment:fragment:1.2.5@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-ui:1.0.0@aar" level="project" />
@@ -169,5 +171,6 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.savedstate:savedstate:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-runtime:2.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.contrarywind:wheelview:4.1.0@aar" level="project" />
   </component>
 </module>

@@ -168,6 +168,9 @@
     <orderEntry type="library" name="Gradle: com.blankj:utilcodex:1.29.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: me.jessyan:autosize:1.2.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.razerdp:BasePopup:2.2.6@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.contrarywind:Android-PickerView:4.1.9@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.contrarywind:wheelview:4.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.haibin:calendarview:3.6.9@aar" level="project" />
     <orderEntry type="module" module-name="common" />
   </component>
 </module>

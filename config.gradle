@@ -60,6 +60,10 @@ ext {
             "material"                     : 'com.google.android.material:material:1.0.0',
             //BasePopup 弹框
             "BasePopup"                    : 'com.github.razerdp:BasePopup:2.2.6',
+            //Android-PickerView 三级滚轮
+            "Android_PickerView"           : 'com.contrarywind:Android-PickerView:4.1.9',
+            //日历
+            "calendarview"                 : 'com.haibin:calendarview:3.6.9',
 
     ]
 }

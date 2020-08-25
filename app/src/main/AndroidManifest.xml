@@ -45,6 +45,8 @@
         <activity android:name=".ui.my.activity.MyIncomeActivity" />
         <activity android:name=".ui.my.activity.SettingActivity" />
         <activity android:name=".ui.my.activity.StopReceivingOrdersActivity" />
+        <activity android:name=".ui.my.activity.ApplyStopReceivingActivity" />
+        <activity android:name=".ui.my.activity.StopReceivingDetailActivity" />
     </application>
 
 </manifest>
