@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * @author : liyl
  * date   : 2020/8/24
- * desc   :
+ * desc   :暂停接单列表适配器
  */
 public class StopReceivingOrdersAdapter extends BaseQuickAdapter<StopReceivingOrdersBean,BaseViewHolder> {
 
