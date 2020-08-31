@@ -1,9 +1,12 @@
 *.iml
 .gradle
-/local.properties
-/.idea/workspace.xml
-/.idea/libraries
-/build
-/app/build/
-/common/build/
-/.idea/
+*.bat
+*.apk
+/captures
+~$*
+gradlew
+.DS_Store
+.idea
+# 自定义了根目录gradle/gradle-wrapper.properties的请删除这条（不推荐自定义）
+gradle
+build
