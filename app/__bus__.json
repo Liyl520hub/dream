@@ -1,0 +1,9 @@
+{
+  "BusUtilsClass": "com.blankj.utilcode.util.BusUtils",
+  "rightBus": {
+    "bus_fragment_plan": [
+      "{ desc: com.dream.cleaner.ui.main.MainActivity#postBusListener(com.dream.cleaner.beans.BusBean busBean) }"
+    ]
+  },
+  "wrongBus": {}
+}
