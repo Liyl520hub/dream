@@ -37,6 +37,10 @@ public enum ToolbarConfig {
      */
     JUST_TITLE,
     /**
+     * 左侧文字与中间标题
+     */
+    LEFT_AND_TITLE,
+    /**
      * 仅有右侧文字
      */
     JUST_RIGHT,

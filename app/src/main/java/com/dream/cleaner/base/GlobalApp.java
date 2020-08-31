@@ -7,6 +7,8 @@ package com.dream.cleaner.base;
  */
 public class GlobalApp {
 
+    public static final String BUS_FRAGMENT_PLAN  = "bus_fragment_plan";
+
     /**
      * 1 保存用户账号密码
      * 其余不保存

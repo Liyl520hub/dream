@@ -28,6 +28,7 @@ public abstract class BaseToolbar implements MyToolbar {
     private Toolbar mToolbarView;
     private int background;
     private TextView mTitleText;
+    private TextView mLeftText;
     private ImageView mRightImage;
 
     public BaseToolbar(BaseActivity activity) {
@@ -45,6 +46,7 @@ public abstract class BaseToolbar implements MyToolbar {
         mToolbarView = (Toolbar) View.inflate(mActivity, R.layout.common_view_default_toolbar, null);
         default_toolbar = mToolbarView.findViewById(R.id.default_toolbar);
         mLeftImage = mToolbarView.findViewById(R.id.default_toolbar_left_image);
+        mLeftText = mToolbarView.findViewById(R.id.default_toolbar_left_text);
         getTitleLeftView(mLeftImage);
         mTitleText = mToolbarView.findViewById(R.id.default_toolbar_title);
         mRightImage = mToolbarView.findViewById(R.id.default_toolbar_right_image);
@@ -68,6 +70,15 @@ public abstract class BaseToolbar implements MyToolbar {
                 break;
             case JUST_TITLE:
                 mLeftImage.setVisibility(View.GONE);
+                mTitleText.setVisibility(View.VISIBLE);
+                mRightImage.setVisibility(View.GONE);
+                mTitleText.setText(getTitle());
+                getTitleTextView(mTitleText);
+                initTitleClickListener();
+                break;
+            case LEFT_AND_TITLE:
+                mLeftImage.setVisibility(View.GONE);
+                mLeftText.setVisibility(View.VISIBLE);
                 mTitleText.setVisibility(View.VISIBLE);
                 mRightImage.setVisibility(View.GONE);
                 mTitleText.setText(getTitle());
@@ -187,6 +198,11 @@ public abstract class BaseToolbar implements MyToolbar {
 
     public BaseToolbar setTitle(String title) {
         mTitleText.setText(title);
+        return this;
+    }
+
+    public BaseToolbar setLiftTitle(String title) {
+        mLeftText.setText(title);
         return this;
     }
 }

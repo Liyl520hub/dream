@@ -10,6 +10,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.6.2'
         classpath 'com.jakewharton:butterknife-gradle-plugin:10.2.3'
+        classpath 'com.blankj:bus-gradle-plugin:2.6'
 
 
         // NOTE: Do not place your application dependencies here; they belong

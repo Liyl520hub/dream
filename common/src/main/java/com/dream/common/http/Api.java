@@ -99,7 +99,6 @@ public class Api {
      */
     public static void setConfig(ApiConfig config) {
         mApiConfig = config;
-        LogUtils.e("HostServer---set" + config.toString());
     }
 
     private static Retrofit getRetrofit(int headerType) {

@@ -10,7 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.blankj.utilcode.util.BusUtils;
 import com.dream.cleaner.R;
+import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.ui.main.adapter.MainAdapter;
 import com.dream.cleaner.ui.main.fragment.WorkOrderFragment;
 import com.dream.cleaner.ui.my.fragment.UserFragment;
@@ -20,6 +23,7 @@ import com.dream.cleaner.widget.DataGenerator;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.widget.ToolbarTitle;
+import com.dream.common.widget.ToolbarTitleLeftTv;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -36,7 +40,8 @@ public class MainActivity extends BaseActivity {
     ViewPager2 myViewPager;
     @BindView(R.id.my_tab_layout)
     TabLayout myTabLayout;
-    private ToolbarTitle toolbarTitle;
+    private ToolbarTitleLeftTv toolbarTitle;
+    public String leftText;
 
     @Override
     protected int getLayoutId() {
@@ -45,13 +50,12 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
-
     }
 
 
     @Override
     protected MyToolbar getMyToolbar() {
-        toolbarTitle = new ToolbarTitle(this, "壹佳保洁");
+        toolbarTitle = new ToolbarTitleLeftTv(this, "壹佳保洁");
         return toolbarTitle;
     }
 
@@ -62,7 +66,7 @@ public class MainActivity extends BaseActivity {
         myViewPager.setAdapter(mainAdapter);
         myViewPager.setUserInputEnabled(false);
         initTabLayout();
-
+        BusUtils.register(this);
 
     }
 
@@ -82,27 +86,29 @@ public class MainActivity extends BaseActivity {
                 switch (position) {
                     case 0: {
                         toolbarTitle.setTitle("壹佳保洁");
-
+                        toolbarTitle.setLiftTitle("");
                     }
                     break;
                     case 1: {
                         toolbarTitle.setTitle("计划");
-
+                        toolbarTitle.setLiftTitle(leftText);
                     }
                     break;
                     case 2: {
                         toolbarTitle.setTitle("消息通知");
-
+                        toolbarTitle.setLiftTitle("");
                     }
                     break;
                     case 3: {
                         toolbarTitle.setTitle("个人中心");
+                        toolbarTitle.setLiftTitle("");
                     }
                     break;
                     default:
                 }
 
                 if (position == 3) {
+
                 }
                 setTabState(tab.getPosition());
 
@@ -157,5 +163,17 @@ public class MainActivity extends BaseActivity {
                 }
             }
         }
+    }
+
+    @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_PLAN)
+    public void postBusListener(BusBean busBean) {
+        leftText = busBean.getName();
+        toolbarTitle.setLiftTitle(busBean.getName());
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BusUtils.unregister(this);
     }
 }

@@ -6,7 +6,7 @@
     android:layout_height="49dp"
     android:background="@color/white"
     android:fitsSystemWindows="false"
-    android:minHeight="42dp"
+    android:minHeight="49dp"
     app:contentInsetLeft="0dp"
     app:contentInsetStart="0dp">
 
@@ -21,6 +21,18 @@
         android:src="@drawable/common_finish_black" />
 
     <TextView
+        android:id="@+id/default_toolbar_left_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:ellipsize="end"
+        android:gravity="left"
+        android:visibility="gone"
+        android:maxLines="1"
+        android:paddingLeft="15dp"
+        android:textColor="@color/color_333333"
+        android:textSize="18sp" />
+  <TextView
         android:id="@+id/default_toolbar_title"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
