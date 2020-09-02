@@ -12,41 +12,41 @@ import java.io.Serializable;
 public class BaseBean<T> implements Serializable {
 
     /**
-     * status : Success
-     * msg : 登录成功！
-     * errors : null
+     * time : 2020
+     * message : 登录成功！
+     * success : true
      * code : 0
-     * returnValue : {"id":45,"status":1,"username":"15835788167","password":"9cbf8a4dcb8e30682b927f352d6559a0","type":2,"schoolName":"","info":{"id":36,"createTime":"2018-09-07T02:09:13.000+0000","updateTime":"2018-09-07T02:09:13.000+0000","status":1,"userId":45,"nickname":"学员NRM2","values":[]}}
+     * data : {"id":45,"status":1,"username":"15835788167","password":"9cbf8a4dcb8e30682b927f352d6559a0","type":2,"schoolName":"","info":{"id":36,"createTime":"2018-09-07T02:09:13.000+0000","updateTime":"2018-09-07T02:09:13.000+0000","status":1,"userId":45,"nickname":"学员NRM2","values":[]}}
      */
 
-    private String status;
-    private String msg;
-    private Object errors;
+    private boolean success;
+    private String message;
+    private String time;
     private int code;
-    private T returnValue;
+    private T data;
 
-    public String getStatus() {
-        return status == null ? "" : status;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 
-    public String getMsg() {
-        return msg == null ? "" : msg;
+    public String getMessage() {
+        return message == null ? "" : message;
     }
 
-    public void setMsg(String msg) {
-        this.msg = msg;
+    public void setMessage(String message) {
+        this.message = message == null ? "" : message;
     }
 
-    public Object getErrors() {
-        return errors;
+    public String getTime() {
+        return time == null ? "" : time;
     }
 
-    public void setErrors(Object errors) {
-        this.errors = errors;
+    public void setTime(String time) {
+        this.time = time == null ? "" : time;
     }
 
     public int getCode() {
@@ -57,11 +57,11 @@ public class BaseBean<T> implements Serializable {
         this.code = code;
     }
 
-    public T getReturnValue() {
-        return returnValue;
+    public T getData() {
+        return data;
     }
 
-    public void setReturnValue(T returnValue) {
-        this.returnValue = returnValue;
+    public void setData(T data) {
+        this.data = data;
     }
 }
