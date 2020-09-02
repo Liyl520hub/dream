@@ -109,7 +109,7 @@ public class ApiUrls {
     /**
      * 出发-变成上门中
      */
-    public static final String go = "/api/app/cleaner/task/go";
+    public static final String TASK_GO = "/api/app/cleaner/task/go";
 
 
     /**
@@ -161,13 +161,13 @@ public class ApiUrls {
     /**
      * 请假申请
      */
-    public static final String leave_APPLY = "/api/app/cleaner/leave/apply";
+    public static final String LEAVE_APPLY = "/api/app/cleaner/leave/apply";
 
 
     /**
      * 请假申请详情
      */
-    public static final String leave_APPLY_DETAIL_ID = "/api/app/cleaner/leave/apply/detail/{id}";
+    public static final String LEAVE_APPLY_DETAIL_ID = "/api/app/cleaner/leave/apply/detail/{id}";
 
 
     /**
