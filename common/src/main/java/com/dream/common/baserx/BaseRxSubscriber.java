@@ -54,7 +54,7 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
     /**
      * JavaBean的Status字段的信息
      */
-    private String mStatus;
+    private boolean mStatus;
     /**
      * JavaBean的Status字段的信息
      */
@@ -84,17 +84,17 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
                 flatMap(new Function<T, ObservableSource<R>>() {
                     @Override
                     public ObservableSource<R> apply(T t) throws Exception {
-                        mTMessage = t.getMsg();
-                        mErrorData = t.getReturnValue();
-                        mStatus = t.getStatus();
+                        mTMessage = t.getMessage();
+                        mErrorData = t.getData();
+                        mStatus = t.isSuccess();
                         mCode = t.getCode();
-                        if (mStatus != null) {
-                            if (!mStatus.equalsIgnoreCase(ErrorCode.SERVER_STATUS_SUCCESS)) {
+                        if (mStatus ) {
+                            if (!mStatus) {
                                 //业务成功 但 data为null的情况 需回调界面作判空处理
                                 return null;
                             }
                         }
-                        return Observable.just(t.getReturnValue());
+                        return Observable.just(t.getData());
                     }
                 }).
                 subscribeOn(Schedulers.io()).
@@ -145,21 +145,21 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
 
         if (e instanceof ApiException) {
             ApiException exception = (ApiException) e;
-            if (mStatus != null) {
-                if (mCode == ErrorCode.SERVER_ERROR_CODE_10007) {
+            if (mStatus) {
+                if (mCode == 401) {
                     //token过期
                     mGlobalErrorListener.onReturn10007Code(this, mTMessage);
-                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_SUCCESS)) {
-                    //业务成功 但 data为null的情况 需回调界面作判空处理
-                    onSuccess(mErrorData, mTMessage);
-                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_FAILURE)) {
-                    //业务 失败
-                    SuperToast.showShortMessage(mTMessage);
-                    onError(exception.getErrorType(), exception.getCode(), mTMessage, mErrorData);
-                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_SYSTEM_EXCEPTION)) {
-                    //服务器异常 直接吐司即可 保留回调
-                    SuperToast.showShortMessage(mTMessage);
-                    onError(exception.getErrorType(), exception.getCode(), mTMessage, mErrorData);
+//                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_SUCCESS)) {
+//                    //业务成功 但 data为null的情况 需回调界面作判空处理
+//                    onSuccess(mErrorData, mTMessage);
+//                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_FAILURE)) {
+//                    //业务 失败
+//                    SuperToast.showShortMessage(mTMessage);
+//                    onError(exception.getErrorType(), exception.getCode(), mTMessage, mErrorData);
+//                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_SYSTEM_EXCEPTION)) {
+//                    //服务器异常 直接吐司即可 保留回调
+//                    SuperToast.showShortMessage(mTMessage);
+//                    onError(exception.getErrorType(), exception.getCode(), mTMessage, mErrorData);
                 } else {
                     //向错误回调传递data字段数据
                     String message = "考夫子迷路了";
