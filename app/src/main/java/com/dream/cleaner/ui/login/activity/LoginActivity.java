@@ -24,6 +24,7 @@ import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.ui.login.contract.LoginContract;
 import com.dream.cleaner.ui.login.presenter.LoginPresenter;
@@ -168,9 +169,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
                 } else {
                     SPUtils.getInstance().put(GlobalApp.REMEMBER_PASSWORD, "0");
                 }
-                UiUtil.openActivity(this, MainActivity.class);
-                finish();
-//              mPresenter.userLogin(mobile,password);
+                mPresenter.userLogin(mobile, password);
                 break;
             default:
         }
@@ -188,10 +187,12 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         spannable.setSpan(new ClickableSpan() {
             @Override
             public void onClick(@NonNull View widget) {
-                Bundle bundle = new Bundle();
-                bundle.putString("weburl", "content");
-                bundle.putString("titleStr", isPrivacy ? "用户协议" : "隐私条款");
-                UiUtil.openActivity(LoginActivity.this, H5Activity.class, bundle);
+                //true 用户协议
+                if (isPrivacy) {
+                    mPresenter.agreement(isPrivacy);
+                } else {
+                    mPresenter.privacy(isPrivacy);
+                }
             }
 
             @Override
@@ -206,13 +207,24 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     }
 
     @Override
-    public void retrunLoginBean(LoginBean loginBean) {
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
+
+    }
+
+    @Override
+    public void returnLoginBean(LoginBean loginBean) {
+
         UiUtil.openActivity(this, MainActivity.class);
         finish();
     }
 
     @Override
-    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
-
+    public void returnAgreementBean(AgreementBean agreementBean, boolean isPrivacy) {
+        String articleText = agreementBean.getArticleText();
+        Bundle bundle = new Bundle();
+        bundle.putString("weburl", "html");
+        bundle.putString("htmlContent", articleText);
+        bundle.putString("titleStr", isPrivacy ? "用户协议" : "隐私条款");
+        UiUtil.openActivity(LoginActivity.this, H5Activity.class, bundle);
     }
 }

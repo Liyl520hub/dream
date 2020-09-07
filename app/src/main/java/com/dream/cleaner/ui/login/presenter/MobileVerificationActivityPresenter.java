@@ -1,9 +1,8 @@
 package com.dream.cleaner.ui.login.presenter;
 
 import com.dream.cleaner.beans.login.AgreementBean;
-import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.http.ApiService;
-import com.dream.cleaner.ui.login.contract.LoginContract;
+import com.dream.cleaner.ui.login.contract.MobileVerificationActivityContract;
 import com.dream.common.base.BaseBean;
 import com.dream.common.base.BasePresenter;
 import com.dream.common.baserx.BaseRxSubscriber;
@@ -18,58 +17,31 @@ import okhttp3.RequestBody;
 
 /**
  * @author : Liyalei
- * date   : 2020/8/16
+ * date   : 2020/9/7
  * desc   :
  */
-public class LoginPresenter extends BasePresenter<LoginContract> {
+public class MobileVerificationActivityPresenter extends BasePresenter<MobileVerificationActivityContract> {
+
 
     /**
-     * 用户登录
-     *
-     * @param userName 用户名
-     * @param passWord 密码
+     * 校验图片验证码
      */
-    public void userLogin(String userName, String passWord) {
+    public void updateCheckLocalCode(String phone, String imgCode) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("phone", userName);
-        jsonObject.addProperty("password", passWord);
+        jsonObject.addProperty("phone", phone);
         jsonObject.addProperty("verifyToken", "");
-        jsonObject.addProperty("imgCode", "");
+        jsonObject.addProperty("imgCode", imgCode);
         jsonObject.addProperty("code", "");
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
-                .observable(Api.getService(ApiService.class).userLogin(requestBody))
-                .presenter(this)
-                .requestMode(RequestMode.SINGLE)
-                .showLoading(true)
-                .doRequest(new BaseRxSubscriber<LoginBean, BaseBean<LoginBean>>() {
-                    @Override
-                    protected void onSuccess(LoginBean loginBean, String successMessage) {
-                        mContract.returnLoginBean(loginBean);
-
-                    }
-
-                    @Override
-                    protected void onError(ErrorType errorType, int errorCode, String message, LoginBean loginBean) {
-                        SuperToast.showShortMessage(message);
-                    }
-                });
-
-    }
-
-    /**
-     * 保洁端获取用户协议
-     */
-    public void agreement(boolean isPrivacy) {
-        Api
-                .observable(Api.getService(ApiService.class).agreement())
+                .observable(Api.getService(ApiService.class).updateCheckCode(requestBody))
                 .presenter(this)
                 .requestMode(RequestMode.SINGLE)
                 .showLoading(true)
                 .doRequest(new BaseRxSubscriber<AgreementBean, BaseBean<AgreementBean>>() {
                     @Override
                     protected void onSuccess(AgreementBean agreementBean, String successMessage) {
-                        mContract.returnAgreementBean(agreementBean,isPrivacy);
+                        mContract.returnAgreementPhone(agreementBean);
                     }
 
                     @Override
@@ -81,18 +53,24 @@ public class LoginPresenter extends BasePresenter<LoginContract> {
     }
 
     /**
-     * 保洁端获取隐私条款
+     * 校验验证码
      */
-    public void privacy(boolean isPrivacy) {
+    public void updateCheckCode(String phone, String code) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("phone", phone);
+        jsonObject.addProperty("verifyToken", "");
+        jsonObject.addProperty("imgCode", "");
+        jsonObject.addProperty("code", code);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
-                .observable(Api.getService(ApiService.class).privacy())
+                .observable(Api.getService(ApiService.class).updateCheckCode(requestBody))
                 .presenter(this)
                 .requestMode(RequestMode.SINGLE)
                 .showLoading(true)
                 .doRequest(new BaseRxSubscriber<AgreementBean, BaseBean<AgreementBean>>() {
                     @Override
                     protected void onSuccess(AgreementBean agreementBean, String successMessage) {
-                        mContract.returnAgreementBean(agreementBean,isPrivacy);
+                        mContract.returnAgreementPhone(agreementBean);
                     }
 
                     @Override
@@ -103,5 +81,27 @@ public class LoginPresenter extends BasePresenter<LoginContract> {
 
     }
 
+    /**
+     * 发送验证码
+     */
+    public void agreementPhone(String phone) {
+        Api
+                .observable(Api.getService(ApiService.class).agreementPhone(phone))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<AgreementBean, BaseBean<AgreementBean>>() {
+                    @Override
+                    protected void onSuccess(AgreementBean agreementBean, String successMessage) {
+                        mContract.returnAgreementPhone(agreementBean);
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, AgreementBean loginBean) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
 
 }

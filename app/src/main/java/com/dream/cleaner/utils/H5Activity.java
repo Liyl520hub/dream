@@ -41,6 +41,7 @@ public class H5Activity extends BaseActivity {
     TextView tvContent;
     private String weburl;
     private String titleStr;
+    private String htmlContent;
     private ToolbarBackTitle toolbarBackTitle;
 
 
@@ -78,6 +79,7 @@ public class H5Activity extends BaseActivity {
         if (bundle != null) {
             weburl = bundle.getString("weburl");
             titleStr = bundle.getString("titleStr");
+            htmlContent = bundle.getString("htmlContent");
             if (StringUtils.isEmpty(titleStr)) {
                 toolbarBackTitle.setTitle("");
             } else {
@@ -89,11 +91,19 @@ public class H5Activity extends BaseActivity {
             pb.setVisibility(View.GONE);
             tvContent.setVisibility(View.VISIBLE);
             tvContent.setText(("用户协议".equals(titleStr)) ? GlobalApp.USER_AGREEMENT : GlobalApp.RIGHTS_OF_PRIVACY);
+        } if ("html".equals(weburl)) {
+            mWebview.setVisibility(View.VISIBLE);
+            pb.setVisibility(View.VISIBLE);
+            initWebView();
+//            mWebview.loadDataWithBaseURL(null, htmlContent, "text/html", "utf-8", null);
+            mWebview.loadData(getHtmlData(htmlContent), "text/html; charset=UTF-8", "UTF-8");
         } else {
             tvContent.setVisibility(View.GONE);
             pb.setVisibility(View.VISIBLE);
             mWebview.setVisibility(View.VISIBLE);
             initWebView();
+            //加载服务器上的页面
+            mWebview.loadUrl(weburl);
         }
     }
 
@@ -106,9 +116,7 @@ public class H5Activity extends BaseActivity {
             webSettings.setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
         }
         webSettings.setDomStorageEnabled(true);
-        //加载服务器上的页面
 
-        mWebview.loadUrl(weburl);
         //加上下面这段代码可以使网页中的链接不以浏览器的方式打开
         mWebview.setWebViewClient(new WebViewClient() {
             @Override
@@ -175,5 +183,31 @@ public class H5Activity extends BaseActivity {
         if (mWebview != null) {
             mWebview.destroy();
         }
+    }
+
+    /**
+     * 富文本适配
+     */
+    private String getHtmlData(String bodyHTML) {
+        String translation = translation(bodyHTML);
+        String head = "<head>"
+                + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0, user-scalable=no\"> "
+                + "<style>img{max-width: 100%; width:auto; height:auto;}</style>"
+                + "<style>video{max-width: 100%; width:auto; height:auto;}</style>"
+                + "</head>";
+        return "<html>" + head + "<body>" + translation + "</body></html>";
+    }
+
+    /**
+     *
+     * @param content 转义字符替换
+     * @return
+     */
+    private String translation(String content) {
+        String replace = content.replace("&lt;", "<");
+        String replace1 = replace.replace("&gt;", ">");
+        String replace2 = replace1.replace("&amp;", "&");
+        String replace3 = replace2.replace("&quot;", "\"");
+        return replace3.replace("&copy;", "©");
     }
 }

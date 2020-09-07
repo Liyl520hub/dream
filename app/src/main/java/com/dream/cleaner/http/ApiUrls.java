@@ -22,7 +22,7 @@ public class ApiUrls {
     /**
      * getPhoneCode
      */
-    public static final String AGREEMENT_PHONE = "/api/app/cleaner/agreement/{phone}";
+    public static final String AGREEMENT_PHONE = "/api/app/cleaner/agreement";
 
 
     /**

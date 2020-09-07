@@ -78,7 +78,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:inputType="phone"
                 android:maxLength="4"
                 android:paddingLeft="5dp"
                 android:paddingTop="13.5dp"

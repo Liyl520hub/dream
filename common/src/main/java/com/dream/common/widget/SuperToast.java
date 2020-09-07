@@ -1,5 +1,6 @@
 package com.dream.common.widget;
 
+import android.graphics.Color;
 import android.view.Gravity;
 
 import com.blankj.utilcode.util.ConvertUtils;
@@ -16,6 +17,7 @@ public class SuperToast {
     public static void showShortMessage(String msg) {
         ToastUtils.setBgResource(R.drawable.common_shape_toast);
         ToastUtils.setMsgTextSize(16);
+        ToastUtils.setMsgColor(Color.WHITE);
         ToastUtils.showShort(msg);
     }
 

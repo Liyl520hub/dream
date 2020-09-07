@@ -12,9 +12,13 @@ import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
+import com.dream.cleaner.beans.login.LoginBean;
+import com.dream.cleaner.ui.login.contract.ResetPasswordActivityContract;
+import com.dream.cleaner.ui.login.presenter.ResetPasswordActivityPresenter;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
+import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.SuperToast;
 import com.dream.common.widget.ToolbarBackTitle;
 
@@ -27,7 +31,7 @@ import butterknife.OnClick;
  * date   : 2020/8/16
  * desc   :重置密码
  */
-public class ResetPasswordActivity extends BaseActivity {
+public class ResetPasswordActivity extends BaseActivity<ResetPasswordActivityPresenter> implements ResetPasswordActivityContract {
     @BindView(R.id.et_password)
     EditText etPassword;
     @BindView(R.id.et_password_again)
@@ -84,10 +88,11 @@ public class ResetPasswordActivity extends BaseActivity {
      */
     private void checkSubmitTv() {
         boolean b = !StringUtils.isEmpty(etPassword.getText().toString()) && !StringUtils.isEmpty(etPasswordAgain.getText().toString());
-        tvSubmit.setBackground(ShapeUtils.getDiyGradientDrawable(b?R.color.color_72BB38:R.color.color_5072bb38, 0, 0, 0));
+        tvSubmit.setBackground(ShapeUtils.getDiyGradientDrawable(b ? R.color.color_72BB38 : R.color.color_5072bb38, 0, 0, 0));
         tvSubmit.setClickable(b);
 
     }
+
     @OnClick(R.id.tv_submit)
     public void onViewClicked() {
         String pwd = etPassword.getText().toString();
@@ -101,5 +106,15 @@ public class ResetPasswordActivity extends BaseActivity {
             return;
         }
         finish();
+    }
+
+    @Override
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
+
+    }
+
+    @Override
+    public void returnUpdatePWBean(LoginBean loginBean) {
+
     }
 }

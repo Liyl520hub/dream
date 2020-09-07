@@ -88,12 +88,6 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
                         mErrorData = t.getData();
                         mStatus = t.isSuccess();
                         mCode = t.getCode();
-                        if (mStatus ) {
-                            if (!mStatus) {
-                                //业务成功 但 data为null的情况 需回调界面作判空处理
-                                return null;
-                            }
-                        }
                         return Observable.just(t.getData());
                     }
                 }).
@@ -171,7 +165,10 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
                     onError(exception.getErrorType(), exception.getCode(), message, mErrorData);
                 }
             } else {
-                onError(exception.getErrorType(), exception.getCode(), exception.getMessage(), mErrorData);
+                if (StringUtils.isEmpty(mTMessage)) {
+                    mTMessage = exception.getMessage();
+                }
+                onError(exception.getErrorType(), exception.getCode(), mTMessage, mErrorData);
             }
 
         } else {

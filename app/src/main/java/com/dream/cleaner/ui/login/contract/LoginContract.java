@@ -1,5 +1,6 @@
 package com.dream.cleaner.ui.login.contract;
 
+import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.common.base.BaseContract;
 
@@ -10,7 +11,8 @@ import com.dream.common.base.BaseContract;
  */
 public interface LoginContract extends BaseContract {
 
-    void retrunLoginBean(LoginBean loginBean);
+    void returnLoginBean(LoginBean loginBean);
 
 
+    void returnAgreementBean(AgreementBean agreementBean,boolean isPrivacy);
 }
