@@ -30,6 +30,7 @@ import com.dream.cleaner.ui.login.contract.LoginContract;
 import com.dream.cleaner.ui.login.presenter.LoginPresenter;
 import com.dream.cleaner.ui.main.MainActivity;
 import com.dream.cleaner.utils.H5Activity;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseActivity;
@@ -213,7 +214,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void returnLoginBean(LoginBean loginBean) {
-
+        InfoUtils.setLoginBean(loginBean);
         UiUtil.openActivity(this, MainActivity.class);
         finish();
     }

@@ -130,9 +130,7 @@ public class MobileVerificationActivity extends BaseActivity<MobileVerificationA
                         SuperToast.showShortMessage("请输入验证码");
                         return;
                     }
-
-                    mPresenter.agreementPhone(phone);
-
+                    mPresenter.updateCheckCode(phone, "");
                     UiUtil.openActivity(this, ResetPasswordActivity.class);
                     finish();
                 }
