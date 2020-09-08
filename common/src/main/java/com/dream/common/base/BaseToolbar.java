@@ -50,7 +50,7 @@ public abstract class BaseToolbar implements MyToolbar {
         getTitleLeftView(mLeftImage);
         mTitleText = mToolbarView.findViewById(R.id.default_toolbar_title);
         mRightImage = mToolbarView.findViewById(R.id.default_toolbar_right_image);
-        Toolbar.LayoutParams params = new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, ConvertUtils.dp2px(42));
+        Toolbar.LayoutParams params = new Toolbar.LayoutParams(Toolbar.LayoutParams.MATCH_PARENT, ConvertUtils.dp2px(52));
         mToolbarView.setLayoutParams(params);
         switch (getToolbarConfig()) {
             case JUST_BACK:
@@ -120,7 +120,6 @@ public abstract class BaseToolbar implements MyToolbar {
 
     @Override
     public void getTitleTextView(TextView mTitleTextView) {
-        LogUtils.e("getTitleTextView");
     }
 
     @Override

@@ -2,6 +2,7 @@ package com.dream.common.http.interceptor;
 
 
 import com.blankj.utilcode.util.EncodeUtils;
+import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.dream.common.base.BaseApplication;
 
@@ -37,7 +38,8 @@ public class HeaderInterceptor implements Interceptor {
         builder.addHeader("Content-Type", "application/json");
 //        builder.addHeader("platform", "1");
 //        builder.addHeader("appVersion", );
-//        builder.addHeader("token", com.baseapp.common.utils.SPUtils.getSharedStringData(BaseApplication.getAppContext(), Global.APP_TOKEN_KEY));
+        String string = SPUtils.getInstance().getString("token");
+        builder.addHeader("token", SPUtils.getInstance().getString("token"));
 //        builder.addHeader("sysfrom", BuildConfig.SYSFROM);
 //        builder.addHeader("userNo", com.baseapp.common.utils.SPUtils.getSharedStringData(BaseApplication.getAppContext(), Global.APP_USER_CODE_KEY));
 //        builder.addHeader("platform", BuildConfig.PLATFORM);

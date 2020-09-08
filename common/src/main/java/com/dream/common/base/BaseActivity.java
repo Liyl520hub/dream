@@ -103,7 +103,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         LinearLayout mRootView = new LinearLayout(this);
         mRootView.setOrientation(LinearLayout.VERTICAL);
         mRootView.setFitsSystemWindows(false);
-        FrameLayout.LayoutParams mContentViewContainerParams = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams mContentViewContainerParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         mRootView.setLayoutParams(mContentViewContainerParams);
         initToolbarContainer();
         initContentContainer();
@@ -125,8 +125,9 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) mToolbar.getLayoutParams();
                 int statusBarHeight = SPUtils.getInstance().getInt("StatusBarHeight");
                 //有时状态栏获取不成功，此处如果状态栏像素小于10，认为没有获取到状态栏，给一个默认的状态栏高度
-                statusBarHeight = statusBarHeight < 10 ? 46 : statusBarHeight;
+                statusBarHeight = statusBarHeight < 10 ? 52 : statusBarHeight;
                 params.topMargin = statusBarHeight;
+//                mToolbar.setPadding(0,statusBarHeight,0,0);
                 mToolbar.setLayoutParams(params);
             }
         }

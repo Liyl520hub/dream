@@ -37,9 +37,9 @@ public class ParamsInterceptor implements Interceptor {
         Request orgRequest = chain.request();
         HttpUrl orgUrl = orgRequest.url();
         //环信校验不替换token
-        if (orgUrl.pathSegments().contains("userAuthentication") || orgUrl.pathSegments().contains("saveCustomer")) {
-            return chain.proceed(orgRequest);
-        }
+//        if (orgUrl.pathSegments().contains("userAuthentication") || orgUrl.pathSegments().contains("saveCustomer")) {
+//            return chain.proceed(orgRequest);
+//        }
         RequestBody body = orgRequest.body();
         //收集请求参数，方便调试
         StringBuilder paramsBuilder = new StringBuilder();

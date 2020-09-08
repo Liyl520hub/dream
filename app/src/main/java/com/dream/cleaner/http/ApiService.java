@@ -57,8 +57,7 @@ public interface ApiService {
      * 保洁端退出登录
      */
     @POST(ApiUrls.LOGOUT)
-    @FormUrlEncoded
-    Observable<BaseBean<LoginBean>> logout(@Body RequestBody body);
+    Observable<BaseBean<String>> logout();
 
     /**
      * 保洁端检查验证码

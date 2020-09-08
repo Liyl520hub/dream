@@ -8,6 +8,8 @@ import com.dream.common.BuildConfig;
 import com.dream.common.base.BaseBean;
 import com.dream.common.http.config.ApiConfig;
 import com.dream.common.http.config.RequestConfig;
+import com.dream.common.http.interceptor.HeaderInterceptor;
+import com.dream.common.http.interceptor.ParamsInterceptor;
 import com.dream.common.http.interceptor.RewriteCacheControlInterceptor;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -117,6 +119,7 @@ public class Api {
         mOkHttpClientBuild
                 .readTimeout(mApiConfig.getReadTimeOut(), TimeUnit.MILLISECONDS)
                 .connectTimeout(mApiConfig.getConnectTimeOut(), TimeUnit.MILLISECONDS)
+                .addInterceptor(new HeaderInterceptor(headerType))
                 .addInterceptor(cacheInterceptor)
 //                .addInterceptor(new ParamsInterceptor(Utils.getApp().getApplicationContext()))
                 .addNetworkInterceptor(cacheInterceptor)

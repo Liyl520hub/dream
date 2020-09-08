@@ -63,11 +63,12 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
         setDoubleClickExit(true);
+        BusUtils.register(this);
         MainAdapter mainAdapter = new MainAdapter(this, getFragments());
         myViewPager.setAdapter(mainAdapter);
         myViewPager.setUserInputEnabled(false);
+        myViewPager.setOffscreenPageLimit(4);
         initTabLayout();
-        BusUtils.register(this);
 
     }
 

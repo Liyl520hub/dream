@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.ActivityUtils;
 import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -90,6 +91,8 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
+        ActivityUtils.finishOtherActivities(LoginActivity.class);
+        setDoubleClickExit(true);
         BusUtils.register(this);
         checkSubmitTv();
         TextWatcher textWatcher = new TextWatcher() {
@@ -242,4 +245,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void postBusListener(BusBean busBean) {
         etPassword.setText("");
     }
+
+
 }
