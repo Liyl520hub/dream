@@ -32,7 +32,7 @@ public class WorkOrderFragment extends BaseFragment {
     @BindView(R.id.my_tab_layout)
     TabLayout myTabLayout;
 
-    private String[] tabTitles = new String[]{"新任务", "待服务", "上门中", "服务中", "服务中", "售后单"};
+    private String[] tabTitles = new String[]{"新任务", "待服务", "上门中", "服务中", "售后单", "已完成", "已取消"};
 
 
     @Override

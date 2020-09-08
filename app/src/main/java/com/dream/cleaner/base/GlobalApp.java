@@ -18,6 +18,10 @@ public class GlobalApp {
      */
     public static final String CLEANER_NO = "cleanerNo";
     /**
+     * 保洁员id
+     */
+    public static final String CLEANER_ID = "cleanerId";
+    /**
      * 姓名
      */
     public static final String NAME = "name";

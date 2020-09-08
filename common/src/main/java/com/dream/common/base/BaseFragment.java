@@ -54,7 +54,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     private static final int CODE_REFRESH_FAILED = 3;
     private BaseActivity mActivity;
     private View mRootView;
-    private T mPresenter;
+    public T mPresenter;
     private Unbinder mBinder;
     private View mEmptyView;
     private boolean isUIVisible = false;

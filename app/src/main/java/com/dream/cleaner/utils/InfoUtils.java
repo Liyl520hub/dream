@@ -14,6 +14,7 @@ public class InfoUtils {
 
     public static void setLoginBean(LoginBean loginBean) {
         SPUtils.getInstance().put(GlobalApp.TOKEN, loginBean.getToken());
+        SPUtils.getInstance().put(GlobalApp.CLEANER_ID, loginBean.getCleaner().getId() + "");
         SPUtils.getInstance().put(GlobalApp.CLEANER_NO, loginBean.getCleaner().getCleanerNo());
         SPUtils.getInstance().put(GlobalApp.NAME, loginBean.getCleaner().getName());
         SPUtils.getInstance().put(GlobalApp.AGE, loginBean.getCleaner().getAge());
@@ -44,6 +45,13 @@ public class InfoUtils {
      */
     public static String getCleanerNo() {
         return SPUtils.getInstance().getString(GlobalApp.CLEANER_NO, "");
+    }
+
+    /**
+     * @return 获取员工id
+     */
+    public static String getCleanerId() {
+        return SPUtils.getInstance().getString(GlobalApp.CLEANER_ID, "");
     }
 
     /**

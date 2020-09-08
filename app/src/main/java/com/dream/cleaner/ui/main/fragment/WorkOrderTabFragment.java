@@ -18,11 +18,14 @@ import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.cleaner.ui.main.activity.TaskDetailsActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderTabFragmentAdapter;
+import com.dream.cleaner.ui.main.contract.WorkOrderTabFragmentContract;
+import com.dream.cleaner.ui.main.presenter.WorkOrderTabFragmentPresenter;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.cleaner.widget.pop.PopWorkOrder;
 import com.dream.common.base.BaseFragment;
+import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.SuperToast;
 
 import java.util.ArrayList;
@@ -38,7 +41,7 @@ import razerdp.basepopup.BasePopupWindow;
  *
  * @author joy
  */
-public class WorkOrderTabFragment extends BaseFragment {
+public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPresenter> implements WorkOrderTabFragmentContract {
 
 
     @BindView(R.id.tv_order_type)
@@ -50,6 +53,7 @@ public class WorkOrderTabFragment extends BaseFragment {
     @BindView(R.id.my_recyclerview)
     RecyclerView myRecyclerview;
     private PopTip popTip;
+    private String title;
 
     @Override
     protected int getLayoutId() {
@@ -58,16 +62,26 @@ public class WorkOrderTabFragment extends BaseFragment {
 
     @Override
     protected void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
     protected void initView() {
         Bundle arguments = getArguments();
         if (arguments != null) {
-            String title = arguments.getString("title");
-            Log.e("title", title + "");
+            title = arguments.getString("title");
         }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    private void initData() {
+        mPresenter.taskList("1","10",title);
         ArrayList<WorkOrderTabBean> workOrderTabBeans = new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             workOrderTabBeans.add(new WorkOrderTabBean());
@@ -80,8 +94,7 @@ public class WorkOrderTabFragment extends BaseFragment {
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 popTip = new PopTip.Builder()
                         .setType(2)
-                        .setMsg(
-                                "接单确认")
+                        .setMsg("接单确认")
                         .setSubmitClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -97,6 +110,7 @@ public class WorkOrderTabFragment extends BaseFragment {
                             @Override
                             public void onClick(View v) {
                                 UiUtil.openActivity(getActivity(), TaskDetailsActivity.class);
+                                popTip.dismiss();
                             }
                         })
                         .build(getActivity());
@@ -104,8 +118,8 @@ public class WorkOrderTabFragment extends BaseFragment {
 
             }
         });
-    }
 
+    }
 
     @OnClick({R.id.tv_order_type, R.id.tv_server_type})
     public void onViewClicked(View view) {
@@ -159,5 +173,15 @@ public class WorkOrderTabFragment extends BaseFragment {
                 break;
             default:
         }
+    }
+
+    @Override
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
+
+    }
+
+    @Override
+    public void returnTaskList(WorkOrderTabBean loginBean) {
+
     }
 }
