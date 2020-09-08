@@ -28,13 +28,11 @@ public class ResetPasswordActivityPresenter extends BasePresenter<ResetPasswordA
      * @param userName 用户名
      * @param passWord 密码
      */
-    public void updatePassword(String userName, String passWord) {
+    public void updatePassword(String userName, String passWord, String code) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("phone", userName);
         jsonObject.addProperty("password", passWord);
-        jsonObject.addProperty("verifyToken", "");
-        jsonObject.addProperty("imgCode", "");
-        jsonObject.addProperty("code", "");
+        jsonObject.addProperty("code", code);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).updatePassword(requestBody))
@@ -44,7 +42,7 @@ public class ResetPasswordActivityPresenter extends BasePresenter<ResetPasswordA
                 .doRequest(new BaseRxSubscriber<LoginBean, BaseBean<LoginBean>>() {
                     @Override
                     protected void onSuccess(LoginBean loginBean, String successMessage) {
-                        mContract.returnUpdatePWBean(loginBean);
+                        mContract.returnUpdatePassWordBean(loginBean);
 
                     }
 

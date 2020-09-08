@@ -9,6 +9,6 @@ import com.dream.common.base.BaseContract;
  * desc   :
  */
 public interface ResetPasswordActivityContract extends BaseContract {
-    void returnUpdatePWBean(LoginBean loginBean);
+    void returnUpdatePassWordBean(LoginBean loginBean);
 
 }

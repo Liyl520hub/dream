@@ -15,6 +15,9 @@ import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.GlideUrl;
+import com.bumptech.glide.load.model.Headers;
+import com.bumptech.glide.load.model.LazyHeaders;
 import com.dream.cleaner.BuildConfig;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.MyApplication;
@@ -22,6 +25,7 @@ import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.ui.login.contract.MobileVerificationActivityContract;
 import com.dream.cleaner.ui.login.presenter.MobileVerificationActivityPresenter;
 import com.dream.cleaner.utils.CodeUtils;
+import com.dream.cleaner.utils.HttpUrlConnectionUtil;
 import com.dream.cleaner.utils.ImageLoaderUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
@@ -30,6 +34,10 @@ import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.SuperToast;
 import com.dream.common.widget.ToolbarBackTitle;
+
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -58,6 +66,8 @@ public class MobileVerificationActivity extends BaseActivity<MobileVerificationA
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
     private String phone;
+    private String localCode;
+    private String mobileCode;
 
     @Override
     protected int getLayoutId() {
@@ -66,7 +76,7 @@ public class MobileVerificationActivity extends BaseActivity<MobileVerificationA
 
     @Override
     public void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -113,26 +123,22 @@ public class MobileVerificationActivity extends BaseActivity<MobileVerificationA
                 break;
             case R.id.tv_get_code:
                 if (checkEt()) {
-                    String localCode = etLocalCode.getText().toString();
+                    localCode = etLocalCode.getText().toString();
                     if (StringUtils.isEmpty(localCode)) {
                         SuperToast.showShortMessage("请输入图形验证码");
                         return;
                     }
-//                    mPresenter.updateCheckLocalCode(phone,localCode);
-                    //发送验证码
-                    mPresenter.agreementPhone(phone);
+                    mPresenter.updateCheckLocalCode(phone, localCode);
                 }
                 break;
             case R.id.tv_submit:
                 if (checkEt()) {
-                    String mobileCode = etMobileCode.getText().toString();
+                    mobileCode = etMobileCode.getText().toString();
                     if (StringUtils.isEmpty(mobileCode)) {
                         SuperToast.showShortMessage("请输入验证码");
                         return;
                     }
-                    mPresenter.updateCheckCode(phone, "");
-                    UiUtil.openActivity(this, ResetPasswordActivity.class);
-                    finish();
+                    mPresenter.updateCheckCode(phone, mobileCode);
                 }
 
                 break;
@@ -142,12 +148,11 @@ public class MobileVerificationActivity extends BaseActivity<MobileVerificationA
 
     private void getLocalCode() {
         String captchaUrl = BuildConfig.HOST_SERVER + "/api/app/cleaner/getImage";
-        ImageLoaderUtils.loadImage(captchaUrl, ivLocalCode);
+        HttpUrlConnectionUtil.setWallpaper(ivLocalCode, captchaUrl);
     }
 
     private boolean checkEt() {
         phone = etMobile.getText().toString();
-
         if (StringUtils.isEmpty(phone)) {
             SuperToast.showShortMessage("请输入手机号");
             return false;
@@ -161,12 +166,22 @@ public class MobileVerificationActivity extends BaseActivity<MobileVerificationA
 
     @Override
     public void showErrorTip(ErrorType errorType, int errorCode, String message) {
-
+        if (errorCode == 1) {
+            //图形验证码错误，重新获取
+            getLocalCode();
+        }
     }
 
     @Override
-    public void returnAgreementPhone(AgreementBean agreementBean) {
-
-
+    public void returnAgreementPhone(String agreementBean, boolean isLocal) {
+        if (isLocal) {
+            mPresenter.agreementPhone(phone, localCode);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString("phone", phone);
+            bundle.putString("code", mobileCode);
+            UiUtil.openActivity(this, ResetPasswordActivity.class, bundle);
+            finish();
+        }
     }
 }

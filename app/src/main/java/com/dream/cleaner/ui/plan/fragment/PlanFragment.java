@@ -49,9 +49,14 @@ public class PlanFragment extends BaseFragment implements CalendarView.OnCalenda
     @Override
     protected void initView() {
         BusUtils.register(this);
-        BusUtils.post(GlobalApp.BUS_FRAGMENT_PLAN, new BusBean(mCalendarView.getCurYear()+"年"+mCalendarView.getCurMonth() + "月"));
         mCalendarView.setOnCalendarSelectListener(this);
         mCalendarView.setOnYearChangeListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BusUtils.post(GlobalApp.BUS_FRAGMENT_PLAN, new BusBean(mCalendarView.getCurYear()+"年"+mCalendarView.getCurMonth() + "月"));
         initData();
     }
 

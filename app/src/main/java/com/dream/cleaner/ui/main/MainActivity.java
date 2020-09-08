@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.main;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -167,6 +168,7 @@ public class MainActivity extends BaseActivity {
 
     @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_PLAN)
     public void postBusListener(BusBean busBean) {
+        Log.e("postBusListener: ","dddd" );
         leftText = busBean.getName();
         toolbarTitle.setLiftTitle(busBean.getName());
     }

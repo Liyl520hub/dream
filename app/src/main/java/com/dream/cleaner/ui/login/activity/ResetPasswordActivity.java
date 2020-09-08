@@ -1,5 +1,6 @@
 package com.dream.cleaner.ui.login.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,10 +9,13 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
+import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.ui.login.contract.ResetPasswordActivityContract;
 import com.dream.cleaner.ui.login.presenter.ResetPasswordActivityPresenter;
@@ -44,6 +48,8 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordActivityPre
      * 密码校验
      */
     private String parr = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$";
+    private String phone;
+    private String code;
 
     @Override
     protected int getLayoutId() {
@@ -52,7 +58,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordActivityPre
 
     @Override
     public void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -62,6 +68,12 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordActivityPre
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
+        BusUtils.register(this);
+        Intent intent = getIntent();
+        if (intent != null) {
+            phone = intent.getStringExtra("phone");
+            code = intent.getStringExtra("code");
+        }
         checkSubmitTv();
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -105,7 +117,7 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordActivityPre
             SuperToast.showShortMessage("两次密码不一致");
             return;
         }
-        finish();
+        mPresenter.updatePassword(phone, pwd, code);
     }
 
     @Override
@@ -114,7 +126,14 @@ public class ResetPasswordActivity extends BaseActivity<ResetPasswordActivityPre
     }
 
     @Override
-    public void returnUpdatePWBean(LoginBean loginBean) {
+    protected void onDestroy() {
+        super.onDestroy();
+        BusUtils.unregister(this);
+    }
 
+    @Override
+    public void returnUpdatePassWordBean(LoginBean loginBean) {
+        BusUtils.post(GlobalApp.BUS_LOGIN_ACTIVITY, new BusBean());
+        finish();
     }
 }

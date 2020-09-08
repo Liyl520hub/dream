@@ -33,15 +33,13 @@ public interface ApiService {
      * 保洁端获取验证码
      */
     @POST(ApiUrls.GET_IMAGE)
-    @FormUrlEncoded
-    Observable<BaseBean<LoginBean>> getImage(@Body RequestBody body
-    );
+    Observable<BaseBean<LoginBean>> getImage(@Body RequestBody body);
 
     /**
      * getPhoneCode
      */
-    @GET(ApiUrls.AGREEMENT_PHONE + "/{phone}")
-    Observable<BaseBean<AgreementBean>> agreementPhone(@Path("phone") String phone);
+    @POST(ApiUrls.GET_PHONE_CODE)
+    Observable<BaseBean<AgreementBean>> agreementPhone(@Body RequestBody body);
 
     /**
      * 保洁端获取用户协议
@@ -65,14 +63,18 @@ public interface ApiService {
     /**
      * 保洁端检查验证码
      */
-    @POST(ApiUrls.UPDATE_CHECK_CODE)
-    Observable<BaseBean<LoginBean>> updateCheckCode(@Body RequestBody body);
+    @POST(ApiUrls.CHECK_PHONE_CODE)
+    Observable<BaseBean<String>> CheckPhoneCode(@Body RequestBody body);
+  /**
+     * 保洁端检查图形验证码
+     */
+    @POST(ApiUrls.CHECK_IMG_CODE)
+    Observable<BaseBean<String>> checkImgCode(@Body RequestBody body);
 
     /**
      * 保洁端修改密码
      */
     @POST(ApiUrls.UPDATE_PASSWORD)
-    @FormUrlEncoded
     Observable<BaseBean<LoginBean>> updatePassword(@Body RequestBody body);
 
     //--------------------------------------------保洁端申请物料------------------------------------------------------

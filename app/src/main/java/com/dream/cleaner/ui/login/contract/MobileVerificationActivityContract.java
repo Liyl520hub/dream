@@ -9,6 +9,6 @@ import com.dream.common.base.BaseContract;
  * desc   :
  */
 public interface MobileVerificationActivityContract extends BaseContract {
-    void returnAgreementPhone(AgreementBean agreementBean);
+    void returnAgreementPhone(String agreementBean,boolean isLocal);
 
 }

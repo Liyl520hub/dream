@@ -22,7 +22,7 @@ public class ApiUrls {
     /**
      * getPhoneCode
      */
-    public static final String AGREEMENT_PHONE = "/api/app/cleaner/agreement";
+    public static final String GET_PHONE_CODE = "/api/app/cleaner/getPhoneCode";
 
 
     /**
@@ -42,9 +42,14 @@ public class ApiUrls {
 
 
     /**
-     * 保洁端检查验证码
+     * 保洁端检查手机验证码
      */
-    public static final String UPDATE_CHECK_CODE = "/api/app/cleaner/updateCheckCode";
+    public static final String CHECK_PHONE_CODE = "/api/app/cleaner/checkPhoneCode";
+
+    /**
+     * 保洁端检查图形验证码
+     */
+    public static final String CHECK_IMG_CODE = "/api/app/cleaner/checkImgCode";
 
 
     /**
@@ -178,19 +183,19 @@ public class ApiUrls {
     //--------------------------------------------保洁员端消息------------------------------------------------------
 
     /**
-     *消息详情
+     * 消息详情
      */
     public static final String MESSAGE_DETAIL_ID = "/api/app/cleaner/message/detail/{id}";
 
 
     /**
-     *消息列表
+     * 消息列表
      */
     public static final String MESSAGE_LIST = "/api/app/cleaner/message/list";
 
 
     /**
-     *修改为已读
+     * 修改为已读
      */
     public static final String MESSAGE_READ_ID = "/api/app/cleaner/message/read/{id}";
 

@@ -3,6 +3,7 @@ package com.dream.common.baserx;
 
 import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.dream.common.R;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.base.BaseBean;
 import com.dream.common.base.BaseFragment;
@@ -143,10 +144,12 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
                 if (mCode == 401) {
                     //token过期
                     mGlobalErrorListener.onReturn10007Code(this, mTMessage);
-//                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_SUCCESS)) {
-//                    //业务成功 但 data为null的情况 需回调界面作判空处理
-//                    onSuccess(mErrorData, mTMessage);
-//                } else if (mStatus.equals(ErrorCode.SERVER_STATUS_FAILURE)) {
+                } else if (mCode==200) {
+                    //业务成功 但 data为null的情况 需回调界面作判空处理
+                    SuperToast.showShortMessage(mTMessage);
+                    onSuccess(mErrorData, mTMessage);
+//                }
+//                else if (mStatus.equals(ErrorCode.SERVER_STATUS_FAILURE)) {
 //                    //业务 失败
 //                    SuperToast.showShortMessage(mTMessage);
 //                    onError(exception.getErrorType(), exception.getCode(), mTMessage, mErrorData);

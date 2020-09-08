@@ -13,6 +13,9 @@ public class BusBean {
         this.name = name;
     }
 
+    public BusBean() {
+    }
+
     public String getName() {
         return name == null ? "" : name;
     }

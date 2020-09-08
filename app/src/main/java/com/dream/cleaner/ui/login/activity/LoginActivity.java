@@ -19,11 +19,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.RegexUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.ui.login.contract.LoginContract;
@@ -88,6 +90,7 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
+        BusUtils.register(this);
         checkSubmitTv();
         TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -227,5 +230,16 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         bundle.putString("htmlContent", articleText);
         bundle.putString("titleStr", isPrivacy ? "用户协议" : "隐私条款");
         UiUtil.openActivity(LoginActivity.this, H5Activity.class, bundle);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BusUtils.unregister(this);
+    }
+
+    @BusUtils.Bus(tag = GlobalApp.BUS_LOGIN_ACTIVITY)
+    public void postBusListener(BusBean busBean) {
+        etPassword.setText("");
     }
 }
