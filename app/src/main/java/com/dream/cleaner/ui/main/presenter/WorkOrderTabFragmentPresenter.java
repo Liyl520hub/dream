@@ -55,7 +55,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
                 intOrderStatus = 5;
             }
             break;
-            case "售后": {
+            case "售后单": {
                 intOrderStatus = 8;
             }
             break;
