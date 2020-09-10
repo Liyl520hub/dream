@@ -169,7 +169,6 @@ public class MainActivity extends BaseActivity {
 
     @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_PLAN)
     public void postBusListener(BusBean busBean) {
-        Log.e("postBusListener: ","dddd" );
         leftText = busBean.getName();
         toolbarTitle.setLiftTitle(busBean.getName());
     }

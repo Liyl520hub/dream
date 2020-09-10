@@ -34,4 +34,11 @@
         <item name="android:textColor">@drawable/switch_text_selector</item>
     </style>
 
+    <!-- 加载滚动条样式 emptyLayout  -->
+    <style name="loading">
+        <item name="android:indeterminate">true</item>
+        <item name="android:indeterminateDrawable">@drawable/progressloading</item>
+        <item name="android:indeterminateDuration">1000</item>
+        <item name="android:indeterminateOnly">true</item>
+    </style>
 </resources>

@@ -1,25 +1,29 @@
 package com.dream.cleaner.ui.plan.fragment;
 
 import android.annotation.SuppressLint;
-import android.util.Log;
-import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.blankj.utilcode.util.BusUtils;
+import com.blankj.utilcode.util.TimeUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.PlanBean;
 import com.dream.cleaner.beans.PlanSectionBean;
 import com.dream.cleaner.ui.plan.adapter.PlanFragmentAdapter;
+import com.dream.cleaner.ui.plan.contract.PlanFragmentContract;
+import com.dream.cleaner.ui.plan.presenter.PlanFragmentPresenter;
 import com.dream.common.base.BaseFragment;
+import com.dream.common.http.error.ErrorType;
 import com.haibin.calendarview.Calendar;
 import com.haibin.calendarview.CalendarView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -30,11 +34,13 @@ import butterknife.BindView;
  *
  * @author Liyalei
  */
-public class PlanFragment extends BaseFragment implements CalendarView.OnCalendarSelectListener, CalendarView.OnYearChangeListener {
+public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements PlanFragmentContract {
     @BindView(R.id.my_calendar)
     CalendarView mCalendarView;
     @BindView(R.id.my_rv)
     RecyclerView myRv;
+    private HashMap<String, List<PlanSectionBean>> stringListHashMap;
+    private int oldMonth;
 
     @Override
     protected int getLayoutId() {
@@ -43,59 +49,51 @@ public class PlanFragment extends BaseFragment implements CalendarView.OnCalenda
 
     @Override
     protected void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
     protected void initView() {
         BusUtils.register(this);
-        mCalendarView.setOnCalendarSelectListener(this);
-        mCalendarView.setOnYearChangeListener(this);
+        mCalendarView.setOnCalendarSelectListener(new CalendarView.OnCalendarSelectListener() {
+            @Override
+            public void onCalendarOutOfRange(Calendar calendar) {
+
+            }
+
+            @Override
+            public void onCalendarSelect(Calendar calendar, boolean isClick) {
+                BusUtils.post(GlobalApp.BUS_FRAGMENT_PLAN, new BusBean(calendar.getYear() + "年" + calendar.getMonth() + "月"));
+                int year = calendar.getYear();
+                int month = calendar.getMonth();
+                int day = calendar.getDay();
+                setCurrentDayPlan(year, month, day);
+                if (month != oldMonth) {
+                    mPresenter.getCleanerPlan(year + "", month + "");
+                    oldMonth = month;
+                }
+            }
+
+
+        });
     }
+
+    private void setCurrentDayPlan(int year, int month, int day) {
+        String planTime = year + "-" + (month <= 9 ? "0" : "") + month + "-" + (day <= 9 ? "0" : "") + day;
+        if (stringListHashMap != null) {
+            List<PlanSectionBean> cleanerPlanItemsBeans = stringListHashMap.get(planTime);
+            PlanFragmentAdapter planFragmentAdapter = new PlanFragmentAdapter(cleanerPlanItemsBeans);
+            myRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+            myRv.setAdapter(planFragmentAdapter);
+        }
+    }
+
 
     @Override
     public void onResume() {
         super.onResume();
-        BusUtils.post(GlobalApp.BUS_FRAGMENT_PLAN, new BusBean(mCalendarView.getCurYear()+"年"+mCalendarView.getCurMonth() + "月"));
-        initData();
-    }
-
-    private void initData() {
-        int year = mCalendarView.getCurYear();
-        int month = mCalendarView.getCurMonth();
-
-        Map<String, Calendar> map = new HashMap<>();
-        map.put(getSchemeCalendar(year, month, 3, 0xFF40db25, "假").toString(),
-                getSchemeCalendar(year, month, 3, 0xFF40db25, "假"));
-        map.put(getSchemeCalendar(year, month, 6, 0xFFe69138, "事").toString(),
-                getSchemeCalendar(year, month, 6, 0xFFe69138, "事"));
-        map.put(getSchemeCalendar(year, month, 9, 0xFFdf1356, "议").toString(),
-                getSchemeCalendar(year, month, 9, 0xFFdf1356, "议"));
-        map.put(getSchemeCalendar(year, month, 13, 0xFFedc56d, "记").toString(),
-                getSchemeCalendar(year, month, 13, 0xFFedc56d, "记"));
-        map.put(getSchemeCalendar(year, month, 14, 0xFFedc56d, "记").toString(),
-                getSchemeCalendar(year, month, 14, 0xFFedc56d, "记"));
-        map.put(getSchemeCalendar(year, month, 15, 0xFFaacc44, "假").toString(),
-                getSchemeCalendar(year, month, 15, 0xFFaacc44, "假"));
-        map.put(getSchemeCalendar(year, month, 18, 0xFFbc13f0, "记").toString(),
-                getSchemeCalendar(year, month, 18, 0xFFbc13f0, "记"));
-        map.put(getSchemeCalendar(year, month, 25, 0xFF13acf0, "假").toString(),
-                getSchemeCalendar(year, month, 25, 0xFF13acf0, "假"));
-        map.put(getSchemeCalendar(year, month, 27, 0xFF13acf0, "多").toString(),
-                getSchemeCalendar(year, month, 27, 0xFF13acf0, "多"));
-        //此方法在巨大的数据量上不影响遍历性能，推荐使用
-        mCalendarView.setSchemeDate(map);
-
-        ArrayList<PlanSectionBean> planSectionBeans = new ArrayList<>();
-
-        for (int i = 0; i < 24; i++) {
-            planSectionBeans.add(new PlanSectionBean<>(true, "7:00"));
-            planSectionBeans.add(new PlanSectionBean<>(new PlanBean("上班")));
-        }
-
-        PlanFragmentAdapter planFragmentAdapter = new PlanFragmentAdapter(planSectionBeans);
-        myRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        myRv.setAdapter(planFragmentAdapter);
+        BusUtils.post(GlobalApp.BUS_FRAGMENT_PLAN, new BusBean(mCalendarView.getCurYear() + "年" + mCalendarView.getCurMonth() + "月"));
+        mPresenter.getCleanerPlan(mCalendarView.getCurYear() + "", mCalendarView.getCurMonth() + "");
     }
 
 
@@ -120,20 +118,52 @@ public class PlanFragment extends BaseFragment implements CalendarView.OnCalenda
         return calendar;
     }
 
+    @Override
+    public void returnCleanerPlan(List<PlanBean> list) {
+        int size = list.size();
+        Map<String, Calendar> map = new HashMap<>();
+        stringListHashMap = new HashMap<>();
+        for (int i = 0; i < size; i++) {
+            PlanBean planBean = list.get(i);
+            ArrayList<PlanSectionBean> planSectionBeans = new ArrayList<>();
+            String planDate = planBean.getPlanDate();
+            List<PlanBean.CleanerPlanItemsBean> cleanerPlanItems = planBean.getCleanerPlanItems();
+            int itemSize = cleanerPlanItems.size();
+            //1为订单，2为请假
+            int type = 0;
+            for (int j = 0; j < itemSize; j++) {
+                PlanBean.CleanerPlanItemsBean cleanerPlanItemsBean = cleanerPlanItems.get(j);
+                String startTime = cleanerPlanItemsBean.getStartTime();
+                planSectionBeans.add(new PlanSectionBean<>(true, startTime));
+                planSectionBeans.add(new PlanSectionBean<>(cleanerPlanItemsBean));
+                type = cleanerPlanItemsBean.getType();
+                if (type != 0) {
+                    java.util.Calendar calendar = java.util.Calendar.getInstance();
+                    Date date = TimeUtils.string2Date(planDate, "yyyy-MM-dd");
+                    if (date != null) {
+                        calendar.setTime(date);
+                        int year = calendar.get(java.util.Calendar.YEAR);
+                        int month = calendar.get(java.util.Calendar.MONTH);
+                        int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+                        map.put(getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假").toString(),
+                                getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假"));
+                    }
+                }
+            }
+            stringListHashMap.put(planDate, planSectionBeans);
+        }
+        //此方法在巨大的数据量上不影响遍历性能，推荐使用
+        mCalendarView.setSchemeDate(map);
+        int year = mCalendarView.getCurYear();
+        int month = mCalendarView.getCurMonth();
+        int day = mCalendarView.getCurDay();
+        setCurrentDayPlan(year, month, day);
+    }
 
     @Override
-    public void onCalendarOutOfRange(Calendar calendar) {
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
 
     }
 
-    @SuppressLint("SetTextI18n")
-    @Override
-    public void onCalendarSelect(Calendar calendar, boolean isClick) {
-      BusUtils.post(GlobalApp.BUS_FRAGMENT_PLAN,new BusBean(calendar.getYear()+"年"+calendar.getMonth() + "月"));
-    }
 
-    @Override
-    public void onYearChange(int year) {
-
-    }
 }

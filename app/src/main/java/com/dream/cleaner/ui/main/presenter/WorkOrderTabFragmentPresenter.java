@@ -36,41 +36,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
      * @param pageSize    页数size
      * @param orderStatus 查询0新任务，1待服务，2上门中，5服务中，8售后单，7已完成，9已取消
      */
-    public void taskList(String pageIndex, String pageSize, String orderStatus) {
-        int intOrderStatus = 0;
-        switch (orderStatus) {
-            case "新任务": {
-                intOrderStatus = 0;
-            }
-            break;
-            case "待服务": {
-                intOrderStatus = 1;
-            }
-            break;
-            case "上门中": {
-                intOrderStatus = 2;
-            }
-            break;
-            case "服务中": {
-                intOrderStatus = 5;
-            }
-            break;
-            case "售后单": {
-                intOrderStatus = 8;
-            }
-            break;
-            case "已完成": {
-                intOrderStatus = 7;
-            }
-            break;
-            case "已取消": {
-                intOrderStatus = 9;
-            }
-            break;
-            default:
-        }
-
-
+    public void taskList(String pageIndex, String pageSize, int orderStatus) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", "0");
         jsonObject.addProperty("pageIndex", pageIndex);
@@ -80,7 +46,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         pageSorts.addProperty("asc", true);
         jsonArray.add(pageSorts);
         jsonObject.add("pageSorts", jsonArray);
-        jsonObject.addProperty("orderStatus", intOrderStatus);
+        jsonObject.addProperty("orderStatus", orderStatus);
         jsonObject.addProperty("pageSize", pageSize);
         jsonObject.addProperty("keyword", "");
         jsonObject.add("orderStatusList", new JsonArray());

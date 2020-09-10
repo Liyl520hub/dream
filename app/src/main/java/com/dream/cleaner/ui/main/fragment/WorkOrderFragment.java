@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.main.fragment;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -51,6 +52,7 @@ public class WorkOrderFragment extends BaseFragment {
         if (getActivity() != null) {
             WorkOrderFragmentTabLayoutAdapter mainAdapter = new WorkOrderFragmentTabLayoutAdapter(getActivity(), getFragments());
             myViewPager.setAdapter(mainAdapter);
+            myViewPager.setOffscreenPageLimit(getFragments().size());
             initTabLayout();
         }
     }

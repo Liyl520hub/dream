@@ -1,5 +1,6 @@
 package com.dream.cleaner.ui.my.fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

@@ -2,6 +2,7 @@ package com.dream.cleaner.ui.main.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.dream.cleaner.ui.main.fragment.WorkOrderTabFragment;

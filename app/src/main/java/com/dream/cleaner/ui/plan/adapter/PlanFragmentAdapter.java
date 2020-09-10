@@ -32,8 +32,13 @@ public class PlanFragmentAdapter extends BaseSectionQuickAdapter<PlanSectionBean
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, PlanSectionBean planSectionBean) {
-        PlanBean item = (PlanBean) planSectionBean.getItem();
-        baseViewHolder.setText(R.id.tv_content, item.getName());
+        PlanBean.CleanerPlanItemsBean item = (PlanBean.CleanerPlanItemsBean) planSectionBean.getItem();
+        //1为订单，2为请假
+        int type = item.getType();
+        if (type != 0) {
+            baseViewHolder.setText(R.id.tv_content, item.getType() == 1 ? "订单" : "请假");
+        }
+
 
     }
 }

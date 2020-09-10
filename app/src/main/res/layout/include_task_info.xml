@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_marginTop="5dp"
     android:paddingBottom="20dp">
@@ -28,7 +29,7 @@
         android:paddingTop="16dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="亦城财富中心1号楼A座1008"
+        tools:text="亦城财富中心1号楼A座1008"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_task_info_title" />
@@ -43,7 +44,7 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="日常保洁"
+        tools:text="日常保洁"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_address" />
@@ -58,7 +59,7 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="2020-07-11  11:30-13:00"
+        tools:text="2020-07-11  11:30-13:00"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_bei_zhu" />
@@ -73,7 +74,7 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="2.5KM"
+        tools:text="2.5KM"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="parent"

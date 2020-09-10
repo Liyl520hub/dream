@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:layout_marginTop="5dp"
     android:paddingBottom="20dp">
@@ -29,7 +30,7 @@
         android:paddingTop="16dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="李先生"
+        tools:text="李先生"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_title" />
@@ -44,7 +45,7 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="13333333333"
+        tools:text="13333333333"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -60,7 +61,7 @@
         android:paddingTop="2.5dp"
         android:paddingRight="13.5dp"
         android:paddingBottom="2.5dp"
-        android:text="去导航"
+        android:text="打电话"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_contact_information_mobile"
         app:layout_constraintLeft_toRightOf="@+id/tv_contact_information_mobile" />
 
@@ -74,7 +75,7 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="不要吸烟，一定要打扫干净"
+        tools:text="不要吸烟，一定要打扫干净"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_mobile" />

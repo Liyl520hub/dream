@@ -1,9 +1,13 @@
 package com.dream.cleaner.http;
 
+import com.dream.cleaner.beans.PlanBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
+import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.common.base.BaseBean;
+
+import java.util.List;
 
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
@@ -154,7 +158,7 @@ public interface ApiService {
      * 任务订单详情
      */
     @POST(ApiUrls.TASK_INFO_ID)
-    Observable<BaseBean<LoginBean>> taskInfoId(@Body RequestBody body);
+    Observable<BaseBean<TaskDetailsBean>> taskInfoId(@Path("id") String id);
 
     //--------------------------------------------保洁端个人中心------------------------------------------------------
 
@@ -162,7 +166,7 @@ public interface ApiService {
      * 获取个人计划
      */
     @POST(ApiUrls.GET_CLEANER_PLAN)
-    Observable<BaseBean<LoginBean>> getCleanerPlan(@Body RequestBody body);
+    Observable<BaseBean<List<PlanBean>>> getCleanerPlan(@Body RequestBody body);
 
     /**
      * 我的收益

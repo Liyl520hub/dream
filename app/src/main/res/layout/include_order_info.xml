@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="5dp"
     android:paddingBottom="20dp"
     android:background="@color/white"
@@ -21,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_order_info_call_mobile"
+        android:id="@+id/tv_order_info_service_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="5.5dp"
@@ -47,7 +48,7 @@
         android:paddingTop="16dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="12312395"
+        tools:text="12312395"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_order_info_title" />
@@ -63,7 +64,7 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        android:text="200"
+        tools:text="200"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_order_info_name" />

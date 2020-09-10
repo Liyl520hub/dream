@@ -2,20 +2,54 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fillViewport="true"
     android:orientation="vertical">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <include layout="@layout/include_after_sale_info" />
+        <include
+            android:id="@+id/include_after_sale"
+            layout="@layout/include_after_sale_info"
+            android:visibility="gone" />
 
-        <include layout="@layout/include_task_info" />
+        <include
+            android:id="@+id/include_task_inf"
+            layout="@layout/include_task_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <include layout="@layout/include_contact_information" />
+        <include
+            android:id="@+id/include_contact_information"
+            layout="@layout/include_contact_information"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/include_task_inf" />
 
-        <include layout="@layout/include_order_info" />
-    </LinearLayout>
+        <include
+            android:id="@+id/include_order_info"
+            layout="@layout/include_order_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/include_contact_information" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="7dp"
+            android:background="@color/color_72BB38"
+            android:drawablePadding="7dp"
+            android:gravity="center"
+            android:paddingTop="11.5dp"
+            android:paddingBottom="11.5dp"
+            android:text="接单"
+            android:textColor="@color/white"
+            android:textSize="17sp" />
+
+    </RelativeLayout>
 
 </ScrollView>
