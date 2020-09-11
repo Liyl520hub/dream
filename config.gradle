@@ -31,7 +31,7 @@ ext {
             //json解析
             "gson"                         : "com.google.code.gson:gson:2.8.6",
             //rx 6.0权限请求
-            "rxpermissions"                : "com.github.tbruyelle:rxpermissions:0.12",
+            "rxpermissions"                : "com.github.tbruyelle:rxpermissions:0.10.2",
             //recyclerview
             "recyclerview"                 : "androidx.recyclerview:recyclerview:1.2.0-alpha05",
             //BaseRecyclerViewAdapterHelper

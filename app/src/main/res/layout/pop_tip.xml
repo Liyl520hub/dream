@@ -8,11 +8,26 @@
     android:orientation="vertical">
 
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="22.5dp" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:gravity="center"
+        android:visibility="gone"
+        android:lineSpacingExtra="6dp"
+        android:textColor="@color/color_333333"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/tv_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="22.5dp"
         android:layout_marginRight="25dp"
         android:gravity="center"
         android:lineSpacingExtra="6dp"

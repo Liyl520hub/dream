@@ -14,22 +14,29 @@ public class InfoUtils {
 
     public static void setLoginBean(LoginBean loginBean) {
         SPUtils.getInstance().put(GlobalApp.TOKEN, loginBean.getToken());
-        SPUtils.getInstance().put(GlobalApp.CLEANER_ID, loginBean.getCleaner().getId() + "");
-        SPUtils.getInstance().put(GlobalApp.CLEANER_NO, loginBean.getCleaner().getCleanerNo());
-        SPUtils.getInstance().put(GlobalApp.NAME, loginBean.getCleaner().getName());
-        SPUtils.getInstance().put(GlobalApp.AGE, loginBean.getCleaner().getAge());
-        SPUtils.getInstance().put(GlobalApp.WORK_AGE, loginBean.getCleaner().getWorkAge());
-        SPUtils.getInstance().put(GlobalApp.PHONE, loginBean.getCleaner().getPhone());
-        SPUtils.getInstance().put(GlobalApp.ID_NUMBER, loginBean.getCleaner().getIdNumber());
-        SPUtils.getInstance().put(GlobalApp.SEX, loginBean.getCleaner().getSex());
-        SPUtils.getInstance().put(GlobalApp.HEADPIC_PATH, loginBean.getCleaner().getHeadpicPath());
-        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_NO, loginBean.getCleaner().getHealthCertNo());
-        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_DATE, loginBean.getCleaner().getHealthCertDate());
-        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_PATH, loginBean.getCleaner().getHealthCertPath());
-        SPUtils.getInstance().put(GlobalApp.OUT_SOURCE_ID, loginBean.getCleaner().getOutsourcerId());
-        SPUtils.getInstance().put(GlobalApp.ENTRY_DATE, loginBean.getCleaner().getEntryDate());
-        SPUtils.getInstance().put(GlobalApp.DIRECT_CONTACT_NAME, loginBean.getCleaner().getDirectContactName());
-        SPUtils.getInstance().put(GlobalApp.DIRECT_CONTACT_PHONE, loginBean.getCleaner().getDirectContactPhone());
+        setCleanerBean(loginBean.getCleaner());
+    }
+
+    public static void setCleanerBean(LoginBean.CleanerBean cleanerBean) {
+        SPUtils.getInstance().put(GlobalApp.CLEANER_ID, cleanerBean.getId() + "");
+        SPUtils.getInstance().put(GlobalApp.CLEANER_NO, cleanerBean.getCleanerNo());
+        SPUtils.getInstance().put(GlobalApp.NAME, cleanerBean.getName());
+        SPUtils.getInstance().put(GlobalApp.AGE, cleanerBean.getAge());
+        SPUtils.getInstance().put(GlobalApp.WORK_AGE, cleanerBean.getWorkAge());
+        SPUtils.getInstance().put(GlobalApp.PHONE, cleanerBean.getPhone());
+        SPUtils.getInstance().put(GlobalApp.ID_NUMBER, cleanerBean.getIdNumber());
+        SPUtils.getInstance().put(GlobalApp.SEX, cleanerBean.getSex());
+        SPUtils.getInstance().put(GlobalApp.HEADPIC_PATH, cleanerBean.getHeadpicPath());
+        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_NO, cleanerBean.getHealthCertNo());
+        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_DATE, cleanerBean.getHealthCertDate());
+        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_PATH, cleanerBean.getHealthCertPath());
+        SPUtils.getInstance().put(GlobalApp.OUT_SOURCE_ID, cleanerBean.getOutsourcerId());
+        SPUtils.getInstance().put(GlobalApp.OUT_SOURCE_NAME, cleanerBean.getOutsourcerName());
+        SPUtils.getInstance().put(GlobalApp.ENTRY_DATE, cleanerBean.getEntryDate());
+        SPUtils.getInstance().put(GlobalApp.DIRECT_CONTACT_NAME, cleanerBean.getDirectContactName());
+        SPUtils.getInstance().put(GlobalApp.DIRECT_CONTACT_PHONE, cleanerBean.getDirectContactPhone());
+        SPUtils.getInstance().put(GlobalApp.SERVICE_AREA_NAME, cleanerBean.getServiceAreaName());
+        SPUtils.getInstance().put(GlobalApp.SERVICE_NAME, cleanerBean.getServiceName());
     }
 
 
@@ -134,10 +141,31 @@ public class InfoUtils {
     }
 
     /**
+     * @return 所属公司-外包商名称
+     */
+    public static String getOutSourceName() {
+        return SPUtils.getInstance().getString(GlobalApp.OUT_SOURCE_NAME, "");
+    }
+
+    /**
      * @return 入职日期
      */
     public static String getEntryDate() {
         return SPUtils.getInstance().getString(GlobalApp.ENTRY_DATE, "");
+    }
+
+    /**
+     * @return 所属区域
+     */
+    public static String getServiceAreaName() {
+        return SPUtils.getInstance().getString(GlobalApp.SERVICE_AREA_NAME, "");
+    }
+
+    /**
+     * @return 服务名称
+     */
+    public static String getServiceName() {
+        return SPUtils.getInstance().getString(GlobalApp.SERVICE_NAME, "");
     }
 
     /**

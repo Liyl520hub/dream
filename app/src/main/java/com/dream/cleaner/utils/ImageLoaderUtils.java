@@ -205,11 +205,10 @@ public class ImageLoaderUtils {
 
 
     /**
-     * @param mActivity    当前activity
      * @param iconUrl      加载的图片url
      * @param loadImagview 加载的view
      */
-    public static void loadImgCircle(Context mActivity, String iconUrl, ImageView loadImagview) {
+    public static void loadImgCircle(String iconUrl, ImageView loadImagview) {
         RequestOptions options = new RequestOptions()
                 //加载错误之后的错误图
                 .error(R.mipmap.video_item_empty)

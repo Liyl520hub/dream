@@ -1,6 +1,10 @@
 package com.dream.cleaner.ui.main;
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,20 +21,25 @@ import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.ui.main.adapter.MainAdapter;
 import com.dream.cleaner.ui.main.fragment.WorkOrderFragment;
+import com.dream.cleaner.ui.my.activity.UserInfoActivity;
 import com.dream.cleaner.ui.my.fragment.UserFragment;
 import com.dream.cleaner.ui.news.fragment.NewsFragment;
 import com.dream.cleaner.ui.plan.fragment.PlanFragment;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.widget.DataGenerator;
+import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.widget.ToolbarTitle;
 import com.dream.common.widget.ToolbarTitleLeftTv;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import io.reactivex.disposables.Disposable;
 
 /**
  * @author Liyalei
@@ -43,6 +52,7 @@ public class MainActivity extends BaseActivity {
     TabLayout myTabLayout;
     private ToolbarTitleLeftTv toolbarTitle;
     public String leftText;
+    private PopTip popPermissionsTip;
 
     @Override
     protected int getLayoutId() {
@@ -70,6 +80,51 @@ public class MainActivity extends BaseActivity {
         myViewPager.setOffscreenPageLimit(4);
         initTabLayout();
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getMyPermissions();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    private void getMyPermissions() {
+        String[] permissions = {Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.CALL_PHONE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION};
+        Disposable subscribe = new RxPermissions(MainActivity.this).requestEach(permissions)
+                .subscribe(aBoolean -> {
+                    if (aBoolean.granted) {
+                    } else if (aBoolean.shouldShowRequestPermissionRationale) {
+                        getMyPermissions();
+                    } else {
+                        popPermissionsTip = new PopTip.Builder()
+                                .setType(1)
+                                .setTitle("提示")
+                                .setSubmitText("立即获取")
+                                .setMsg("考啦需要以下权限才能正常运行")
+                                .setSubmitClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // 帮跳转到该应用的设置界面，让用户手动授权
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", MainActivity.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                        popPermissionsTip.dismiss();
+                                    }
+                                }).build(MainActivity.this);
+                    }
+                });
     }
 
     private void initTabLayout() {

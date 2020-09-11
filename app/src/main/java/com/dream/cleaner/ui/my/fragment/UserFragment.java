@@ -15,8 +15,13 @@ import com.dream.cleaner.ui.my.activity.MyIncomeActivity;
 import com.dream.cleaner.ui.my.activity.SettingActivity;
 import com.dream.cleaner.ui.my.activity.StopReceivingOrdersActivity;
 import com.dream.cleaner.ui.my.activity.UserInfoActivity;
+import com.dream.cleaner.ui.my.contract.UserFragmentContract;
+import com.dream.cleaner.ui.my.presenter.UserFragmentPresenter;
+import com.dream.cleaner.utils.ImageLoaderUtils;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseFragment;
+import com.dream.common.http.error.ErrorType;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -28,7 +33,7 @@ import butterknife.OnClick;
  *
  * @author joy
  */
-public class UserFragment extends BaseFragment {
+public class UserFragment extends BaseFragment<UserFragmentPresenter> implements UserFragmentContract {
 
     @BindView(R.id.iv_head)
     ImageView ivHead;
@@ -76,12 +81,14 @@ public class UserFragment extends BaseFragment {
 
     @Override
     protected void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
     protected void initView() {
-
+        ImageLoaderUtils.loadImgCircle(InfoUtils.getHeadIcPath(), ivHead);
+        tvName.setText(InfoUtils.getName());
+        tvMobile.setText(InfoUtils.getPhone());
     }
 
 
@@ -110,5 +117,10 @@ public class UserFragment extends BaseFragment {
                 break;
             default:
         }
+    }
+
+    @Override
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
+
     }
 }

@@ -68,11 +68,24 @@ public class GlobalApp {
      * 所属公司-外包商
      */
     public static final String OUT_SOURCE_ID = "outsourceId";
+    /**
+     * 所属公司-外包商名称
+     */
+    public static final String OUT_SOURCE_NAME = "outsourceName";
 
     /**
      * 入职日期
      */
     public static final String ENTRY_DATE = "entryDate";
+
+    /**
+     * 所属区域
+     */
+    public static final String SERVICE_AREA_NAME = "serviceAreaName";
+    /**
+     * 服务名称
+     */
+    public static final String SERVICE_NAME = "serviceName";
 
     /**
      * 直属联系人姓名

@@ -22,6 +22,7 @@ public class PopTip extends BasePopupWindow {
     private TextView tvYes;
     private TextView tvSubmit;
     private TextView tvMsg;
+    private TextView tvTitle;
     private LinearLayout llDouble;
 
     public PopTip(Context context) {
@@ -35,12 +36,7 @@ public class PopTip extends BasePopupWindow {
         tvSubmit = findViewById(R.id.tv_submit);
         tvMsg = findViewById(R.id.tv_msg);
         llDouble = findViewById(R.id.ll_double);
-        tvCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+        tvTitle = findViewById(R.id.tv_title);
     }
 
     public TextView getTvCancel() {
@@ -59,6 +55,10 @@ public class PopTip extends BasePopupWindow {
         return tvMsg;
     }
 
+    public TextView getTvTitle() {
+        return tvTitle;
+    }
+
     public LinearLayout getLlDouble() {
         return llDouble;
     }
@@ -71,6 +71,14 @@ public class PopTip extends BasePopupWindow {
 
     public static class Builder {
         private String msg;
+        private String title;
+        private String cancelText = "取消";
+        private String submitText = "知道了";
+        private String yesText = "确定";
+        /**
+         * 1 代表1个按钮
+         * 2 代表2个按钮
+         */
         private int type;
         private View.OnClickListener cancelClickListener;
         private View.OnClickListener submitClickListener;
@@ -82,8 +90,28 @@ public class PopTip extends BasePopupWindow {
             return this;
         }
 
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
         public Builder setType(int type) {
             this.type = type;
+            return this;
+        }
+
+        public Builder setCancelText(String cancelText) {
+            this.cancelText = cancelText;
+            return this;
+        }
+
+        public Builder setSubmitText(String submitText) {
+            this.submitText = submitText;
+            return this;
+        }
+
+        public Builder setYesText(String yesText) {
+            this.yesText = yesText;
             return this;
         }
 
@@ -108,7 +136,12 @@ public class PopTip extends BasePopupWindow {
             LinearLayout llDouble = popTip.getLlDouble();
             TextView tvSubmit = popTip.getTvSubmit();
             TextView tvCancel = popTip.getTvCancel();
+            TextView tvTitle = popTip.getTvTitle();
             TextView tvYes = popTip.getTvYes();
+            tvTitle.setText(title);
+            tvCancel.setText(cancelText);
+            tvSubmit.setText(submitText);
+            tvYes.setText(yesText);
             llDouble.setVisibility(type == 2 ? View.VISIBLE : View.GONE);
             tvSubmit.setVisibility(type == 1 ? View.VISIBLE : View.GONE);
             if (yesClickListener != null) {

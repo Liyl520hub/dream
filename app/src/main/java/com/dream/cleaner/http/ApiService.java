@@ -185,7 +185,7 @@ public interface ApiService {
      * 个人信息
      */
     @POST(ApiUrls.USER_INFO)
-    Observable<BaseBean<LoginBean>> userInfo(@Body RequestBody body);
+    Observable<BaseBean<LoginBean.CleanerBean>> userInfo(@Path("id") String id);
 
     //--------------------------------------------保洁端oss上传图片------------------------------------------------------
 
