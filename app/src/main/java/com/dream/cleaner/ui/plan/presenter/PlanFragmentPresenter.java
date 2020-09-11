@@ -38,7 +38,7 @@ public class PlanFragmentPresenter extends BasePresenter<PlanFragmentContract> {
         jsonObject.addProperty("month", month);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
-                .observable(Api.getService(ApiService.class).getCleanerPlan(requestBody))
+                .observable(Api.getService(ApiService.class).getCleanerPlanMonth(requestBody))
                 .presenter(this)
                 .requestMode(RequestMode.SINGLE)
                 .showLoading(true)
@@ -51,6 +51,36 @@ public class PlanFragmentPresenter extends BasePresenter<PlanFragmentContract> {
 
                     @Override
                     protected void onError(ErrorType errorType, int errorCode, String message, List<PlanBean> list) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
+    /**
+     * 获取计划
+     *
+     * @param year  年
+     * @param month 月
+     */
+    public void getCleanerPlanDay(String currentDate) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("currentDate", currentDate);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).getCleanerPlanDay(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<List<PlanBean.CleanerPlanItemsBean>, BaseBean<List<PlanBean.CleanerPlanItemsBean>>>() {
+                    @Override
+                    protected void onSuccess(List<PlanBean.CleanerPlanItemsBean> list, String successMessage) {
+                        mContract.returnCleanerPlanDay(list);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, List<PlanBean.CleanerPlanItemsBean> list) {
                         SuperToast.showShortMessage(message);
                     }
                 });

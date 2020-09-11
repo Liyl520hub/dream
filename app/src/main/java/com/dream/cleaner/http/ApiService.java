@@ -3,6 +3,7 @@ package com.dream.cleaner.http;
 import com.dream.cleaner.beans.PlanBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
+import com.dream.cleaner.beans.my.MyIncomeBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.common.base.BaseBean;
@@ -163,16 +164,22 @@ public interface ApiService {
     //--------------------------------------------保洁端个人中心------------------------------------------------------
 
     /**
-     * 获取个人计划
+     * 获取个人计划 月
      */
-    @POST(ApiUrls.GET_CLEANER_PLAN)
-    Observable<BaseBean<List<PlanBean>>> getCleanerPlan(@Body RequestBody body);
+    @POST(ApiUrls.GET_CLEANER_PLAN_MONTH)
+    Observable<BaseBean<List<PlanBean>>> getCleanerPlanMonth(@Body RequestBody body);
+
+    /**
+     * 获取个人计划 天
+     */
+    @POST(ApiUrls.GET_CLEANER_PLAN_DAY)
+    Observable<BaseBean<List<PlanBean.CleanerPlanItemsBean>>> getCleanerPlanDay(@Body RequestBody body);
 
     /**
      * 我的收益
      */
     @POST(ApiUrls.MY_INCOME)
-    Observable<BaseBean<LoginBean>> myIncome(@Body RequestBody body);
+    Observable<BaseBean<MyIncomeBean>> myIncome();
 
     /**
      * 个人信息

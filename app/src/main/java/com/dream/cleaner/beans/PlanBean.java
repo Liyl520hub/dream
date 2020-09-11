@@ -17,7 +17,16 @@ public class PlanBean implements Serializable {
      */
 
     private String planDate;
+    private int type;
     private List<CleanerPlanItemsBean> cleanerPlanItems;
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 
     public String getPlanDate() {
         return planDate == null ? "" : planDate;
@@ -54,6 +63,8 @@ public class PlanBean implements Serializable {
         private String endTime;
         private String times;
         private int type;
+        private String taskStartTime;
+        private String taskEndTime;
 
         public int getId() {
             return id;
@@ -103,5 +114,20 @@ public class PlanBean implements Serializable {
             this.type = type;
         }
 
+        public String getTaskStartTime() {
+            return taskStartTime == null ? "" : taskStartTime;
+        }
+
+        public void setTaskStartTime(String taskStartTime) {
+            this.taskStartTime = taskStartTime == null ? "" : taskStartTime;
+        }
+
+        public String getTaskEndTime() {
+            return taskEndTime == null ? "" : taskEndTime;
+        }
+
+        public void setTaskEndTime(String taskEndTime) {
+            this.taskEndTime = taskEndTime == null ? "" : taskEndTime;
+        }
     }
 }

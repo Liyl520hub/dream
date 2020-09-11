@@ -13,4 +13,5 @@ import java.util.List;
 public interface PlanFragmentContract  extends BaseContract {
     void returnCleanerPlan(List<PlanBean> list);
 
+    void returnCleanerPlanDay(List<PlanBean.CleanerPlanItemsBean> list);
 }

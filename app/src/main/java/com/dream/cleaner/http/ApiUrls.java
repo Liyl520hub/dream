@@ -138,9 +138,14 @@ public class ApiUrls {
 
 
     /**
-     * 获取个人计划
+     * 获取个人计划 月
      */
-    public static final String GET_CLEANER_PLAN = "/api/app/cleaner/userinfo/getCleanerPlan";
+    public static final String GET_CLEANER_PLAN_MONTH = "/api/app/cleaner/userinfo/getCleanerMonthPlan";
+
+   /**
+     * 获取个人计划 月
+     */
+    public static final String GET_CLEANER_PLAN_DAY = "/api/app/cleaner/userinfo/getCleanerDayPlan";
 
 
     /**

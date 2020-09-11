@@ -39,8 +39,8 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
     CalendarView mCalendarView;
     @BindView(R.id.my_rv)
     RecyclerView myRv;
-    private HashMap<String, List<PlanSectionBean>> stringListHashMap;
     private int oldMonth;
+    private String oldPlanTime = "";
 
     @Override
     protected int getLayoutId() {
@@ -80,11 +80,9 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
 
     private void setCurrentDayPlan(int year, int month, int day) {
         String planTime = year + "-" + (month <= 9 ? "0" : "") + month + "-" + (day <= 9 ? "0" : "") + day;
-        if (stringListHashMap != null) {
-            List<PlanSectionBean> cleanerPlanItemsBeans = stringListHashMap.get(planTime);
-            PlanFragmentAdapter planFragmentAdapter = new PlanFragmentAdapter(cleanerPlanItemsBeans);
-            myRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-            myRv.setAdapter(planFragmentAdapter);
+        if (!oldPlanTime.equals(planTime)) {
+            mPresenter.getCleanerPlanDay(planTime);
+            oldPlanTime = planTime;
         }
     }
 
@@ -122,35 +120,23 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
     public void returnCleanerPlan(List<PlanBean> list) {
         int size = list.size();
         Map<String, Calendar> map = new HashMap<>();
-        stringListHashMap = new HashMap<>();
         for (int i = 0; i < size; i++) {
             PlanBean planBean = list.get(i);
-            ArrayList<PlanSectionBean> planSectionBeans = new ArrayList<>();
             String planDate = planBean.getPlanDate();
-            List<PlanBean.CleanerPlanItemsBean> cleanerPlanItems = planBean.getCleanerPlanItems();
-            int itemSize = cleanerPlanItems.size();
             //1为订单，2为请假
-            int type = 0;
-            for (int j = 0; j < itemSize; j++) {
-                PlanBean.CleanerPlanItemsBean cleanerPlanItemsBean = cleanerPlanItems.get(j);
-                String startTime = cleanerPlanItemsBean.getStartTime();
-                planSectionBeans.add(new PlanSectionBean<>(true, startTime));
-                planSectionBeans.add(new PlanSectionBean<>(cleanerPlanItemsBean));
-                type = cleanerPlanItemsBean.getType();
-                if (type != 0) {
-                    java.util.Calendar calendar = java.util.Calendar.getInstance();
-                    Date date = TimeUtils.string2Date(planDate, "yyyy-MM-dd");
-                    if (date != null) {
-                        calendar.setTime(date);
-                        int year = calendar.get(java.util.Calendar.YEAR);
-                        int month = calendar.get(java.util.Calendar.MONTH);
-                        int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-                        map.put(getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假").toString(),
-                                getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假"));
-                    }
+            int type = planBean.getType();
+            if (type != 0) {
+                java.util.Calendar calendar = java.util.Calendar.getInstance();
+                Date date = TimeUtils.string2Date(planDate, "yyyy-MM-dd");
+                if (date != null) {
+                    calendar.setTime(date);
+                    int year = calendar.get(java.util.Calendar.YEAR);
+                    int month = calendar.get(java.util.Calendar.MONTH);
+                    int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+                    map.put(getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假").toString(),
+                            getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假"));
                 }
             }
-            stringListHashMap.put(planDate, planSectionBeans);
         }
         //此方法在巨大的数据量上不影响遍历性能，推荐使用
         mCalendarView.setSchemeDate(map);
@@ -158,6 +144,24 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
         int month = mCalendarView.getCurMonth();
         int day = mCalendarView.getCurDay();
         setCurrentDayPlan(year, month, day);
+    }
+
+    @Override
+    public void returnCleanerPlanDay(List<PlanBean.CleanerPlanItemsBean> list) {
+        int size = list.size();
+        ArrayList<PlanSectionBean> planSectionBeans = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            PlanBean.CleanerPlanItemsBean cleanerPlanItemsBean = list.get(i);
+            String startTime = cleanerPlanItemsBean.getStartTime();
+            Date date = TimeUtils.string2Date(startTime);
+            String s = TimeUtils.date2String(date, "HH:mm");
+            planSectionBeans.add(new PlanSectionBean<>(true, s));
+            planSectionBeans.add(new PlanSectionBean<>(cleanerPlanItemsBean));
+        }
+        PlanFragmentAdapter planFragmentAdapter = new PlanFragmentAdapter(planSectionBeans);
+        myRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        myRv.setAdapter(planFragmentAdapter);
+
     }
 
     @Override

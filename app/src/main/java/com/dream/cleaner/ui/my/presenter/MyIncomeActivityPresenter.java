@@ -1,8 +1,8 @@
 package com.dream.cleaner.ui.my.presenter;
 
-import com.dream.cleaner.beans.login.LoginBean;
+import com.dream.cleaner.beans.my.MyIncomeBean;
 import com.dream.cleaner.http.ApiService;
-import com.dream.cleaner.ui.my.contract.SettingActivityContract;
+import com.dream.cleaner.ui.my.contract.MyIncomeActivityContract;
 import com.dream.cleaner.utils.InfoUtils;
 import com.dream.common.base.BaseBean;
 import com.dream.common.base.BasePresenter;
@@ -18,33 +18,36 @@ import okhttp3.RequestBody;
 
 /**
  * @author : Liyalei
- * date   : 2020/9/8
+ * date   : 2020/9/11
  * desc   :
  */
-public class SettingActivityPresenter extends BasePresenter<SettingActivityContract> {
+public class MyIncomeActivityPresenter extends BasePresenter<MyIncomeActivityContract> {
+
 
     /**
-     * 用户退出登录
+     * 我的收益
      */
-    public void logout() {
+    public void myIncome() {
+
         Api
-                .observable(Api.getService(ApiService.class).logout())
+                .observable(Api.getService(ApiService.class).myIncome())
                 .presenter(this)
                 .requestMode(RequestMode.SINGLE)
                 .showLoading(true)
-                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                .doRequest(new BaseRxSubscriber<MyIncomeBean, BaseBean<MyIncomeBean>>() {
                     @Override
-                    protected void onSuccess(String loginBean, String successMessage) {
-                        mContract.returnLogout(loginBean);
+                    protected void onSuccess(MyIncomeBean myIncomeBean, String successMessage) {
+                        mContract.returnMyIncome(myIncomeBean);
 
                     }
 
                     @Override
-                    protected void onError(ErrorType errorType, int errorCode, String message, String loginBean) {
+                    protected void onError(ErrorType errorType, int errorCode, String message, MyIncomeBean myIncomeBean) {
                         SuperToast.showShortMessage(message);
                     }
                 });
 
     }
+
 
 }
