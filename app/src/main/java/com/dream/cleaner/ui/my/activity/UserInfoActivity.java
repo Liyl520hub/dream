@@ -155,8 +155,8 @@ public class UserInfoActivity extends BaseActivity<UserInfoActivityPresenter> im
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(Intent.ACTION_CALL);
-//                        Uri data = Uri.parse("tel:" + phone);
-                        Uri data = Uri.parse("tel:15733125211"  );
+                        Uri data = Uri.parse("tel:" + phone);
+//                        Uri data = Uri.parse("tel:15733125211"  );
                         intent.setData(data);
                         //不影响程序的运行
                         if (ActivityCompat.checkSelfPermission(UserInfoActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {

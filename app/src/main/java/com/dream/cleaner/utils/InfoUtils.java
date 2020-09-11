@@ -183,4 +183,26 @@ public class InfoUtils {
     }
 
 
+    public static void clean() {
+        SPUtils.getInstance().put(GlobalApp.TOKEN, "");
+        SPUtils.getInstance().put(GlobalApp.CLEANER_ID, "");
+        SPUtils.getInstance().put(GlobalApp.CLEANER_NO, "");
+        SPUtils.getInstance().put(GlobalApp.NAME, "");
+        SPUtils.getInstance().put(GlobalApp.AGE, "");
+        SPUtils.getInstance().put(GlobalApp.WORK_AGE, "");
+        SPUtils.getInstance().put(GlobalApp.PHONE, "");
+        SPUtils.getInstance().put(GlobalApp.ID_NUMBER, "");
+        SPUtils.getInstance().put(GlobalApp.SEX, "");
+        SPUtils.getInstance().put(GlobalApp.HEADPIC_PATH, "");
+        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_NO, "");
+        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_DATE, "");
+        SPUtils.getInstance().put(GlobalApp.HEALTH_CERT_PATH, "");
+        SPUtils.getInstance().put(GlobalApp.OUT_SOURCE_ID, "");
+        SPUtils.getInstance().put(GlobalApp.OUT_SOURCE_NAME, "");
+        SPUtils.getInstance().put(GlobalApp.ENTRY_DATE, "");
+        SPUtils.getInstance().put(GlobalApp.DIRECT_CONTACT_NAME, "");
+        SPUtils.getInstance().put(GlobalApp.DIRECT_CONTACT_PHONE, "");
+        SPUtils.getInstance().put(GlobalApp.SERVICE_AREA_NAME, "");
+        SPUtils.getInstance().put(GlobalApp.SERVICE_NAME, "");
+    }
 }
