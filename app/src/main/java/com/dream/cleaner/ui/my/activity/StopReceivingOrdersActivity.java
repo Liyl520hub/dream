@@ -12,14 +12,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.dream.cleaner.R;
-import com.dream.cleaner.beans.my.StopReceivingOrdersBean;
+import com.dream.cleaner.beans.my.LeaveBean;
 import com.dream.cleaner.ui.my.adapter.StopReceivingOrdersAdapter;
+import com.dream.cleaner.ui.my.contract.StopReceivingOrdersActivityContract;
+import com.dream.cleaner.ui.my.presenter.StopReceivingOrdersActivityPresenter;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
+import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.ToolbarBackTitle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,12 +33,13 @@ import butterknife.OnClick;
  * date   : 2020/8/24
  * desc   :暂停接单
  */
-public class StopReceivingOrdersActivity extends BaseActivity {
+public class StopReceivingOrdersActivity extends BaseActivity<StopReceivingOrdersActivityPresenter> implements StopReceivingOrdersActivityContract {
 
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
     @BindView(R.id.my_rv)
     RecyclerView myRv;
+    private StopReceivingOrdersAdapter stopReceivingOrdersAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -43,6 +48,7 @@ public class StopReceivingOrdersActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
+        mPresenter.setVM(this);
 
     }
 
@@ -58,20 +64,47 @@ public class StopReceivingOrdersActivity extends BaseActivity {
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
+        mPresenter.leaveApplyList("1", "1000");
+    }
 
-        ArrayList<StopReceivingOrdersBean> stopReceivingOrdersBeans = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            stopReceivingOrdersBeans.add(new StopReceivingOrdersBean());
+    @Override
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mPresenter.leaveApplyList("1", "1000");
+    }
+
+    @Override
+    public void returnLeaveBean(LeaveBean leaveBean) {
+        if (leaveBean != null) {
+            List<LeaveBean.RecordsBean> records = leaveBean.getRecords();
+            stopReceivingOrdersAdapter = new StopReceivingOrdersAdapter(records);
+            stopReceivingOrdersAdapter.setOnItemClickListener(new OnItemClickListener() {
+                @Override
+                public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
+                    int id = stopReceivingOrdersAdapter.getItem(position).getId();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", id + "");
+                    UiUtil.openActivity(StopReceivingOrdersActivity.this, StopReceivingDetailActivity.class,bundle);
+                }
+            });
+            myRv.setLayoutManager(new LinearLayoutManager(this));
+            myRv.setAdapter(stopReceivingOrdersAdapter);
 
         }
-        StopReceivingOrdersAdapter stopReceivingOrdersAdapter = new StopReceivingOrdersAdapter(stopReceivingOrdersBeans);
-        stopReceivingOrdersAdapter.setOnItemClickListener(new OnItemClickListener() {
-            @Override
-            public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                UiUtil.openActivity(StopReceivingOrdersActivity.this, StopReceivingDetailActivity.class);
-            }
-        });
-        myRv.setLayoutManager(new LinearLayoutManager(this));
-        myRv.setAdapter(stopReceivingOrdersAdapter);
+    }
+
+    @Override
+    public void returnApply(String leaveBean) {
+
+    }
+
+    @Override
+    public void returnLeaveRecordsBean(LeaveBean.RecordsBean leaveBean) {
+
     }
 }

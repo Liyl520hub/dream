@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginTop="10dp"
     android:background="@color/white">
 
@@ -12,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="6dp"
-        android:text="开始时间   2020-09-11 14:10:24"
+        android:text="开始时间"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="6dp"
-        android:text="结束时间   2020-09-11 14:10:24"
+        android:text="结束时间"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_start_time" />
@@ -36,7 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="6dp"
-        android:text="申请时间   2020-09-11 14:10:24"
+        android:text="申请时间"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_end_time" />
@@ -49,7 +50,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="6dp"
         android:layout_marginRight="15dp"
-        android:text="审批状态   通过"
+        tools:text="审批状态"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_apply_time" />
@@ -74,7 +75,7 @@
         android:layout_marginTop="6dp"
         android:layout_marginRight="15dp"
         android:layout_marginBottom="10dp"
-        android:text="身体不舒服需要去医院检查一下，今天回不来了，麻烦领导审批"
+        tools:text="身体不舒服需要去医院检查一下，今天回不来了，麻烦领导审批"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintBottom_toBottomOf="parent"

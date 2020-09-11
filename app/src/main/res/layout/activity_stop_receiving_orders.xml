@@ -11,6 +11,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
         android:overScrollMode="never"
+        android:paddingBottom="80dp"
         android:scrollbars="none" />
 
     <TextView

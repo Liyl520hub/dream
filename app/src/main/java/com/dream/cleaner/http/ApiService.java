@@ -3,6 +3,7 @@ package com.dream.cleaner.http;
 import com.dream.cleaner.beans.PlanBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
+import com.dream.cleaner.beans.my.LeaveBean;
 import com.dream.cleaner.beans.my.MyIncomeBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
@@ -201,19 +202,19 @@ public interface ApiService {
      * 请假申请
      */
     @POST(ApiUrls.LEAVE_APPLY)
-    Observable<BaseBean<LoginBean>> leaveApply(@Body RequestBody body);
+    Observable<BaseBean<String>> leaveApply(@Body RequestBody body);
 
     /**
      * 请假申请详情
      */
     @POST(ApiUrls.LEAVE_APPLY_DETAIL_ID)
-    Observable<BaseBean<LoginBean>> leaveApplyDetailId(@Body RequestBody body);
+    Observable<BaseBean<LeaveBean.RecordsBean>> leaveApplyDetailId(@Path("id") String id);
 
     /**
      * 请假申请列表
      */
     @POST(ApiUrls.LEAVE_APPLY_LIST)
-    Observable<BaseBean<LoginBean>> leaveApplyList(@Body RequestBody body);
+    Observable<BaseBean<LeaveBean>> leaveApplyList(@Body RequestBody body);
 
     //--------------------------------------------保洁员端消息------------------------------------------------------
 
