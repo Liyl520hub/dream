@@ -8,14 +8,17 @@
 
     <TextView
         android:id="@+id/tv_materiel_id"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="10dp"
-        android:text="申请编号   200705464"
+        android:ellipsize="end"
+        android:lines="1"
+        android:text="申请编号"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/tv_states"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -38,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:text="物料类型   常规物料"
+        android:text="物料类型"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_materiel_id" />
@@ -50,7 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:text="申请时间   2020-09-11 14:10:24"
+        android:text="申请时间"
         android:textColor="@color/color_666666"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@+id/tv_materiel_type" />
@@ -61,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
-        android:text="拒绝理由   已经申请过了"
+        android:text="拒绝理由"
         android:textColor="@color/color_666666"
         android:textSize="16sp"
         android:visibility="gone"

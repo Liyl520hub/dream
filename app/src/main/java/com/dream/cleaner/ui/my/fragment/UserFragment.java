@@ -1,6 +1,5 @@
 package com.dream.cleaner.ui.my.fragment;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,7 +9,7 @@ import android.widget.TextView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.dream.cleaner.R;
-import com.dream.cleaner.ui.my.activity.MaterielApplyActivity;
+import com.dream.cleaner.ui.my.activity.MaterielApplyListActivity;
 import com.dream.cleaner.ui.my.activity.MyIncomeActivity;
 import com.dream.cleaner.ui.my.activity.SettingActivity;
 import com.dream.cleaner.ui.my.activity.StopReceivingOrdersActivity;
@@ -107,7 +106,7 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
                 UiUtil.openActivity(getActivity(), MyIncomeActivity.class);
                 break;
             case R.id.ll_wu_liao:
-                UiUtil.openActivity(getActivity(), MaterielApplyActivity.class);
+                UiUtil.openActivity(getActivity(), MaterielApplyListActivity.class);
                 break;
             case R.id.ll_zan_ting:
                 UiUtil.openActivity(getActivity(), StopReceivingOrdersActivity.class);

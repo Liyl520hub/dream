@@ -1,6 +1,5 @@
 package com.dream.cleaner.ui.my.adapter;
 
-import android.view.View;
 import android.widget.TextView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -17,11 +16,11 @@ import java.util.List;
 /**
  * @author : liyl
  * date   : 2020/8/26
- * desc   :申请物料列表适配器
+ * desc   :申请物料明细适配器
  */
-public class ApplyMaterielAdapter extends BaseQuickAdapter<ApplyMaterielBean.RecordsBean, BaseViewHolder> {
+public class ApplyMaterielItemAdapter extends BaseQuickAdapter<ApplyMaterielBean.RecordsBean, BaseViewHolder> {
 
-    public ApplyMaterielAdapter(@Nullable List<ApplyMaterielBean.RecordsBean> data) {
+    public ApplyMaterielItemAdapter(@Nullable List<ApplyMaterielBean.RecordsBean> data) {
         super(R.layout.item_apply_materiel, data);
     }
 

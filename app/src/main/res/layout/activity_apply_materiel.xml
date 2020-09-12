@@ -8,6 +8,7 @@
         android:id="@+id/cl_apply_edit_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -151,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="申请编号   200705464"
+            android:text="申请编号："
             android:textColor="@color/color_333333"
             android:textSize="17sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -163,7 +164,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="物料类型   新人物料"
+            android:text="物料类型："
             android:textColor="@color/color_333333"
             android:textSize="17sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -175,7 +176,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="领用时间   2020-07-08"
+            android:text="领用时间："
             android:textColor="@color/color_333333"
             android:textSize="17sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -187,7 +188,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="领用数量   2套"
+            android:text="领用数量："
             android:textColor="@color/color_333333"
             android:textSize="17sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -199,7 +200,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
-            android:text="审批状态   通过"
+            android:text="审批状态："
             android:textColor="@color/color_333333"
             android:textSize="17sp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -212,7 +213,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="领用状态   未领取"
+            android:text="领用状态："
             android:textColor="@color/color_333333"
             android:textSize="17sp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -247,6 +248,7 @@
         android:text="提交申请"
         android:textColor="@color/white"
         android:textSize="17sp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

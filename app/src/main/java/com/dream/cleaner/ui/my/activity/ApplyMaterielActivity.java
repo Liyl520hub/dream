@@ -1,5 +1,6 @@
 package com.dream.cleaner.ui.my.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -9,10 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
+import com.dream.cleaner.beans.my.ApplyMaterielBean;
+import com.dream.cleaner.beans.my.MaterielBean;
+import com.dream.cleaner.beans.my.MaterielTypeBean;
+import com.dream.cleaner.ui.my.contract.ApplyMaterielContract;
+import com.dream.cleaner.ui.my.presenter.ApplyMaterielPresenter;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
+import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.ToolbarBackTitle;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -20,9 +30,9 @@ import butterknife.OnClick;
 /**
  * @author : liyl
  * date   : 2020/8/26
- * desc   :申请物料
+ * desc   :申请物料界面&物料详情界面
  */
-public class ApplyMaterielActivity extends BaseActivity {
+public class ApplyMaterielActivity extends BaseActivity<ApplyMaterielPresenter> implements ApplyMaterielContract {
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
     @BindView(R.id.tv_materiel_edit_type)
@@ -77,6 +87,12 @@ public class ApplyMaterielActivity extends BaseActivity {
     EditText etDunBuNum;
     @BindView(R.id.et_shui_tong_num)
     EditText etShuiTongNum;
+    private String id;
+    /**
+     * 1 详情
+     * 2 申请
+     */
+    private String type;
 
     @Override
     protected int getLayoutId() {
@@ -85,7 +101,7 @@ public class ApplyMaterielActivity extends BaseActivity {
 
     @Override
     public void initPresenter() {
-
+        mPresenter.setVM(this);
     }
 
     @Override
@@ -96,7 +112,17 @@ public class ApplyMaterielActivity extends BaseActivity {
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            id = intent.getStringExtra("id");
+            type = intent.getStringExtra("type");
+            if ("1".equals(type)) {
+                //详情
+                mPresenter.materielApplyInfoId(id);
+            }
+            tvSubmit.setVisibility("1".equals(type) ? View.GONE : View.VISIBLE);
+            clApplyEditInfo.setVisibility("2".equals(type) ? View.VISIBLE : View.GONE);
+        }
     }
 
 
@@ -108,8 +134,75 @@ public class ApplyMaterielActivity extends BaseActivity {
             case R.id.tv_routine:
                 break;
             case R.id.tv_submit:
+                if ("1".equals(type)) {
+                    //立即领取
+                    mPresenter.collectId(id);
+                } else {
+                    //申请
+
+                }
                 break;
             default:
         }
+    }
+
+    @Override
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
+
+    }
+
+    @Override
+    public void returnMaterielBean(MaterielBean materielBean) {
+        //审批状态；1->待审批；2->审核通过；3->拒绝；
+        int status = materielBean.getStatus();
+        String statusString = "";
+        if (status == 1) {
+            statusString = "待审批";
+            tvSubmit.setVisibility(View.GONE);
+        } else if (status == 2) {
+            statusString = "审核通过";
+            tvSubmit.setText("立即领取");
+            tvSubmit.setVisibility(View.VISIBLE);
+        } else if (status == 3) {
+            statusString = "拒绝";
+            tvSubmit.setVisibility(View.GONE);
+        }
+        tvMaterielId.setText("申请编号：" + materielBean.getApplyNo());
+        String applyType = materielBean.getApplyType();
+        //01  新人物料，  02常规物料
+        if ("01".equals(applyType)) {
+            applyType = "新人物料";
+        } else if ("02".equals(applyType)) {
+            applyType = "常规物料";
+        }
+        tvMaterielType.setText("物料类型：" + applyType);
+        tvMaterielCollectTime.setText("领用时间：" + materielBean.getCollectTime());
+        tvMaterielCollectNum.setText("领用数量：" + materielBean.getApplyNums() + "套");
+        tvApplyStates.setText("审批状态：" + statusString);
+        if (StringUtils.isEmpty(materielBean.getCollectTime())) {
+            tvMaterielCollectTime.setVisibility(View.GONE);
+            tvCollectStates.setText("领用状态：未领取");
+        } else {
+            tvMaterielCollectTime.setVisibility(View.VISIBLE);
+            tvCollectStates.setText("领用状态：已领取");
+            tvSubmit.setVisibility(View.GONE);
+        }
+
+    }
+
+    @Override
+    public void returnCollect(String string) {
+
+    }
+
+    @Override
+    public void returnApplyMaterielBean(String s) {
+
+    }
+
+    @Override
+    public void returnMaterielTypeBeans(List<MaterielTypeBean> list) {
+
+
     }
 }

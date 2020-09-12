@@ -48,7 +48,7 @@
         <activity android:name=".ui.my.activity.StopReceivingOrdersActivity" />
         <activity android:name=".ui.my.activity.ApplyStopReceivingActivity" />
         <activity android:name=".ui.my.activity.StopReceivingDetailActivity" />
-        <activity android:name=".ui.my.activity.MaterielApplyActivity" />
+        <activity android:name=".ui.my.activity.MaterielApplyListActivity" />
         <activity android:name=".ui.my.activity.ApplyMaterielActivity" />
     </application>
 

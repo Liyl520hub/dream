@@ -3,7 +3,10 @@ package com.dream.cleaner.http;
 import com.dream.cleaner.beans.PlanBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
+import com.dream.cleaner.beans.my.ApplyMaterielBean;
 import com.dream.cleaner.beans.my.LeaveBean;
+import com.dream.cleaner.beans.my.MaterielBean;
+import com.dream.cleaner.beans.my.MaterielTypeBean;
 import com.dream.cleaner.beans.my.MyIncomeBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
@@ -87,28 +90,28 @@ public interface ApiService {
     //--------------------------------------------保洁端申请物料------------------------------------------------------
 
     /**
-     * 领取物料申请单表
+     * 确认领取物料申请单表
      */
     @POST(ApiUrls.COLLECT_ID)
-    Observable<BaseBean<LoginBean>> collectId(@Body RequestBody body);
+    Observable<BaseBean<String>> collectId(@Path("id") String id);
 
     /**
      * 查询自己物料申请单
      */
     @POST(ApiUrls.GET_PAGE_LIST)
-    Observable<BaseBean<LoginBean>> getPageList(@Body RequestBody body);
+    Observable<BaseBean<ApplyMaterielBean>> getPageList(@Body RequestBody body);
 
     /**
      * 物料申请单表详情
      */
-    @POST(ApiUrls.MATERIEL_APPLY_INFO_ID)
-    Observable<BaseBean<LoginBean>> materielApplyInfoId(@Body RequestBody body);
+    @GET(ApiUrls.MATERIEL_APPLY_INFO_ID)
+    Observable<BaseBean<MaterielBean>> materielApplyInfoId(@Path("id") String id);
 
     /**
      * 提交物料申请单
      */
     @POST(ApiUrls.SUBMIT_MATERIEL)
-    Observable<BaseBean<LoginBean>> submitMateriel(@Body RequestBody body);
+    Observable<BaseBean<String>> submitMateriel(@Body RequestBody body);
 
     //--------------------------------------------保洁端物料------------------------------------------------------
 
@@ -116,7 +119,7 @@ public interface ApiService {
      * 拉取分类物料
      */
     @POST(ApiUrls.MATERIEL_LIST)
-    Observable<BaseBean<LoginBean>> materielList(@Body RequestBody body);
+    Observable<BaseBean<List<MaterielTypeBean>>> materielList(@Body RequestBody body);
 
     //--------------------------------------------保洁端任务------------------------------------------------------
 

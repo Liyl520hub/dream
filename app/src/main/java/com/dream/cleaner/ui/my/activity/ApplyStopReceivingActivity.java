@@ -86,11 +86,6 @@ public class ApplyStopReceivingActivity extends BaseActivity<StopReceivingOrders
                 showTimePickerView(false);
                 break;
             case R.id.tv_submit:
-                String reason = etReason.getText().toString();
-                if (StringUtils.isEmpty(reason)) {
-                    SuperToast.showShortMessage("请假理由不能为空");
-                    return;
-                }
                 String startTime = tvStartTime.getText().toString();
                 if (StringUtils.isEmpty(startTime)) {
                     SuperToast.showShortMessage("请选择请假开始时间");
@@ -99,6 +94,11 @@ public class ApplyStopReceivingActivity extends BaseActivity<StopReceivingOrders
                 String endTime = tvEndTime.getText().toString();
                 if (StringUtils.isEmpty(endTime)) {
                     SuperToast.showShortMessage("请选择请假结束时间");
+                    return;
+                }
+                String reason = etReason.getText().toString();
+                if (StringUtils.isEmpty(reason)) {
+                    SuperToast.showShortMessage("请假理由不能为空");
                     return;
                 }
                 mPresenter.leaveApply(startTime, endTime, reason);
