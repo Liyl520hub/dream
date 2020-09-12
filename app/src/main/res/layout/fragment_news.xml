@@ -5,50 +5,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent"&ndash;&gt;-->
+<!--        app:tabSelectedTextColor="@color/color_72BB38"-->
+<!--        app:tabTextColor="@color/color_999999"/>-->
+
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/news_tab_layout"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabBackground="@android:color/transparent"
         app:tabIndicator="@null"
-
+        app:tabBackground="@android:color/transparent"
         app:tabRippleColor="@android:color/transparent"
-        app:tabSelectedTextColor="@color/color_72BB38"
-        app:tabTextColor="@color/color_999999">
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 
-        <com.google.android.material.tabs.TabItem
 
-            android:id="@+id/all_tabitem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="全部" />
 
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/work_tabitem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="工单"
-
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/notice_tabitem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="公告"
-
-            />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/leave_tabitem"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="请假" />
-    </com.google.android.material.tabs.TabLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_news"

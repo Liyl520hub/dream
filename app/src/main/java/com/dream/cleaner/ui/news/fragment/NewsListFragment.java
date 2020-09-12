@@ -61,6 +61,9 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
 
     private void initTabLayout() {
 
+        for (int i = 0; i < 4; i++) {
+            newsTabLayout.addTab(newsTabLayout.newTab().setCustomView(DataGenerator.getTabNewsView(getActivity(), i, i == 0)));
+        }
         newsTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -103,10 +106,10 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
                     TextView tabContentText = view.findViewById(R.id.tab_content_text);
                     if (i == tabPosition) {
                         // 选中状态
-                        icon.setImageResource(DataGenerator.mNewsRes[i]);
+                        icon.setImageResource(DataGenerator.mNewsResSelect[i]);
                         tabContentText.setSelected(true);
                     } else {// 未选中状态
-                        icon.setImageResource(DataGenerator.mNewsResPressed[i]);
+                        icon.setImageResource(DataGenerator.mNewsNoSelect[i]);
                         tabContentText.setSelected(false);
 
                     }
