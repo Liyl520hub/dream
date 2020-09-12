@@ -18,8 +18,9 @@ public class DataGenerator {
     private static String[] tabTitles = new String[]{"工单", "计划", "消息", "我的"};
 
 
-    public static final  int[] mNewsRes=new  int[]{R.mipmap.check_grouping,R.mipmap.menu_work_order_uncheck,R.mipmap.check_notifal_uncheck,R.mipmap.check_leave_uncheck};
-    public static final  int[] mNewsResPressed=new  int[]{R.mipmap.check_grouping,R.mipmap.menu_work_order,R.mipmap.check_notifal_uncheck,R.mipmap.check_leave_uncheck};
+    public static final int[] mNewsNoSelect = new int[]{R.mipmap.check_ungroup, R.mipmap.menu_work_order_uncheck, R.mipmap.check_notifal_uncheck, R.mipmap.check_leave_uncheck};
+    public static final int[] mNewsResSelect = new int[]{R.mipmap.check_grouping, R.mipmap.menu_work_order, R.mipmap.news_notifal, R.mipmap.news_leave};
+    private static String[] tabNewsTitles = new String[]{"全部", "工单", "公告", "请假"};
 
 
     /**
@@ -29,12 +30,21 @@ public class DataGenerator {
      * @param position
      * @return
      */
-    public static View getTabView(Context context, int position,boolean isSelected) {
+    public static View getTabView(Context context, int position, boolean isSelected) {
         View view = LayoutInflater.from(context).inflate(R.layout.tab_home_content, null);
         ImageView tabIcon = view.findViewById(R.id.tab_content_image);
-        tabIcon.setImageResource(isSelected?DataGenerator.mTabRes[position]:DataGenerator.mTabResPressed[position]);
+        tabIcon.setImageResource(isSelected ? DataGenerator.mTabRes[position] : DataGenerator.mTabResPressed[position]);
         TextView tabText = view.findViewById(R.id.tab_content_text);
         tabText.setText(tabTitles[position]);
+        return view;
+    }
+
+    public static View getTabNewsView(Context context, int position, boolean isSelected) {
+        View view = LayoutInflater.from(context).inflate(R.layout.tab_home_content, null);
+        ImageView tabIcon = view.findViewById(R.id.tab_content_image);
+        tabIcon.setImageResource(isSelected ? DataGenerator.mNewsResSelect[position] : DataGenerator.mNewsNoSelect[position]);
+        TextView tabText = view.findViewById(R.id.tab_content_text);
+        tabText.setText(tabNewsTitles[position]);
         return view;
     }
 
