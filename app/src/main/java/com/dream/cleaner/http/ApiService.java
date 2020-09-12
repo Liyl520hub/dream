@@ -8,6 +8,8 @@ import com.dream.cleaner.beans.my.LeaveBean;
 import com.dream.cleaner.beans.my.MaterielBean;
 import com.dream.cleaner.beans.my.MaterielTypeBean;
 import com.dream.cleaner.beans.my.MyIncomeBean;
+import com.dream.cleaner.beans.news.NewsDetailsBean;
+import com.dream.cleaner.beans.news.NewsListBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.common.base.BaseBean;
@@ -17,8 +19,6 @@ import java.util.List;
 import io.reactivex.Observable;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
@@ -225,18 +225,18 @@ public interface ApiService {
      * 消息详情
      */
     @POST(ApiUrls.MESSAGE_DETAIL_ID)
-    Observable<BaseBean<LoginBean>> messageDetailId(@Body RequestBody body);
+    Observable<BaseBean<NewsDetailsBean>> messageDetailId(@Path("id") String id);
 
     /**
      * 消息列表
      */
     @POST(ApiUrls.MESSAGE_LIST)
-    Observable<BaseBean<LoginBean>> messageList(@Body RequestBody body);
+    Observable<BaseBean<NewsListBean>> messageList(@Body RequestBody body);
 
     /**
      * 修改为已读
      */
     @POST(ApiUrls.MESSAGE_READ_ID)
-    Observable<BaseBean<LoginBean>> messageReadId(@Body RequestBody body);
+    Observable<BaseBean<String>> messageReadId(@Path("id") String id);
 
 }

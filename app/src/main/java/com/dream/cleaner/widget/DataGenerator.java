@@ -18,6 +18,10 @@ public class DataGenerator {
     private static String[] tabTitles = new String[]{"工单", "计划", "消息", "我的"};
 
 
+    public static final  int[] mNewsRes=new  int[]{R.mipmap.check_grouping,R.mipmap.menu_work_order_uncheck,R.mipmap.check_notifal_uncheck,R.mipmap.check_leave_uncheck};
+    public static final  int[] mNewsResPressed=new  int[]{R.mipmap.check_grouping,R.mipmap.menu_work_order,R.mipmap.check_notifal_uncheck,R.mipmap.check_leave_uncheck};
+
+
     /**
      * 获取Tab 显示的内容
      *
