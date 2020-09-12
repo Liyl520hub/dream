@@ -114,7 +114,7 @@ public class ApplyStopReceivingActivity extends BaseActivity<StopReceivingOrders
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 setTvValue(isStart, TimeUtils.date2String(date));
             }
-        }).setType(new boolean[]{true, true, true, true, true, true}).build();
+        }).setType(new boolean[]{true, true, true, true, true, false}).build();
         // pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
         pvTime.show();
     }

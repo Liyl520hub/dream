@@ -57,8 +57,14 @@ public class MaterielApplyListActivity extends BaseActivity<MaterielApplyPresent
     @OnClick({R.id.tv_submit})
     public void onViewClicked(View view) {
         Bundle bundle = new Bundle();
-        bundle.putString("type",  "2");
-        UiUtil.openActivity(this, ApplyMaterielActivity.class,bundle);
+        bundle.putString("type", "2");
+        UiUtil.openActivity(this, ApplyMaterielActivity.class, bundle);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        mPresenter.getPageList("1", "10");
     }
 
     @Override
@@ -83,7 +89,7 @@ public class MaterielApplyListActivity extends BaseActivity<MaterielApplyPresent
                     int id = item.getId();
                     Bundle bundle = new Bundle();
                     bundle.putString("id", id + "");
-                    bundle.putString("type",  "1");
+                    bundle.putString("type", "1");
                     UiUtil.openActivity(MaterielApplyListActivity.this, ApplyMaterielActivity.class, bundle);
                 }
             });

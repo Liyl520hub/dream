@@ -57,7 +57,7 @@ public class MaterielBean {
     private String updateTime;
     private int applyNums;
     private String applyTypeName;
-    private List<ItemsBean> items;
+    private List<MaterielTypeBean> items;
 
     public int getId() {
         return id;
@@ -227,130 +227,16 @@ public class MaterielBean {
         this.applyTypeName = applyTypeName == null ? "" : applyTypeName;
     }
 
-    public List<ItemsBean> getItems() {
+    public List<MaterielTypeBean> getItems() {
         if (items == null) {
             return new ArrayList<>();
         }
         return items;
     }
 
-    public void setItems(List<ItemsBean> items) {
+    public void setItems(List<MaterielTypeBean> items) {
         this.items = items;
     }
 
-    public static class ItemsBean {
-        /**
-         * id : 0
-         * materielApplyId : 0
-         * applyNo :
-         * materielId : 0
-         * materielNo :
-         * materielName :
-         * materielModel :
-         * applyNum : 0
-         * isDel : 0
-         * createTime :
-         * updateTime :
-         */
 
-        private int id;
-        private int materielApplyId;
-        private String applyNo;
-        private int materielId;
-        private String materielNo;
-        private String materielName;
-        private String materielModel;
-        private int applyNum;
-        private int isDel;
-        private String createTime;
-        private String updateTime;
-
-        public int getId() {
-            return id;
-        }
-
-        public void setId(int id) {
-            this.id = id;
-        }
-
-        public int getMaterielApplyId() {
-            return materielApplyId;
-        }
-
-        public void setMaterielApplyId(int materielApplyId) {
-            this.materielApplyId = materielApplyId;
-        }
-
-        public String getApplyNo() {
-            return applyNo;
-        }
-
-        public void setApplyNo(String applyNo) {
-            this.applyNo = applyNo;
-        }
-
-        public int getMaterielId() {
-            return materielId;
-        }
-
-        public void setMaterielId(int materielId) {
-            this.materielId = materielId;
-        }
-
-        public String getMaterielNo() {
-            return materielNo;
-        }
-
-        public void setMaterielNo(String materielNo) {
-            this.materielNo = materielNo;
-        }
-
-        public String getMaterielName() {
-            return materielName;
-        }
-
-        public void setMaterielName(String materielName) {
-            this.materielName = materielName;
-        }
-
-        public String getMaterielModel() {
-            return materielModel;
-        }
-
-        public void setMaterielModel(String materielModel) {
-            this.materielModel = materielModel;
-        }
-
-        public int getApplyNum() {
-            return applyNum;
-        }
-
-        public void setApplyNum(int applyNum) {
-            this.applyNum = applyNum;
-        }
-
-        public int getIsDel() {
-            return isDel;
-        }
-
-        public void setIsDel(int isDel) {
-            this.isDel = isDel;
-        }
-
-        public String getCreateTime() {
-            return createTime;
-        }
-
-        public void setCreateTime(String createTime) {
-            this.createTime = createTime;
-        }
-
-        public String getUpdateTime() {
-            return updateTime;
-        }
-
-        public void setUpdateTime(String updateTime) {
-            this.updateTime = updateTime;
-        }
-    }
 }

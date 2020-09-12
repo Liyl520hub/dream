@@ -8,7 +8,6 @@
         android:id="@+id/cl_apply_edit_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -111,8 +110,8 @@
                 android:textColor="@color/color_333333"
                 android:textSize="17sp" />
 
-            <TextView
-                android:id="@+id/tv_collect_num"
+            <EditText
+                android:id="@+id/et_collect_num"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
@@ -121,6 +120,7 @@
                 android:paddingTop="6dp"
                 android:paddingRight="10dp"
                 android:paddingBottom="6dp"
+                android:inputType="number"
                 android:textColor="@color/color_333333"
                 android:textSize="16sp" />
 

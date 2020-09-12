@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp"
     android:background="@color/color_f8f8f8"
+    android:orientation="vertical"
     android:paddingBottom="15dp">
     <!--物料明细-->
     <TextView
@@ -18,123 +19,52 @@
         android:textSize="17sp"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/tv_materiel_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginRight="100dp"
-        android:text="物料名称"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_materiel_info_title" />
+        android:orientation="horizontal">
 
-    <TextView
-        android:id="@+id/tv_materiel_num"
-        android:layout_width="wrap_content"
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/tv_materiel_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="物料名称"
+            android:textColor="@color/color_333333"
+            android:textSize="17sp" />
+
+        <TextView
+            android:id="@+id/tv_materiel_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:layout_marginRight="20dp"
+            android:text="数量"
+            android:textColor="@color/color_333333"
+            android:textSize="17sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_item"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:text="数量"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_materiel_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_materiel_info_title" />
-
-
-    <TextView
-        android:id="@+id/tv_ma_bu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="100dp"
-        android:text="抹布"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_materiel_name" />
-
-
-    <TextView
-        android:id="@+id/tv_dun_bu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="100dp"
-        android:text="墩布"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_ma_bu" />
-
-
-    <TextView
-        android:id="@+id/tv_shui_tong"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="100dp"
-        android:text="水桶"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_dun_bu" />
-
-    <EditText
-        android:id="@+id/et_ma_bu_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@null"
-        android:gravity="center"
-        android:minWidth="40dp"
-        android:padding="0dp"
-        android:text="3"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_materiel_name"
-        app:layout_constraintRight_toRightOf="parent"
+        android:overScrollMode="never"
+        android:scrollbars="none"
         app:layout_constraintTop_toBottomOf="@+id/tv_materiel_num" />
 
-
-    <EditText
-        android:id="@+id/et_dun_bu_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@null"
-        android:gravity="center"
-        android:minWidth="40dp"
-        android:padding="0dp"
-        android:text="2"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_materiel_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_ma_bu_num" />
-
-
-    <EditText
-        android:id="@+id/et_shui_tong_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@null"
-        android:gravity="center"
-        android:minWidth="40dp"
-        android:padding="0dp"
-        android:text="1"
-        android:textColor="@color/color_333333"
-        android:textSize="17sp"
-        app:layout_constraintLeft_toLeftOf="@+id/tv_materiel_name"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_dun_bu_num" />
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

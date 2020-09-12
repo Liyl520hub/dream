@@ -43,6 +43,48 @@ public class MaterielTypeBean {
     private int status;
     private String materielTypeCodes;
     private String materielTypeNames;
+    /**
+     * 物料详情item对象跟这个对象共用一个
+     * materielApplyId applyNo materielId applyNum
+     * 这四个是item对象带的
+     */
+    private int materielApplyId;
+    private String applyNo;
+    private String materielId;
+    private String applyNum;
+
+
+    public int getMaterielApplyId() {
+        return materielApplyId;
+    }
+
+    public void setMaterielApplyId(int materielApplyId) {
+        this.materielApplyId = materielApplyId;
+    }
+
+    public String getApplyNo() {
+        return applyNo == null ? "" : applyNo;
+    }
+
+    public void setApplyNo(String applyNo) {
+        this.applyNo = applyNo == null ? "" : applyNo;
+    }
+
+    public String getMaterielId() {
+        return materielId == null ? "" : materielId;
+    }
+
+    public void setMaterielId(String materielId) {
+        this.materielId = materielId == null ? "" : materielId;
+    }
+
+    public String getApplyNum() {
+        return applyNum == null ? "" : applyNum;
+    }
+
+    public void setApplyNum(String applyNum) {
+        this.applyNum = applyNum == null ? "" : applyNum;
+    }
 
     public int getId() {
         return id;

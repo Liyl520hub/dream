@@ -13,6 +13,7 @@ import com.dream.common.http.Api;
 import com.dream.common.http.error.ErrorType;
 import com.dream.common.http.mode.RequestMode;
 import com.dream.common.widget.SuperToast;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
 import java.util.List;
@@ -31,11 +32,12 @@ public class ApplyMaterielPresenter extends BasePresenter<ApplyMaterielContract>
     /**
      * 物料申请接口
      */
-    public void getPageList(String pageIndex, String pageSize) {
+    public void submitMateriel(String applyType, String applyNum, String collectTime, JsonArray items) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("applyPerson", InfoUtils.getCleanerId());
-        jsonObject.addProperty("pageIndex", pageIndex);
-        jsonObject.addProperty("pageSize", pageSize);
+        jsonObject.addProperty("applyType",applyType);
+        jsonObject.addProperty("applyNum", applyNum);
+        jsonObject.addProperty("collectTime", collectTime);
+        jsonObject.add("items", items);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).submitMateriel(requestBody))
@@ -110,6 +112,8 @@ public class ApplyMaterielPresenter extends BasePresenter<ApplyMaterielContract>
 
     /**
      * 拉取分类物料
+     * 01 新人物料
+     * 02 常规物料
      */
     public void materielList(String newmaterielTypeCode) {
         JsonObject jsonObject = new JsonObject();
