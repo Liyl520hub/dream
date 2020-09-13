@@ -8,6 +8,7 @@ import com.dream.cleaner.beans.my.LeaveBean;
 import com.dream.cleaner.beans.my.MaterielBean;
 import com.dream.cleaner.beans.my.MaterielTypeBean;
 import com.dream.cleaner.beans.my.MyIncomeBean;
+import com.dream.cleaner.beans.my.MyIncomeListBean;
 import com.dream.cleaner.beans.news.NewsDetailsBean;
 import com.dream.cleaner.beans.news.NewsListBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
@@ -184,6 +185,12 @@ public interface ApiService {
      */
     @POST(ApiUrls.MY_INCOME)
     Observable<BaseBean<MyIncomeBean>> myIncome();
+
+    /**
+     * 我的收益
+     */
+    @POST(ApiUrls.INCOME_LIST)
+    Observable<BaseBean<MyIncomeListBean>> myIncomeList(@Body RequestBody body);
 
     /**
      * 个人信息

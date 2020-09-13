@@ -155,6 +155,12 @@ public class ApiUrls {
 
 
     /**
+     * 我的收益工单列表
+     */
+    public static final String INCOME_LIST = "/api/app/cleaner/userinfo/list";
+
+
+    /**
      * 个人信息
      */
     public static final String USER_INFO = "/api/app/cleaner/userinfo/{id}";

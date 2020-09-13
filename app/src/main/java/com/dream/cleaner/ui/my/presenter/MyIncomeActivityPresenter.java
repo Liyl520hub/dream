@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.my.presenter;
 
 import com.dream.cleaner.beans.my.MyIncomeBean;
+import com.dream.cleaner.beans.my.MyIncomeListBean;
 import com.dream.cleaner.http.ApiService;
 import com.dream.cleaner.ui.my.contract.MyIncomeActivityContract;
 import com.dream.cleaner.utils.InfoUtils;
@@ -43,6 +44,36 @@ public class MyIncomeActivityPresenter extends BasePresenter<MyIncomeActivityCon
 
                     @Override
                     protected void onError(ErrorType errorType, int errorCode, String message, MyIncomeBean myIncomeBean) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
+
+    /**
+     * 我的收益工单列表
+     */
+    public void myIncomeList(String yearAndMonth) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("yearAndMonth", yearAndMonth);
+        jsonObject.addProperty("pageIndex", "1");
+        jsonObject.addProperty("pageSize", "999");
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).myIncomeList(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<MyIncomeListBean, BaseBean<MyIncomeListBean>>() {
+                    @Override
+                    protected void onSuccess(MyIncomeListBean myIncomeListBean, String successMessage) {
+                        mContract.returnMyIncomeList(myIncomeListBean);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, MyIncomeListBean myIncomeListBean) {
                         SuperToast.showShortMessage(message);
                     }
                 });

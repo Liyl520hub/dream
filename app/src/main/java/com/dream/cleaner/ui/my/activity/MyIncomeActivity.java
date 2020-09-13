@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.my.activity;
 
 import android.os.Bundle;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -11,19 +12,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.dream.cleaner.R;
 import com.dream.cleaner.beans.my.MyIncomeBean;
-import com.dream.cleaner.beans.my.MyOrderListBean;
+import com.dream.cleaner.beans.my.MyIncomeListBean;
 import com.dream.cleaner.ui.my.MyOrderListAdapter;
 import com.dream.cleaner.ui.my.contract.MyIncomeActivityContract;
 import com.dream.cleaner.ui.my.presenter.MyIncomeActivityPresenter;
+import com.dream.cleaner.widget.EmptyLayout;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.ToolbarBackTitle;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * @author : liyl
@@ -78,15 +80,6 @@ public class MyIncomeActivity extends BaseActivity<MyIncomeActivityPresenter> im
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
         mPresenter.myIncome();
-        ArrayList<MyOrderListBean> myOrderListBeans = new ArrayList<>();
-        for (int i = 0; i < 30; i++) {
-            myOrderListBeans.add(new MyOrderListBean());
-        }
-        MyOrderListAdapter myOrderListAdapter = new MyOrderListAdapter(myOrderListBeans);
-        rvOrderList.setLayoutManager(new LinearLayoutManager(this));
-        rvOrderList.setAdapter(myOrderListAdapter);
-
-
     }
 
 
@@ -96,15 +89,25 @@ public class MyIncomeActivity extends BaseActivity<MyIncomeActivityPresenter> im
             //总收入
             tvNum.setText(myIncomeBean.getTotalWages() + "元");
             //月份
-            tvMouth.setText(myIncomeBean.getMonth() + "月");
+            int month = myIncomeBean.getMonth();
+            tvMouth.setText(month + "月");
             //订单数
             tvOrderNum.setText(myIncomeBean.getOrderNum() + "单");
             //实收
             tvNetWages.setText("+" + myIncomeBean.getNetWages() + "元");
             //扣款
             tvDeductionWages.setText("-" + myIncomeBean.getDeductionWages() + "元");
+            mPresenter.myIncomeList(myIncomeBean.getYear() + "-" + (month < 10 ? "0" + month : month + ""));
         }
 
+    }
+
+    @Override
+    public void returnMyIncomeList(MyIncomeListBean myIncomeListBean) {
+        List<MyIncomeListBean.RecordsBean> records = myIncomeListBean.getRecords();
+        MyOrderListAdapter myOrderListAdapter = new MyOrderListAdapter(records);
+        rvOrderList.setLayoutManager(new LinearLayoutManager(this));
+        rvOrderList.setAdapter(myOrderListAdapter);
     }
 
     @Override
