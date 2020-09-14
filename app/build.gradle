@@ -18,18 +18,35 @@ android {
         buildConfigField('int', 'CONNECT_TIME_OUT', project.CONNECT_TIME_OUT)
     }
 
+    signingConfigs {
+        release {
+            storeFile file('../cleaner.jks')
+            storePassword '12345679'
+            keyAlias = rootProject.ext.android.keyAlias
+            keyPassword = rootProject.ext.android.keyPassword
+            storePassword = rootProject.ext.android.keyPassword
+        }
+        debug {
+            storeFile file('../cleaner.jks')
+            keyAlias = rootProject.ext.android.keyAlias
+            keyPassword = rootProject.ext.android.keyPassword
+            storePassword = rootProject.ext.android.keyPassword
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField('boolean', 'IS_DEBUG', 'false')
             buildConfigField('String', 'HOST_SERVER', "\"" + HOST_TEST_SERVER.toString() + "\"")
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
             buildConfigField('boolean', 'IS_DEBUG', 'true')
             buildConfigField('String', 'HOST_SERVER', "\"" + HOST_TEST_SERVER.toString() + "\"")
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

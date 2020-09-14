@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white"
     android:layout_marginTop="5dp"
+    android:background="@color/white"
     android:paddingBottom="20dp">
     <!--联系方式-->
 
@@ -30,10 +30,10 @@
         android:paddingTop="16dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        tools:text="李先生"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_title"
+        tools:text="李先生" />
 
     <TextView
         android:id="@+id/tv_contact_information_mobile"
@@ -45,11 +45,11 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        tools:text="13333333333"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_name" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_name"
+        tools:text="13333333333" />
 
 
     <TextView
@@ -61,7 +61,8 @@
         android:paddingTop="2.5dp"
         android:paddingRight="13.5dp"
         android:paddingBottom="2.5dp"
-        android:text="打电话"
+        android:text="拨打电话"
+        android:textColor="@color/color_F6B351"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_contact_information_mobile"
         app:layout_constraintLeft_toRightOf="@+id/tv_contact_information_mobile" />
 
@@ -75,10 +76,10 @@
         android:paddingTop="5.5dp"
         android:paddingRight="15dp"
         android:paddingBottom="3dp"
-        tools:text="不要吸烟，一定要打扫干净"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
-        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_mobile" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_mobile"
+        tools:text="不要吸烟，一定要打扫干净" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

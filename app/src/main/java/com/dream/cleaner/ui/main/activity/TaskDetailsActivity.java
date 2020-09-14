@@ -1,22 +1,35 @@
 package com.dream.cleaner.ui.main.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
+import com.blankj.utilcode.util.ConvertUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.ui.main.contract.TaskDetailsActivityContract;
 import com.dream.cleaner.ui.main.presenter.TaskDetailsActivityPresenter;
+import com.dream.cleaner.ui.my.activity.UserInfoActivity;
+import com.dream.cleaner.utils.InfoUtils;
+import com.dream.cleaner.utils.ShapeUtils;
+import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.ToolbarBackTitle;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.reactivex.disposables.Disposable;
 
 /**
  * author : liyl
@@ -90,6 +103,8 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     private String title;
     private int orderStatus;
     private String id;
+    private PopTip popPermissionsTip;
+    private PopTip popTip;
 
     @Override
     protected int getLayoutId() {
@@ -115,6 +130,9 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
             orderStatus = getOrderStatus(title);
             mPresenter.taskInfoId(id);
         }
+        tvGoNavigation.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_4986FA));
+        tvContactInformationCallMobile.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_F6B351));
+
     }
 
     @Override
@@ -144,6 +162,38 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
             //订单价格
             tvOrderInfoPrice.setText(taskDetailsBean.getServicePrice() + "元");
             tvOrderInfoServiceStatus.setText(getOrderStatusString(taskDetailsBean.getOrderStatus()));
+            tvContactInformationCallMobile.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String[] permissions = {Manifest.permission.CALL_PHONE};
+                    Disposable subscribe = new RxPermissions(TaskDetailsActivity.this).requestEach(permissions)
+                            .subscribe(aBoolean -> {
+                                if (aBoolean.granted) {
+                                    callPhone(taskDetailsBean.getContactNo());
+                                } else if (aBoolean.shouldShowRequestPermissionRationale) {
+                                    callPhone(taskDetailsBean.getContactNo());
+                                } else {
+                                    popPermissionsTip = new PopTip.Builder()
+                                            .setType(1)
+                                            .setTitle("提示")
+                                            .setSubmitText("立即获取")
+                                            .setMsg("考啦需要以下权限才能正常运行")
+                                            .setSubmitClickListener(new View.OnClickListener() {
+                                                @Override
+                                                public void onClick(View v) {
+                                                    // 帮跳转到该应用的设置界面，让用户手动授权
+                                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                                    Uri uri = Uri.fromParts("package", TaskDetailsActivity.this.getPackageName(), null);
+                                                    intent.setData(uri);
+                                                    startActivity(intent);
+                                                    popPermissionsTip.dismiss();
+                                                }
+                                            }).build(TaskDetailsActivity.this);
+                                }
+                            });
+                }
+            });
+
         }
 
 
@@ -234,5 +284,52 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
         }
         return orderStatusString;
     }
+
+
+    /**
+     * 打电话
+     */
+    private void callPhone(final String phone) {
+        popTip = new PopTip.Builder().
+                setType(2).
+                setTitle("提示").
+                setMsg("确定拨打电话" + phone + "?").
+                setSubmitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                }).
+                setCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                }).
+                setYesClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        Uri data = Uri.parse("tel:" + phone);
+//                        Uri data = Uri.parse("tel:15733125211"  );
+                        intent.setData(data);
+                        //不影响程序的运行
+                        if (ActivityCompat.checkSelfPermission(TaskDetailsActivity.this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        startActivity(intent);
+                        popTip.dismiss();
+                    }
+                }).build(TaskDetailsActivity.this);
+        popTip.showPopupWindow();
+    }
+
 
 }

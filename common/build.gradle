@@ -17,6 +17,8 @@ android {
     buildTypes {
         release {
             minifyEnabled false
+            buildConfigField('boolean', 'IS_DEBUG', 'false')
+            buildConfigField('String', 'HOST_SERVER', "\"" + HOST_TEST_SERVER.toString() + "\"")
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
         debug {
