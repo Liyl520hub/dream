@@ -4,6 +4,9 @@
     "bus_fragment_plan": [
       "{ desc: com.dream.cleaner.ui.main.MainActivity#postBusListener(com.dream.cleaner.beans.BusBean busBean) }"
     ],
+    "bus_fragment_work": [
+      "{ desc: com.dream.cleaner.ui.main.fragment.WorkOrderTabFragment#postBusListener(com.dream.cleaner.beans.BusBean busBean) }"
+    ],
     "bus_login_activity": [
       "{ desc: com.dream.cleaner.ui.login.activity.LoginActivity#postBusListener(com.dream.cleaner.beans.BusBean busBean) }"
     ]

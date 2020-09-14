@@ -11,10 +11,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.BusUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.dream.cleaner.R;
+import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.cleaner.ui.main.activity.TaskDetailsActivity;
@@ -47,17 +50,13 @@ import razerdp.basepopup.BasePopupWindow;
 public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPresenter> implements WorkOrderTabFragmentContract {
 
 
-    @BindView(R.id.tv_order_type)
-    TextView tvOrderType;
-    @BindView(R.id.tv_server_type)
-    TextView tvServerType;
-    @BindView(R.id.ll_menu)
-    LinearLayout llMenu;
     @BindView(R.id.my_recyclerview)
     RecyclerView myRecyclerview;
     private PopTip popTip;
     private String title;
     private WorkOrderTabFragmentAdapter workOrderTabFragmentAdapter;
+    private String orderTypeId = "";
+    private String serviceTypeId = "";
 
     @Override
     protected int getLayoutId() {
@@ -71,6 +70,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
 
     @Override
     protected void initView() {
+        BusUtils.register(this);
         Bundle arguments = getArguments();
         if (arguments != null) {
             title = arguments.getString("title");
@@ -81,11 +81,17 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     @Override
     public void onResume() {
         super.onResume();
-        initData();
+        initData(orderTypeId, serviceTypeId);
     }
 
-    private void initData() {
-        mPresenter.taskList("1", "10", getOrderStatus(title));
+    private void initData(String orderType, String serviceType) {
+        orderTypeId = orderType;
+        serviceTypeId = serviceType;
+        mPresenter.taskList("1", "10", getOrderStatus(title), orderTypeId, serviceTypeId);
+    }
+
+    public void upData(String orderType, String serviceType) {
+        initData(orderType, serviceType);
     }
 
     private int getOrderStatus(String title) {
@@ -124,59 +130,6 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
         return intOrderStatus;
     }
 
-    @OnClick({R.id.tv_order_type, R.id.tv_server_type})
-    public void onViewClicked(View view) {
-        BasePopupWindow.OnDismissListener onDismissListener = new BasePopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                llMenu.setBackgroundColor(Color.WHITE);
-            }
-        };
-        switch (view.getId()) {
-            case R.id.tv_order_type:
-                ArrayList<PopWorkOrderBean> popWorkOrderBeans = new ArrayList<>();
-                popWorkOrderBeans.add(new PopWorkOrderBean("周次单"));
-                popWorkOrderBeans.add(new PopWorkOrderBean("周期单"));
-                popWorkOrderBeans.add(new PopWorkOrderBean("企业单"));
-                popWorkOrderBeans.add(new PopWorkOrderBean("自如单"));
-                popWorkOrderBeans.add(new PopWorkOrderBean("麦田单"));
-                PopWorkOrder popWorkOrder = new PopWorkOrder(this, popWorkOrderBeans);
-                popWorkOrder.getPopWorkOrderAdapter().setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                        PopWorkOrderBean data = (PopWorkOrderBean) adapter.getItem(position);
-                        SuperToast.showShortMessage(data.getName());
-                    }
-                });
-                popWorkOrder.setOnDismissListener(onDismissListener);
-                popWorkOrder.setBackgroundColor(Color.TRANSPARENT);
-                popWorkOrder.showPopupWindow(tvOrderType);
-                llMenu.setBackgroundColor(ShapeUtils.getColor(R.color.color_f8f8f8));
-                break;
-            case R.id.tv_server_type:
-                ArrayList<PopWorkOrderBean> servers = new ArrayList<>();
-                servers.add(new PopWorkOrderBean("日常保洁"));
-                servers.add(new PopWorkOrderBean("开荒保洁"));
-                servers.add(new PopWorkOrderBean("深度保洁"));
-                servers.add(new PopWorkOrderBean("地毯清洁"));
-                PopWorkOrder popServers = new PopWorkOrder(this, servers);
-                popServers.getPopWorkOrderAdapter().setOnItemClickListener(new OnItemClickListener() {
-                    @Override
-                    public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                        PopWorkOrderBean data = (PopWorkOrderBean) adapter.getItem(position);
-                        SuperToast.showShortMessage(data.getName());
-                    }
-                });
-                popServers.setOnDismissListener(onDismissListener);
-                popServers.setBackgroundColor(Color.TRANSPARENT);
-                popServers.showPopupWindow(tvServerType);
-                llMenu.setBackgroundColor(ShapeUtils.getColor(R.color.color_f8f8f8));
-
-
-                break;
-            default:
-        }
-    }
 
     @Override
     public void showErrorTip(ErrorType errorType, int errorCode, String message) {
@@ -244,5 +197,20 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                 }
             });
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        BusUtils.unregister(this);
+    }
+
+    @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_WORK)
+    public void postBusListener(BusBean busBean) {
+        if (isResumed()) {
+            Log.e(WorkOrderTabFragment.this.toString(), title);
+            initData(busBean.getOrderTypeId(), busBean.getServiceTypeId());
+        }
+
     }
 }

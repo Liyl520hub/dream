@@ -122,6 +122,16 @@ public class ApiUrls {
      */
     public static final String TASK_LIST = "/api/app/cleaner/task/list";
 
+   /**
+     * 获取服务列表
+     */
+    public static final String GET_SERVICE_CLASS_LIST = "/api/app/cleaner/task/getServiceClassList";
+
+   /**
+     * 获取订单类型列表
+     */
+    public static final String GET_ORDER_TYPE_LIST = "/api/app/cleaner/task/getOrderTypeList";
+
 
     /**
      * 接单接口

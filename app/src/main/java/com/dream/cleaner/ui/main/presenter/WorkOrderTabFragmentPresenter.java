@@ -30,13 +30,13 @@ import okhttp3.RequestBody;
 public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFragmentContract> {
 
     /**
-     * 用户登录
+     * 任务列表
      *
      * @param pageIndex   页数
      * @param pageSize    页数size
      * @param orderStatus 查询0新任务，1待服务，2上门中，5服务中，8售后单，7已完成，9已取消
      */
-    public void taskList(String pageIndex, String pageSize, int orderStatus) {
+    public void taskList(String pageIndex, String pageSize, int orderStatus,String orderTypeId,String serviceClassId ) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", "0");
         jsonObject.addProperty("pageIndex", pageIndex);
@@ -51,6 +51,8 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         jsonObject.addProperty("keyword", "");
         jsonObject.add("orderStatusList", new JsonArray());
         jsonObject.addProperty("cleanerId", InfoUtils.getCleanerId());
+        jsonObject.addProperty("orderTypeId", orderTypeId);
+        jsonObject.addProperty("serviceClasssId", serviceClassId);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).taskList(requestBody))

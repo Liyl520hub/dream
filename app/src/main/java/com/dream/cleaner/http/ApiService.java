@@ -11,6 +11,7 @@ import com.dream.cleaner.beans.my.MyIncomeBean;
 import com.dream.cleaner.beans.my.MyIncomeListBean;
 import com.dream.cleaner.beans.news.NewsDetailsBean;
 import com.dream.cleaner.beans.news.NewsListBean;
+import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.common.base.BaseBean;
@@ -153,6 +154,18 @@ public interface ApiService {
      */
     @POST(ApiUrls.TASK_LIST)
     Observable<BaseBean<WorkOrderTabBean>> taskList(@Body RequestBody body);
+
+    /**
+     * 获取服务列表
+     */
+    @POST(ApiUrls.GET_SERVICE_CLASS_LIST)
+    Observable<BaseBean<List<PopWorkOrderBean>>> getServiceClassList();
+
+    /**
+     * 获取订单类型列表
+     */
+    @POST(ApiUrls.GET_ORDER_TYPE_LIST)
+    Observable<BaseBean<List<PopWorkOrderBean>>> getOrderTypeList();
 
     /**
      * 接单接口

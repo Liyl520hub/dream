@@ -16,12 +16,19 @@ import java.util.List;
  * desc   :工单pop适配器
  */
 public class PopWorkOrderAdapter extends BaseQuickAdapter<PopWorkOrderBean, BaseViewHolder> {
-    public PopWorkOrderAdapter(@Nullable List<PopWorkOrderBean> data) {
+    private boolean isOrderType;
+
+    public PopWorkOrderAdapter(@Nullable List<PopWorkOrderBean> data, boolean isOrderType) {
         super(R.layout.pop_item_work_order, data);
+        this.isOrderType = isOrderType;
     }
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, PopWorkOrderBean popWorkOrderBean) {
-        baseViewHolder.setText(R.id.tv_name, popWorkOrderBean.getName());
+        if (isOrderType) {
+            baseViewHolder.setText(R.id.tv_name, popWorkOrderBean.getName());
+        }else{
+            baseViewHolder.setText(R.id.tv_name, popWorkOrderBean.getCategoryName());
+        }
     }
 }

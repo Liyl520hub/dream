@@ -11,6 +11,7 @@ import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.widget.pop.adapter.PopWorkOrderAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import razerdp.basepopup.BasePopupWindow;
 
@@ -22,19 +23,21 @@ import razerdp.basepopup.BasePopupWindow;
  * @author joy
  */
 public class PopWorkOrder extends BasePopupWindow {
-    private ArrayList<PopWorkOrderBean> popWorkOrderBeans;
+    private List<PopWorkOrderBean> popWorkOrderBeans;
     private PopWorkOrderAdapter popWorkOrderAdapter;
+    private boolean isOrderType;
 
-    public PopWorkOrder(Fragment fragment, ArrayList<PopWorkOrderBean> popWorkOrderBeans) {
+    public PopWorkOrder(Fragment fragment, List<PopWorkOrderBean> popWorkOrderBeans, boolean isOrderType) {
         super(fragment);
         this.popWorkOrderBeans = popWorkOrderBeans;
+        this.isOrderType = isOrderType;
         initView(fragment);
     }
 
 
     private void initView(Fragment fragment) {
         RecyclerView myRv = findViewById(R.id.my_rv);
-        popWorkOrderAdapter = new PopWorkOrderAdapter(popWorkOrderBeans);
+        popWorkOrderAdapter = new PopWorkOrderAdapter(popWorkOrderBeans, isOrderType);
         myRv.setLayoutManager(new LinearLayoutManager(fragment.getContext()));
         myRv.setAdapter(popWorkOrderAdapter);
     }
