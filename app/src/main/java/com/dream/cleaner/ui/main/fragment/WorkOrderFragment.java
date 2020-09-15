@@ -19,10 +19,12 @@ import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.PopWorkOrderTypeListBean;
+import com.dream.cleaner.ui.main.activity.WorkReadyActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderFragmentTabLayoutAdapter;
 import com.dream.cleaner.ui.main.contract.WorkOrderFragmentContract;
 import com.dream.cleaner.ui.main.presenter.WorkOrderFragmentPresenter;
 import com.dream.cleaner.utils.ShapeUtils;
+import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.DataGenerator;
 import com.dream.cleaner.widget.pop.PopWorkOrder;
 import com.dream.common.base.BaseFragment;
@@ -80,12 +82,14 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_order_type:
-                if (orderTypeList.size() == 0) {
-                    mPresenter.getOrderTypeList();
-                } else {
-                    showPop(true);
+                UiUtil.openActivity(getActivity(), WorkReadyActivity.class);
 
-                }
+//                if (orderTypeList.size() == 0) {
+//                    mPresenter.getOrderTypeList();
+//                } else {
+//                    showPop(true);
+//
+//                }
                 break;
             case R.id.tv_server_type:
                 if (serviceList.size() == 0) {

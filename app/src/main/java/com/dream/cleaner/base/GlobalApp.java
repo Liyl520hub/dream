@@ -118,5 +118,9 @@ public class GlobalApp {
      * app下载地址
      */
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory() + "/BaoJieIcon/";
+  /**
+     * FILE_PROVIDER
+     */
+    public static final String FILE_PROVIDER = "com.dream.cleaner.fileprovider";
 
 }

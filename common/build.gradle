@@ -77,4 +77,6 @@ dependencies {
     api rootProject.ext.dependencies.Android_PickerView
     //日历
     api rootProject.ext.dependencies.calendarview
+    //自定义相册
+    api rootProject.ext.dependencies.EasyPhotos
 }

@@ -66,6 +66,8 @@ ext {
             "Android_PickerView"           : 'com.contrarywind:Android-PickerView:4.1.9',
             //日历
             "calendarview"                 : 'com.haibin:calendarview:3.6.9',
+            //自定义相册
+            "EasyPhotos"                 : 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
 
     ]
 }

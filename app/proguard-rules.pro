@@ -48,3 +48,5 @@
 -keep interface com.google.android.support.v4.app.** { *; }
 -keep public class * extends com.google.android.support.v4.**
 -keep public class * extends com.google.android.support.v4.app.Fragment
+#自定义相册
+-keep class com.huantansheng.easyphotos.models.** { *; }
