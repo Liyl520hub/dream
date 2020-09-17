@@ -9,6 +9,7 @@ import com.dream.cleaner.BuildConfig;
 import com.dream.common.base.BaseApplication;
 import com.dream.common.http.Api;
 import com.dream.common.http.config.ApiConfig;
+import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
@@ -29,7 +30,10 @@ public class MyApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         initAutoSize();
-
+        //初始化友盟推送
+        UMConfigure.init(this, "5f5e33a7b4739632429e3dad",
+                "cleaner", UMConfigure.DEVICE_TYPE_PHONE, "26658a6cb55df9d40d4a07adb24ee269");
+        UMConfigure.setLogEnabled(true);
         //获取消息推送代理示例
         PushAgent mPushAgent = PushAgent.getInstance(this);
 
@@ -39,6 +43,14 @@ public class MyApplication extends BaseApplication {
             public void onSuccess(String deviceToken) {
                 //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
                 Log.i(TAG, "注册成功：deviceToken：-------->  " + deviceToken);
+                //alias_type 必须先add下，类型添加完后续不许再次添加
+//                mPushAgent.addAlias("dream","test",null);
+                mPushAgent.setAlias("dream1", "test", new UTrack.ICallBack() {
+                    @Override
+                    public void onMessage(boolean b, String s) {
+                        Log.d(TAG, "onMessage: " + s);
+                    }
+                });
             }
 
             @Override
@@ -47,12 +59,7 @@ public class MyApplication extends BaseApplication {
             }
         });
 
-        mPushAgent.setAlias("dream", "", new UTrack.ICallBack() {
-            @Override
-            public void onMessage(boolean b, String s) {
-                Log.d(TAG, "onMessage: " + s);
-            }
-        });
+
     }
 
     @Override
