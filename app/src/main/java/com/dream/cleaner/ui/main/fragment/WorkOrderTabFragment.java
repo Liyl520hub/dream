@@ -21,6 +21,7 @@ import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.cleaner.ui.main.activity.TaskDetailsActivity;
+import com.dream.cleaner.ui.main.activity.WorkReadyActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderTabFragmentAdapter;
 import com.dream.cleaner.ui.main.contract.WorkOrderTabFragmentContract;
 import com.dream.cleaner.ui.main.presenter.WorkOrderTabFragmentPresenter;
@@ -95,6 +96,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     }
 
     private int getOrderStatus(String title) {
+        // 订单状态，查询0新任务，1待服务，2上门中，5服务中，8售后，7已完成，9已取消
         int intOrderStatus = 0;
         switch (title) {
             case "新任务": {
@@ -153,39 +155,73 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                 @Override
                 public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                     WorkOrderTabBean.RecordsBean item = workOrderTabFragmentAdapter.getItem(position);
+                    int orderStatus = item.getOrderStatus();
                     int id = item.getId();
                     switch (view.getId()) {
                         case R.id.cl_top: {
                             Bundle bundle = new Bundle();
-                            bundle.putString("title", title);
                             bundle.putString("id", id + "");
                             UiUtil.openActivity(getActivity(), TaskDetailsActivity.class, bundle);
                         }
                         break;
 
                         case R.id.tv_submit: {
-                            popTip = new PopTip.Builder()
-                                    .setType(2)
-                                    .setMsg("接单确认")
-                                    .setSubmitClickListener(new View.OnClickListener() {
+                            // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
+                            switch (orderStatus) {
+                                case 0: {
+                                    //接单"
+                                    goNext("接单确认", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            popTip.dismiss();
+                                            canCelPop();
+                                            mPresenter.taskReceive(id + "");
                                         }
-                                    }).setCancelClickListener(new View.OnClickListener() {
+                                    });
+                                }
+                                break;
+                                case 1: {
+                                    //出发
+                                    goNext("是否确认出发", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            popTip.dismiss();
+                                            canCelPop();
+                                            mPresenter.taskGo(id + "");
                                         }
-                                    })
-                                    .setYesClickListener(new View.OnClickListener() {
+                                    });
+                                }
+                                break;
+                                case 2: {
+                                    //确认到达 -- 变成扫前准备
+                                    goNext("是否确认到达", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            popTip.dismiss();
+                                            canCelPop();
+                                            mPresenter.arrive(id + "");
+
                                         }
-                                    })
-                                    .build(getActivity());
-                            popTip.showPopupWindow();
+                                    });
+                                }
+                                break;
+                                case 4: {
+                                    //扫前准备
+                                    UiUtil.openActivity(getActivity(), WorkReadyActivity.class);
+                                }
+                                break;
+                                case 5: {
+                                    //完成服务
+                                    goNext("确认完成服务", new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            canCelPop();
+                                            UiUtil.openActivity(getActivity(), WorkReadyActivity.class);
+                                        }
+                                    });
+                                }
+
+                                break;
+                                default:
+                            }
+
                         }
                         break;
 
@@ -195,8 +231,42 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
 
 
                 }
+
+
             });
         }
+    }
+
+    private void canCelPop() {
+        if (popTip != null) {
+            popTip.dismiss();
+        }
+    }
+
+    @Override
+    public void returnTaskReceive(String s) {
+        //刷新当前页面
+
+    }
+
+    private void goNext(String msg, View.OnClickListener onClickListener) {
+        popTip = new PopTip.Builder()
+                .setType(2)
+                .setMsg(msg)
+                .setSubmitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                }).setCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                })
+                .setYesClickListener(onClickListener)
+                .build(getActivity());
+        popTip.showPopupWindow();
     }
 
     @Override
@@ -208,7 +278,6 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_WORK)
     public void postBusListener(BusBean busBean) {
         if (isResumed()) {
-            Log.e(WorkOrderTabFragment.this.toString(), title);
             initData(busBean.getOrderTypeId(), busBean.getServiceTypeId());
         }
 

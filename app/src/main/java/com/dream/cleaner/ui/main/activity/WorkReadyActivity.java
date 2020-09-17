@@ -44,7 +44,8 @@ import butterknife.OnClick;
 /**
  * @author : Liyalei
  * date   : 2020/9/15
- * desc   :扫💰准备
+ * desc   :扫前准备   确认开始服务
+ * 扫后拍照  确认完成服务
  */
 public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> implements WorkReadyActivityContract {
     @BindView(R.id.tv_title)
@@ -118,7 +119,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                                             if (size > 0) {
                                                 for (int i = 0; i < size; i++) {
                                                     Photo photo = photos.get(i);
-                                                    photoAdapter.addData(0, new MyPhotoBean("2", photo.uri,photo.path));
+                                                    photoAdapter.addData(0, new MyPhotoBean("2", photo.uri, photo.path));
                                                     if (photoAdapter.getPhotoSize() == maxSize) {
                                                         MyPhotoBean lastItem = photoAdapter.getItem((photoAdapter.getItemCount() - 1));
                                                         if ("1".equals(lastItem.getType())) {
@@ -202,5 +203,10 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                 break;
             default:
         }
+    }
+
+    @Override
+    public void returnUpLoadImageStatus(String 无网络, String s) {
+
     }
 }

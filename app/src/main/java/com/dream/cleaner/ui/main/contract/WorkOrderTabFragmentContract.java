@@ -10,4 +10,6 @@ import com.dream.common.base.BaseContract;
  */
 public interface WorkOrderTabFragmentContract extends BaseContract {
     void returnTaskList(WorkOrderTabBean loginBean);
+
+    void returnTaskReceive(String s);
 }

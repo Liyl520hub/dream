@@ -11,4 +11,5 @@ import com.dream.common.base.BaseContract;
 public interface TaskDetailsActivityContract extends BaseContract {
     void returnTaskDetail(TaskDetailsBean taskDetailsBean);
 
+    void returnTaskReceive(String s);
 }

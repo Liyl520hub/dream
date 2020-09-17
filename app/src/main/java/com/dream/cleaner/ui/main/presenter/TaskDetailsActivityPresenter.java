@@ -46,36 +46,86 @@ public class TaskDetailsActivityPresenter extends BasePresenter<TaskDetailsActiv
                 });
 
     }
-//  /**
-//     * 订单详情
-//     *
-//     */
-//    public void userLogin(String id) {
-//        JsonObject jsonObject = new JsonObject();
-//        jsonObject.addProperty("phone", userName);
-//        jsonObject.addProperty("password", passWord);
-//        jsonObject.addProperty("verifyToken", "");
-//        jsonObject.addProperty("imgCode", "");
-//        jsonObject.addProperty("code", "");
-//        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
-//        Api
-//                .observable(Api.getService(ApiService.class).taskInfoId(id))
-//                .presenter(this)
-//                .requestMode(RequestMode.SINGLE)
-//                .showLoading(true)
-//                .doRequest(new BaseRxSubscriber<TaskDetailsBean, BaseBean<TaskDetailsBean>>() {
-//                    @Override
-//                    protected void onSuccess(TaskDetailsBean taskDetailsBean, String successMessage) {
-//                        mContract.returnLoginBean(taskDetailsBean);
-//
-//                    }
-//
-//                    @Override
-//                    protected void onError(ErrorType errorType, int errorCode, String message, TaskDetailsBean taskDetailsBean) {
-//                        SuperToast.showShortMessage(message);
-//                    }
-//                });
-//
-//    }
+    /**
+     * 接单
+     */
+    public void taskReceive(String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).taskReceive(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                    @Override
+                    protected void onSuccess(String s, String successMessage) {
+                        mContract.returnTaskReceive(s);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, String s) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
+    /**
+     * 出发
+     */
+    public void taskGo(String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).taskGo(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                    @Override
+                    protected void onSuccess(String s, String successMessage) {
+                        mContract.returnTaskReceive(s);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, String s) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
+    /**
+     * 确认到达
+     */
+    public void arrive(String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).arrive(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                    @Override
+                    protected void onSuccess(String s, String successMessage) {
+                        mContract.returnTaskReceive(s);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, String s) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
 
 }

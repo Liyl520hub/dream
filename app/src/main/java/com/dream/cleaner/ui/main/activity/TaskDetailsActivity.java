@@ -13,13 +13,13 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.ui.main.contract.TaskDetailsActivityContract;
 import com.dream.cleaner.ui.main.presenter.TaskDetailsActivityPresenter;
-import com.dream.cleaner.ui.my.activity.UserInfoActivity;
-import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.ShapeUtils;
+import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
@@ -29,6 +29,7 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
 
 /**
@@ -100,7 +101,6 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     TextView tvOrderInfoPrice;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
-    private String title;
     private int orderStatus;
     private String id;
     private PopTip popPermissionsTip;
@@ -125,14 +125,11 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     protected void initView(@Nullable Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            title = intent.getStringExtra("title");
             id = intent.getStringExtra("id");
-            orderStatus = getOrderStatus(title);
             mPresenter.taskInfoId(id);
         }
         tvGoNavigation.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_4986FA));
         tvContactInformationCallMobile.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_F6B351));
-
     }
 
     @Override
@@ -143,6 +140,7 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     @Override
     public void returnTaskDetail(TaskDetailsBean taskDetailsBean) {
         if (taskDetailsBean != null) {
+            orderStatus = taskDetailsBean.getOrderStatus();
             //任务信息地址
             tvAddress.setText(taskDetailsBean.getContactAddress());
             //日常保洁那一行
@@ -194,7 +192,139 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
                 }
             });
 
+            String orderString = getOrderString(orderStatus);
+            tvSubmit.setVisibility(StringUtils.isEmpty(orderString) ? View.GONE : View.VISIBLE);
+            tvSubmit.setText(orderString);
         }
+    }
+
+    private String getOrderString(int intOrderStatus) {
+        // 0新任务，1待服务，[2显示确认到达,3显示待客户确认,4显示扫前准备]2，3，4上门中，
+        // [5显示确认完成，6显示待用户确认]5，6服务中，8售后，7已完成，9已取消
+        String intOrderStatusString = "";
+        switch (intOrderStatus) {
+            case 0: {
+                intOrderStatusString = "接单";
+            }
+            break;
+            case 1: {
+                intOrderStatusString = "出发";
+            }
+            break;
+            case 2: {
+                intOrderStatusString = "确认到达";
+            }
+            break;
+            case 3: {
+                //待用户确认
+                intOrderStatusString = "";
+            }
+            break;
+            case 4: {
+                intOrderStatusString = "扫前准备";
+            }
+            break;
+            case 5: {
+                //点击跳转扫后拍照
+                intOrderStatusString = "完成服务";
+            }
+            break;
+            default:
+        }
+        return intOrderStatusString;
+    }
+
+    @OnClick(R.id.tv_submit)
+    public void onViewClicked() {
+
+        // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
+        switch (orderStatus) {
+            case 0: {
+                //接单"
+                goNext("接单确认", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        canCelPop();
+                        mPresenter.taskReceive(id + "");
+                    }
+                });
+            }
+            break;
+            case 1: {
+                //出发
+                goNext("是否确认出发", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        canCelPop();
+                        mPresenter.taskGo(id + "");
+                    }
+                });
+            }
+            break;
+            case 2: {
+                //确认到达 -- 变成扫前准备
+                goNext("是否确认到达", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        canCelPop();
+                        mPresenter.arrive(id + "");
+
+                    }
+                });
+            }
+            break;
+            case 4: {
+                //扫前准备
+                UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class);
+            }
+            break;
+            case 5: {
+                //完成服务
+                goNext("确认完成服务", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        canCelPop();
+                        UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class);
+                    }
+                });
+            }
+
+            break;
+            default:
+        }
+
+
+    }
+
+    private void canCelPop() {
+        if (popTip != null) {
+            popTip.dismiss();
+        }
+    }
+
+    private void goNext(String msg, View.OnClickListener onClickListener) {
+        popTip = new PopTip.Builder()
+                .setType(2)
+                .setMsg(msg)
+                .setSubmitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                }).setCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                })
+                .setYesClickListener(onClickListener)
+                .build(TaskDetailsActivity.this);
+        popTip.showPopupWindow();
+    }
+
+
+    @Override
+    public void returnTaskReceive(String s) {
 
 
     }
@@ -333,3 +463,4 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
 
 
 }
+

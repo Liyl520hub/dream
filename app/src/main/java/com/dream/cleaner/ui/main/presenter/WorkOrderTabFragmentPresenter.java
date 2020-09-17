@@ -36,7 +36,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
      * @param pageSize    页数size
      * @param orderStatus 查询0新任务，1待服务，2上门中，5服务中，8售后单，7已完成，9已取消
      */
-    public void taskList(String pageIndex, String pageSize, int orderStatus,String orderTypeId,String serviceClassId ) {
+    public void taskList(String pageIndex, String pageSize, int orderStatus, String orderTypeId, String serviceClassId) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", "0");
         jsonObject.addProperty("pageIndex", pageIndex);
@@ -68,6 +68,87 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
 
                     @Override
                     protected void onError(ErrorType errorType, int errorCode, String message, WorkOrderTabBean loginBean) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
+    /**
+     * 接单
+     */
+    public void taskReceive(String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).taskReceive(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                    @Override
+                    protected void onSuccess(String s, String successMessage) {
+                        mContract.returnTaskReceive(s);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, String s) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
+    /**
+     * 出发
+     */
+    public void taskGo(String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).taskGo(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                    @Override
+                    protected void onSuccess(String s, String successMessage) {
+                        mContract.returnTaskReceive(s);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, String s) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
+    /**
+     * 确认到达
+     */
+    public void arrive(String id) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", id);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+        Api
+                .observable(Api.getService(ApiService.class).arrive(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                    @Override
+                    protected void onSuccess(String s, String successMessage) {
+                        mContract.returnTaskReceive(s);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, String s) {
                         SuperToast.showShortMessage(message);
                     }
                 });

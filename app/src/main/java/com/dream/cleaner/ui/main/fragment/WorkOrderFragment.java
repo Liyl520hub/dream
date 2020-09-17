@@ -82,14 +82,12 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_order_type:
-                UiUtil.openActivity(getActivity(), WorkReadyActivity.class);
+                if (orderTypeList.size() == 0) {
+                    mPresenter.getOrderTypeList();
+                } else {
+                    showPop(true);
 
-//                if (orderTypeList.size() == 0) {
-//                    mPresenter.getOrderTypeList();
-//                } else {
-//                    showPop(true);
-//
-//                }
+                }
                 break;
             case R.id.tv_server_type:
                 if (serviceList.size() == 0) {

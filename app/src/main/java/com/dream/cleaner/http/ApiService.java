@@ -1,6 +1,7 @@
 package com.dream.cleaner.http;
 
 import com.dream.cleaner.beans.PlanBean;
+import com.dream.cleaner.beans.UploadImageBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.beans.my.ApplyMaterielBean;
@@ -126,30 +127,6 @@ public interface ApiService {
     //--------------------------------------------保洁端任务------------------------------------------------------
 
     /**
-     * 保洁员到达
-     */
-    @POST(ApiUrls.ARRIVE)
-    Observable<BaseBean<LoginBean>> arrive(@Body RequestBody body);
-
-    /**
-     * 确认开始-扫前准备上传照片
-     */
-    @POST(ApiUrls.BEFORE_CLEAN)
-    Observable<BaseBean<LoginBean>> beforeClean(@Body RequestBody body);
-
-    /**
-     * 确认完成
-     */
-    @POST(ApiUrls.CONFIRM_FINISH)
-    Observable<BaseBean<LoginBean>> confirmFinish(@Body RequestBody body);
-
-    /**
-     * 出发-变成上门中
-     */
-    @POST(ApiUrls.TASK_GO)
-    Observable<BaseBean<LoginBean>> taskGo(@Body RequestBody body);
-
-    /**
      * 任务列表
      */
     @POST(ApiUrls.TASK_LIST)
@@ -171,7 +148,29 @@ public interface ApiService {
      * 接单接口
      */
     @POST(ApiUrls.TASK_RECEIVE)
-    Observable<BaseBean<LoginBean>> taskReceive(@Body RequestBody body);
+    Observable<BaseBean<String>> taskReceive(@Body RequestBody body);
+    /**
+     * 出发-变成上门中
+     */
+    @POST(ApiUrls.TASK_GO)
+    Observable<BaseBean<String>> taskGo(@Body RequestBody body);
+    /**
+     * 保洁员到达
+     */
+    @POST(ApiUrls.ARRIVE)
+    Observable<BaseBean<String>> arrive(@Body RequestBody body);
+
+    /**
+     * 确认开始-扫前准备上传照片
+     */
+    @POST(ApiUrls.BEFORE_CLEAN)
+    Observable<BaseBean<UploadImageBean>> beforeClean(@Body RequestBody body);
+
+    /**
+     * 确认完成
+     */
+    @POST(ApiUrls.CONFIRM_FINISH)
+    Observable<BaseBean<LoginBean>> confirmFinish(@Body RequestBody body);
 
     /**
      * 任务订单详情
