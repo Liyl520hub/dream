@@ -77,4 +77,20 @@ dependencies {
     api rootProject.ext.dependencies.Android_PickerView
     //日历
     api rootProject.ext.dependencies.calendarview
+
+    //友盟push相关依赖(必须)
+    api 'com.umeng.umsdk:common:9.1.0'
+    api 'com.umeng.umsdk:utdid:1.5.2'
+    api  'com.umeng.umsdk:asms:1.1.3'
+    api 'com.umeng.umsdk:crash:0.0.4'
+    api 'com.umeng.umsdk:push:6.1.0'
+    api 'com.umeng.umsdk:alicloud-httpdns:1.2.5'
+    api 'com.umeng.umsdk:alicloud-utils:1.1.5'
+    api 'com.umeng.umsdk:alicloud_beacon:1.0.1'
+    api 'com.umeng.umsdk:agoo-accs:3.3.8.8-open-fix2'
+    api 'com.umeng.umsdk:agoo_networksdk:3.5.5'
+    api 'com.umeng.umsdk:agoo_tlog:3.0.0.17'
+    api 'com.umeng.umsdk:agoo_tnet4android:3.1.14.9'
+
+
 }

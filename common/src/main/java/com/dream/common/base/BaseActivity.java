@@ -1,7 +1,6 @@
 package com.dream.common.base;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,13 +21,13 @@ import com.blankj.utilcode.util.BarUtils;
 import com.blankj.utilcode.util.ClickUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.ScreenUtils;
-import com.blankj.utilcode.util.ToastUtils;
 import com.dream.common.R;
 import com.dream.common.baserx.RxManager;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorCode;
 import com.dream.common.utils.TUtil;
 import com.dream.common.widget.SuperToast;
+import com.umeng.message.PushAgent;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -88,6 +87,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         mRxManager = new RxManager();
         initBeforeSetContentView();
         setContentView(getRootView());
+
+//        友盟
+        PushAgent.getInstance(mActivity).onAppStart();
+
         bind = ButterKnife.bind(this);
         mPresenter = TUtil.getT(this, 0);
         if (mPresenter != null) {
