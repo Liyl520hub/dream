@@ -93,4 +93,6 @@ dependencies {
     api 'com.umeng.umsdk:agoo_tnet4android:3.1.14.9'
 
 
+    //自定义相册
+    api rootProject.ext.dependencies.EasyPhotos
 }
