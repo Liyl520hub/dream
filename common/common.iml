@@ -110,6 +110,16 @@
     <orderEntry type="library" name="Gradle: com.squareup.retrofit2:retrofit:2.4.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.squareup.okhttp3:okhttp:3.10.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: io.reactivex.rxjava2:rxjava:2.2.3@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:common:9.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:utdid:1.5.2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:push:6.1.0@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:alicloud-httpdns:1.2.5@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:alicloud-utils:1.1.5@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:alicloud_beacon:1.0.1@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:agoo-accs:3.3.8.8-open-fix2@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:agoo_networksdk:3.5.5@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:agoo_tlog:3.0.0.17@jar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:agoo_tnet4android:3.1.14.9@jar" level="project" />
     <orderEntry type="library" name="Gradle: org.reactivestreams:reactive-streams:1.0.2@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.collection:collection:1.1.0@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.jakewharton:butterknife-annotations:10.2.3@jar" level="project" />
@@ -136,7 +146,8 @@
     <orderEntry type="library" name="Gradle: com.github.razerdp:BasePopup:2.2.6@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.contrarywind:Android-PickerView:4.1.9@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.haibin:calendarview:3.6.9@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.HuanTanSheng:EasyPhotos:3.0.6@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:asms:1.1.3@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.umeng.umsdk:crash:0.0.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-ui:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.drawerlayout:drawerlayout:1.0.0@aar" level="project" />

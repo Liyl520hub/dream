@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -31,6 +32,7 @@ import com.dream.common.widget.ToolbarTitleLeftTv;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.umeng.message.PushAgent;
 
 import java.util.ArrayList;
 
@@ -49,7 +51,7 @@ public class MainActivity extends BaseActivity {
     private ToolbarTitleLeftTv toolbarTitle;
     public String leftText;
     private PopTip popPermissionsTip;
-
+    private static final String TAG = "MainActivity";
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -70,6 +72,9 @@ public class MainActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         setDoubleClickExit(true);
         BusUtils.register(this);
+        Log.d(TAG, "initView: ");
+
+
         MainAdapter mainAdapter = new MainAdapter(this, getFragments());
         myViewPager.setAdapter(mainAdapter);
         myViewPager.setUserInputEnabled(false);

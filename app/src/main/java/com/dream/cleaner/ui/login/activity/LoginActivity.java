@@ -39,6 +39,7 @@ import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
+import com.umeng.message.PushAgent;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -95,6 +96,10 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         setDoubleClickExit(true);
         BusUtils.register(this);
         checkSubmitTv();
+
+        PushAgent.getInstance(this).onAppStart();
+
+
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
