@@ -157,10 +157,11 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                     WorkOrderTabBean.RecordsBean item = workOrderTabFragmentAdapter.getItem(position);
                     int orderStatus = item.getOrderStatus();
                     int id = item.getId();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("orderId",id+"");
+                    bundle.putString("orderStatus",orderStatus+"");
                     switch (view.getId()) {
                         case R.id.cl_top: {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id", id + "");
                             UiUtil.openActivity(getActivity(), TaskDetailsActivity.class, bundle);
                         }
                         break;
@@ -204,16 +205,18 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                                 break;
                                 case 4: {
                                     //扫前准备
-                                    UiUtil.openActivity(getActivity(), WorkReadyActivity.class);
+                                    bundle.putBoolean("isBefore",true);
+                                    UiUtil.openActivity(getActivity(), WorkReadyActivity.class,bundle);
                                 }
                                 break;
                                 case 5: {
                                     //完成服务
+                                    bundle.putBoolean("isBefore",false);
                                     goNext("确认完成服务", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             canCelPop();
-                                            UiUtil.openActivity(getActivity(), WorkReadyActivity.class);
+                                            UiUtil.openActivity(getActivity(), WorkReadyActivity.class,bundle);
                                         }
                                     });
                                 }
@@ -246,7 +249,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     @Override
     public void returnTaskReceive(String s) {
         //刷新当前页面
-
+        initData(orderTypeId, serviceTypeId);
     }
 
     private void goNext(String msg, View.OnClickListener onClickListener) {

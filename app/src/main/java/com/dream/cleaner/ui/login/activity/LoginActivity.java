@@ -9,6 +9,7 @@ import android.text.TextPaint;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -40,6 +41,7 @@ import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
 import com.umeng.message.PushAgent;
+import com.umeng.message.UTrack;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -225,6 +227,14 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void returnLoginBean(LoginBean loginBean) {
+        PushAgent mPushAgent = PushAgent.getInstance(this);
+
+        mPushAgent.setAlias(loginBean.getCleaner().getId()+"", "test", new UTrack.ICallBack() {
+            @Override
+            public void onMessage(boolean b, String s) {
+                Log.d("ddddd", "onMessage: " + s);
+            }
+        });
         InfoUtils.setLoginBean(loginBean);
         UiUtil.openActivity(this, MainActivity.class);
         finish();

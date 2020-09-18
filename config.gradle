@@ -67,7 +67,9 @@ ext {
             //日历
             "calendarview"                 : 'com.haibin:calendarview:3.6.9',
             //自定义相册
-            "EasyPhotos"                 : 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
+            "luban"                        : 'top.zibin:Luban:1.1.8',
+            //自定义相册
+            "EasyPhotos"                   : 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
 
     ]
 }

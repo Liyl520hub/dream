@@ -5,7 +5,9 @@ import android.util.Log;
 
 import androidx.multidex.MultiDex;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.BuildConfig;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.common.base.BaseApplication;
 import com.dream.common.http.Api;
 import com.dream.common.http.config.ApiConfig;
@@ -45,12 +47,16 @@ public class MyApplication extends BaseApplication {
                 Log.i(TAG, "注册成功：deviceToken：-------->  " + deviceToken);
                 //alias_type 必须先add下，类型添加完后续不许再次添加
 //                mPushAgent.addAlias("dream","test",null);
-                mPushAgent.setAlias("dream1", "test", new UTrack.ICallBack() {
-                    @Override
-                    public void onMessage(boolean b, String s) {
-                        Log.d(TAG, "onMessage: " + s);
-                    }
-                });
+                String cleanerId = InfoUtils.getCleanerId();
+                if (!StringUtils.isEmpty(cleanerId)) {
+                    mPushAgent.setAlias(cleanerId, "test", new UTrack.ICallBack() {
+                        @Override
+                        public void onMessage(boolean b, String s) {
+                            Log.d("ddddd", "onMessage: " + s);
+                        }
+                    });
+                }
+
             }
 
             @Override

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.ResourceUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
@@ -33,6 +37,8 @@ import com.huantansheng.easyphotos.EasyPhotos;
 import com.huantansheng.easyphotos.callback.SelectCallback;
 import com.huantansheng.easyphotos.models.album.entity.Photo;
 
+import java.io.File;
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -40,6 +46,9 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import top.zibin.luban.CompressionPredicate;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
 
 /**
  * @author : Liyalei
@@ -64,6 +73,17 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     TextView tvSubmit;
     private PhotoAdapter photoAdapter;
     private int maxSize = 9;
+    private ArrayList<File> luBanListAfter = new ArrayList<>();
+    private boolean isSuccess = true;
+    private int postsPictureIndex;
+    private ArrayList<String> luBanList = new ArrayList<>();
+    private String orderId = "";
+    private String orderStatus = "";
+    /**
+     * 接口返回的图片地址
+     */
+    private ArrayList<String> picUrlList = new ArrayList<>();
+    private boolean isBefore;
 
     @Override
     protected int getLayoutId() {
@@ -82,6 +102,13 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            isBefore = intent.getBooleanExtra("isBefore", true);
+            orderId = intent.getStringExtra("orderId");
+            orderStatus = intent.getStringExtra("orderStatus");
+        }
+
         ArrayList<MyPhotoBean> myPhotoBeans = new ArrayList<>();
         myPhotoBeans.add(new MyPhotoBean("1", ""));
         photoAdapter = new PhotoAdapter(myPhotoBeans);
@@ -192,7 +219,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     }
 
 
-    @OnClick({R.id.tv_ok, R.id.tv_no})
+    @OnClick({R.id.tv_ok, R.id.tv_no, R.id.tv_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_ok:
@@ -201,12 +228,81 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             case R.id.tv_no:
                 setMaterielType(false);
                 break;
+            case R.id.tv_submit:
+                picUrlList.clear();
+                FileUtils.createOrExistsDir(getExternalFilesDir("android.os.Environment#DIRECTORY_PICTURES") + "/Icon/");
+                luBanList = new ArrayList<>();
+                int photoSize = photoAdapter.getPhotoSize();
+                for (int i = 0; i < photoSize; i++) {
+                    MyPhotoBean item = photoAdapter.getItem(i);
+                    luBanList.add(item.getPath());
+                }
+                final int[] success = {0};
+                Luban
+                        .with(this)
+                        .load(luBanList)
+                        .ignoreBy(500)
+                        .setTargetDir(getExternalFilesDir("android.os.Environment#DIRECTORY_PICTURES") + "/Icon/")
+                        .filter(new CompressionPredicate() {
+                            @Override
+                            public boolean apply(String path) {
+                                return !(TextUtils.isEmpty(path) || path.toLowerCase().endsWith(".gif"));
+                            }
+                        })
+                        .setCompressListener(new OnCompressListener() {
+                            @Override
+                            public void onStart() {
+
+                            }
+
+                            @Override
+                            public void onSuccess(File file) {
+                                luBanListAfter.add(file);
+                                //全部压缩完成则开始上传图片
+                                if (success[0] == (luBanList.size() - 1)) {
+                                    postsPictureIndex = 0;
+                                    mPresenter.ossUpload(luBanListAfter.get(0));
+                                }
+                                success[0]++;
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+
+                            }
+                        })
+                        .launch();
+
+                break;
             default:
         }
     }
 
     @Override
-    public void returnUpLoadImageStatus(String 无网络, String s) {
+    public void returnUpLoadImageStatus(String originalUrl, String constringentUrl) {
+        if (isSuccess) {
+            if ("失败".equals(originalUrl)) {
+                isSuccess = false;
+                SuperToast.showShortMessage("上传图片失败，请重新上传");
+            } else if ("无网络".equals(originalUrl)) {
+                isSuccess = false;
+            } else {
+                isSuccess = true;
+                picUrlList.add(originalUrl);
+                //判断是否是最后一张
+                if (postsPictureIndex == (luBanList.size() - 1)) {
+                    mPresenter.beforeClean(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), "2", "", "", new ArrayList<>());
+                } else {
+                    postsPictureIndex++;
+                    mPresenter.ossUpload(luBanListAfter.get(postsPictureIndex));
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public void returnBeforeClean(String s) {
 
     }
 }

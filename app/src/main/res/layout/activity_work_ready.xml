@@ -14,9 +14,9 @@
         android:paddingTop="10dp"
         android:paddingBottom="15dp"
         android:text="扫前拍照"
-        android:textStyle="bold"
         android:textColor="@color/color_333333"
-        android:textSize="17sp" />
+        android:textSize="17sp"
+        android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tv_ok"
@@ -51,7 +51,9 @@
         android:id="@+id/my_rv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tv_no" />
+        android:layout_below="@+id/tv_no"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp" />
 
     <TextView
         android:id="@+id/tv_reason_title"

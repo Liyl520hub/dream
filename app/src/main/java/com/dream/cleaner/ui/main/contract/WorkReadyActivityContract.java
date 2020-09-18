@@ -9,4 +9,6 @@ import com.dream.common.base.BaseContract;
  */
 public interface WorkReadyActivityContract extends BaseContract {
     void returnUpLoadImageStatus(String 无网络, String s);
+
+    void returnBeforeClean(String s);
 }

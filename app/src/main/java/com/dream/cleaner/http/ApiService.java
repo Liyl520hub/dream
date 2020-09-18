@@ -164,7 +164,7 @@ public interface ApiService {
      * 确认开始-扫前准备上传照片
      */
     @POST(ApiUrls.BEFORE_CLEAN)
-    Observable<BaseBean<UploadImageBean>> beforeClean(@Body RequestBody body);
+    Observable<BaseBean<String>> beforeClean(@Body RequestBody body);
 
     /**
      * 确认完成
@@ -216,7 +216,7 @@ public interface ApiService {
      * OSS文件上传
      */
     @POST(ApiUrls.OSS_UPLOAD)
-    Observable<BaseBean<LoginBean>> ossUpload(@Body RequestBody body);
+    Observable<BaseBean<UploadImageBean>> ossUpload(@Body RequestBody body);
 
     //--------------------------------------------保洁员端请假------------------------------------------------------
 

@@ -12,6 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.INaviInfoCallback;
+import com.amap.api.navi.model.AMapNaviLocation;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
@@ -102,7 +109,7 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
     private int orderStatus;
-    private String id;
+    private String orderId;
     private PopTip popPermissionsTip;
     private PopTip popTip;
 
@@ -125,8 +132,8 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     protected void initView(@Nullable Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null) {
-            id = intent.getStringExtra("id");
-            mPresenter.taskInfoId(id);
+            orderId = intent.getStringExtra("orderId");
+            mPresenter.taskInfoId(orderId);
         }
         tvGoNavigation.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_4986FA));
         tvContactInformationCallMobile.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_F6B351));
@@ -234,66 +241,183 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
         return intOrderStatusString;
     }
 
-    @OnClick(R.id.tv_submit)
-    public void onViewClicked() {
-
-        // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
-        switch (orderStatus) {
-            case 0: {
-                //接单"
-                goNext("接单确认", new View.OnClickListener() {
+    @OnClick({R.id.tv_submit, R.id.tv_go_navigation})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_go_navigation: {
+                Poi start = new Poi("三元桥", new LatLng(39.96087, 116.45798), "");
+                /**终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点**/
+                Poi end = new Poi("北京站", new LatLng(39.904556, 116.427231), "B000A83M61");
+                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
+                amapNaviParams.setUseInnerVoice(true).setMultipleRouteNaviMode(true).setNeedCalculateRouteWhenPresent(true);
+                AmapNaviPage.getInstance().showRouteActivity(this, amapNaviParams, new INaviInfoCallback() {
                     @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        mPresenter.taskReceive(id + "");
-                    }
-                });
-            }
-            break;
-            case 1: {
-                //出发
-                goNext("是否确认出发", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        mPresenter.taskGo(id + "");
-                    }
-                });
-            }
-            break;
-            case 2: {
-                //确认到达 -- 变成扫前准备
-                goNext("是否确认到达", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        mPresenter.arrive(id + "");
+                    public void onInitNaviFailure() {
 
                     }
-                });
-            }
-            break;
-            case 4: {
-                //扫前准备
-                UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class);
-            }
-            break;
-            case 5: {
-                //完成服务
-                goNext("确认完成服务", new View.OnClickListener() {
+
                     @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class);
+                    public void onGetNavigationText(String s) {
+
+                    }
+
+                    @Override
+                    public void onLocationChange(AMapNaviLocation aMapNaviLocation) {
+
+                    }
+
+                    @Override
+                    public void onArriveDestination(boolean b) {
+
+                    }
+
+                    @Override
+                    public void onStartNavi(int i) {
+
+                    }
+
+                    @Override
+                    public void onCalculateRouteSuccess(int[] ints) {
+
+                    }
+
+                    @Override
+                    public void onCalculateRouteFailure(int i) {
+
+                    }
+
+                    @Override
+                    public void onStopSpeaking() {
+
+                    }
+
+                    @Override
+                    public void onReCalculateRoute(int i) {
+
+                    }
+
+                    @Override
+                    public void onExitPage(int i) {
+
+                    }
+
+                    @Override
+                    public void onStrategyChanged(int i) {
+
+                    }
+
+                    @Override
+                    public View getCustomNaviBottomView() {
+                        return null;
+                    }
+
+                    @Override
+                    public View getCustomNaviView() {
+                        return null;
+                    }
+
+                    @Override
+                    public void onArrivedWayPoint(int i) {
+
+                    }
+
+                    @Override
+                    public void onMapTypeChanged(int i) {
+
+                    }
+
+                    @Override
+                    public View getCustomMiddleView() {
+                        return null;
+                    }
+
+                    @Override
+                    public void onNaviDirectionChanged(int i) {
+
+                    }
+
+                    @Override
+                    public void onDayAndNightModeChanged(int i) {
+
+                    }
+
+                    @Override
+                    public void onBroadcastModeChanged(int i) {
+
+                    }
+
+                    @Override
+                    public void onScaleAutoChanged(boolean b) {
+
                     }
                 });
             }
+            break;
+            case R.id.tv_submit: {
+                Bundle bundle = new Bundle();
+                bundle.putString("orderId",orderId);
+                bundle.putString("orderStatus",orderStatus+"");
+                // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
+                switch (orderStatus) {
+                    case 0: {
+                        //接单"
+                        goNext("接单确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                mPresenter.taskReceive(orderId + "");
+                            }
+                        });
+                    }
+                    break;
+                    case 1: {
+                        //出发
+                        goNext("是否确认出发", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                mPresenter.taskGo(orderId + "");
+                            }
+                        });
+                    }
+                    break;
+                    case 2: {
+                        //确认到达 -- 变成扫前准备
+                        goNext("是否确认到达", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                mPresenter.arrive(orderId + "");
 
+                            }
+                        });
+                    }
+                    break;
+                    case 4: {
+                        //扫前准备
+                        bundle.putBoolean("isBefore",true);
+                        UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class,bundle);
+                    }
+                    break;
+                    case 5: {
+                        //完成服务
+                        bundle.putBoolean("isBefore",false);
+                        goNext("确认完成服务", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class,bundle);
+                            }
+                        });
+                    }
+
+                    break;
+                    default:
+                }
+            }
             break;
             default:
         }
-
-
     }
 
     private void canCelPop() {
