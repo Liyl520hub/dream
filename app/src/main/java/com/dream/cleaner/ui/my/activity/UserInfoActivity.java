@@ -23,6 +23,7 @@ import com.dream.cleaner.R;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.ui.my.contract.UserInfoActivityContract;
 import com.dream.cleaner.ui.my.presenter.UserInfoActivityPresenter;
+import com.dream.cleaner.utils.ImageLoaderUtils;
 import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.widget.pop.PopTip;
@@ -202,5 +203,7 @@ public class UserInfoActivity extends BaseActivity<UserInfoActivityPresenter> im
         tvDirectLeadershipMobile.setText("联系电话   " + InfoUtils.getDirectContactPhone());
         tvHealthCertificate.setText("健康证号   " + InfoUtils.getHealthCertNo());
         tvHealthCertificateDate.setText("有效日期   " + InfoUtils.getHealthCertDate());
+        ImageLoaderUtils.loadImgCircle(InfoUtils.getHeadIcPath(), ivHead);
+
     }
 }

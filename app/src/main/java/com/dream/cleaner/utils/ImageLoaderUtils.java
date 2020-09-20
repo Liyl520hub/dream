@@ -211,8 +211,8 @@ public class ImageLoaderUtils {
     public static void loadImgCircle(String iconUrl, ImageView loadImagview) {
         RequestOptions options = new RequestOptions()
                 //加载错误之后的错误图
-                .error(R.mipmap.video_item_empty)
-                .placeholder(R.mipmap.video_item_empty)
+                .error(R.mipmap.default_headimg)
+                .placeholder(R.mipmap.default_headimg)
                 //指定图片的缩放类型为centerCrop （圆形）
                 .circleCrop()
                 .dontAnimate();

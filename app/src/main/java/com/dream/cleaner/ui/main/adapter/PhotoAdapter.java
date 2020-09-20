@@ -40,6 +40,10 @@ public class PhotoAdapter extends BaseQuickAdapter<MyPhotoBean, BaseViewHolder> 
     }
 
 
+    /**
+     *
+     * @return 获取显示图片数量
+     */
     public int getPhotoSize() {
         int count = 0;
         List<MyPhotoBean> data = getData();

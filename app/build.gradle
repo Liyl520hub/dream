@@ -79,8 +79,11 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies.butterknife_compiler
     //高德地图新
     implementation files('libs/AMap3DMap_7.6.0_AMapNavi_7.6.0_AMapSearch_7.6.0_AMapLocation_5.2.0_20200915.jar')
-
-
     //长图显示
     implementation 'com.davemorrissey.labs:subsampling-scale-image-view:3.10.0'
+    implementation project(path: ':core')
+    implementation project(':uidialog')
+    implementation project(':uiasr')
+    implementation "androidx.preference:preference:1.1.0"
+
 }

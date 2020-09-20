@@ -79,3 +79,6 @@
 -keep public class **.R$*{
    public static final int *;
 }
+#百度语音
+-keep class com.baidu.speech.**{*;}
+

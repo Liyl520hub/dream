@@ -136,8 +136,10 @@
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:agoo_networksdk:3.5.5@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:agoo_tlog:3.0.0.17@jar" level="project" />
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:agoo_tnet4android:3.1.14.9@jar" level="project" />
+    <orderEntry type="library" name="Gradle: __local_aars__:./core/libs/bdasr_V3_20191210_81acdf5.jar:unspecified@jar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.multidex:multidex:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.google.android.material:material:1.2.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: androidx.preference:preference:1.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.viewpager2:viewpager2:1.0.0@aar" level="project" />
@@ -165,8 +167,8 @@
     <orderEntry type="library" name="Gradle: androidx.cursoradapter:cursoradapter:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.cardview:cardview:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.exifinterface:exifinterface:1.0.0@aar" level="project" />
-    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.11.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.versionedparcelable:versionedparcelable:1.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.github.bumptech.glide:gifdecoder:4.11.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-viewmodel:2.1.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-runtime:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.interpolator:interpolator:1.0.0@aar" level="project" />
@@ -185,5 +187,8 @@
     <orderEntry type="library" name="Gradle: top.zibin:Luban:1.1.8@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.HuanTanSheng:EasyPhotos:3.0.6@aar" level="project" />
     <orderEntry type="module" module-name="common" />
+    <orderEntry type="module" module-name="core" />
+    <orderEntry type="module" module-name="uidialog" />
+    <orderEntry type="module" module-name="uiasr" />
   </component>
 </module>

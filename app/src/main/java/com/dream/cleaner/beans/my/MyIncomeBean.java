@@ -20,70 +20,70 @@ public class MyIncomeBean {
      * endTime : 2020-09-30 23:59:59
      */
 
-    private int cleanerId;
-    private int year;
-    private int month;
-    private int totalWages;
-    private int deductionWages;
-    private int netWages;
-    private int orderNum;
+    private String  cleanerId;
+    private String year;
+    private String month;
+    private String totalWages;
+    private String deductionWages;
+    private String netWages;
+    private String orderNum;
     private String startTime;
     private String endTime;
 
-    public int getCleanerId() {
-        return cleanerId;
+    public String getCleanerId() {
+        return cleanerId == null ? "" : cleanerId;
     }
 
-    public void setCleanerId(int cleanerId) {
-        this.cleanerId = cleanerId;
+    public void setCleanerId(String cleanerId) {
+        this.cleanerId = cleanerId == null ? "" : cleanerId;
     }
 
-    public int getYear() {
-        return year;
+    public String getYear() {
+        return year == null ? "" : year;
     }
 
-    public void setYear(int year) {
-        this.year = year;
+    public void setYear(String year) {
+        this.year = year == null ? "1" : year;
     }
 
-    public int getMonth() {
-        return month;
+    public String getMonth() {
+        return month == null ? "1" : month;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
+    public void setMonth(String month) {
+        this.month = month == null ? "" : month;
     }
 
-    public int getTotalWages() {
-        return totalWages;
+    public String getTotalWages() {
+        return totalWages == null ? "" : totalWages;
     }
 
-    public void setTotalWages(int totalWages) {
-        this.totalWages = totalWages;
+    public void setTotalWages(String totalWages) {
+        this.totalWages = totalWages == null ? "" : totalWages;
     }
 
-    public int getDeductionWages() {
-        return deductionWages;
+    public String getDeductionWages() {
+        return deductionWages == null ? "" : deductionWages;
     }
 
-    public void setDeductionWages(int deductionWages) {
-        this.deductionWages = deductionWages;
+    public void setDeductionWages(String deductionWages) {
+        this.deductionWages = deductionWages == null ? "" : deductionWages;
     }
 
-    public int getNetWages() {
-        return netWages;
+    public String getNetWages() {
+        return netWages == null ? "" : netWages;
     }
 
-    public void setNetWages(int netWages) {
-        this.netWages = netWages;
+    public void setNetWages(String netWages) {
+        this.netWages = netWages == null ? "" : netWages;
     }
 
-    public int getOrderNum() {
-        return orderNum;
+    public String getOrderNum() {
+        return orderNum == null ? "" : orderNum;
     }
 
-    public void setOrderNum(int orderNum) {
-        this.orderNum = orderNum;
+    public void setOrderNum(String orderNum) {
+        this.orderNum = orderNum == null ? "" : orderNum;
     }
 
     public String getStartTime() {

@@ -170,7 +170,7 @@ public interface ApiService {
      * 确认完成
      */
     @POST(ApiUrls.CONFIRM_FINISH)
-    Observable<BaseBean<LoginBean>> confirmFinish(@Body RequestBody body);
+    Observable<BaseBean<String>> confirmFinish(@Body RequestBody body);
 
     /**
      * 任务订单详情

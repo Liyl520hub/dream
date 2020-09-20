@@ -46,7 +46,7 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
         String orderString = getOrderString(orderStatus);
         tvSubmit.setVisibility(StringUtils.isEmpty(orderString) ? View.GONE : View.VISIBLE);
         tvSubmit.setText(orderString);
-        distanceSearch(tvJuLi);
+//        distanceSearch(tvJuLi);
 
     }
 
