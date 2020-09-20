@@ -33,6 +33,10 @@ import com.dream.cleaner.widget.pop.PopWorkOrder;
 import com.dream.common.base.BaseFragment;
 import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.SuperToast;
+import com.scwang.smart.refresh.layout.SmartRefreshLayout;
+import com.scwang.smart.refresh.layout.api.RefreshLayout;
+import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
+import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,11 +57,15 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
 
     @BindView(R.id.my_recyclerview)
     RecyclerView myRecyclerview;
+    @BindView(R.id.my_smart_refresh)
+    SmartRefreshLayout mySmartRefresh;
     private PopTip popTip;
     private String title;
     private WorkOrderTabFragmentAdapter workOrderTabFragmentAdapter;
     private String orderTypeId = "";
     private String serviceTypeId = "";
+    private int page = 1;
+    private int pageSize = 10;
 
     @Override
     protected int getLayoutId() {
@@ -82,54 +90,13 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     @Override
     public void onResume() {
         super.onResume();
-        initData(orderTypeId, serviceTypeId);
+        mySmartRefresh.autoRefresh();
     }
 
     private void initData(String orderType, String serviceType) {
         orderTypeId = orderType;
         serviceTypeId = serviceType;
-        mPresenter.taskList("1", "10", getOrderStatus(title), orderTypeId, serviceTypeId);
-    }
-
-    public void upData(String orderType, String serviceType) {
-        initData(orderType, serviceType);
-    }
-
-    private int getOrderStatus(String title) {
-        // 订单状态，查询0新任务，1待服务，2上门中，5服务中，8售后，7已完成，9已取消
-        int intOrderStatus = 0;
-        switch (title) {
-            case "新任务": {
-                intOrderStatus = 0;
-            }
-            break;
-            case "待服务": {
-                intOrderStatus = 1;
-            }
-            break;
-            case "上门中": {
-                intOrderStatus = 2;
-            }
-            break;
-            case "服务中": {
-                intOrderStatus = 5;
-            }
-            break;
-            case "售后单": {
-                intOrderStatus = 8;
-            }
-            break;
-            case "已完成": {
-                intOrderStatus = 7;
-            }
-            break;
-            case "已取消": {
-                intOrderStatus = 9;
-            }
-            break;
-            default:
-        }
-        return intOrderStatus;
+        mPresenter.taskList(page + "", pageSize + "", getOrderStatus(title), orderTypeId, serviceTypeId);
     }
 
 
@@ -158,8 +125,8 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                     int orderStatus = item.getOrderStatus();
                     int id = item.getId();
                     Bundle bundle = new Bundle();
-                    bundle.putString("orderId",id+"");
-                    bundle.putString("orderStatus",orderStatus+"");
+                    bundle.putString("orderId", id + "");
+                    bundle.putString("orderStatus", orderStatus + "");
                     switch (view.getId()) {
                         case R.id.cl_top: {
                             UiUtil.openActivity(getActivity(), TaskDetailsActivity.class, bundle);
@@ -205,18 +172,18 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                                 break;
                                 case 4: {
                                     //扫前准备
-                                    bundle.putBoolean("isBefore",true);
-                                    UiUtil.openActivity(getActivity(), WorkReadyActivity.class,bundle);
+                                    bundle.putBoolean("isBefore", true);
+                                    UiUtil.openActivity(getActivity(), WorkReadyActivity.class, bundle);
                                 }
                                 break;
                                 case 5: {
                                     //完成服务
-                                    bundle.putBoolean("isBefore",false);
+                                    bundle.putBoolean("isBefore", false);
                                     goNext("确认完成服务", new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             canCelPop();
-                                            UiUtil.openActivity(getActivity(), WorkReadyActivity.class,bundle);
+                                            UiUtil.openActivity(getActivity(), WorkReadyActivity.class, bundle);
                                         }
                                     });
                                 }
@@ -238,6 +205,20 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
 
             });
         }
+
+        mySmartRefresh.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                page = 1;
+                initData(orderTypeId, serviceTypeId);
+            }
+        }).setOnLoadMoreListener(new OnLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                page++;
+                initData(orderTypeId, serviceTypeId);
+            }
+        });
     }
 
     private void canCelPop() {
@@ -249,6 +230,8 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     @Override
     public void returnTaskReceive(String s) {
         //刷新当前页面
+        page = 1;
+        pageSize = page * 10;
         initData(orderTypeId, serviceTypeId);
     }
 
@@ -285,4 +268,43 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
         }
 
     }
+
+    private int getOrderStatus(String title) {
+        // 订单状态，查询0新任务，1待服务，2上门中，5服务中，8售后，7已完成，9已取消
+        int intOrderStatus = 0;
+        switch (title) {
+            case "新任务": {
+                intOrderStatus = 0;
+            }
+            break;
+            case "待服务": {
+                intOrderStatus = 1;
+            }
+            break;
+            case "上门中": {
+                intOrderStatus = 2;
+            }
+            break;
+            case "服务中": {
+                intOrderStatus = 5;
+            }
+            break;
+            case "售后单": {
+                intOrderStatus = 8;
+            }
+            break;
+            case "已完成": {
+                intOrderStatus = 7;
+            }
+            break;
+            case "已取消": {
+                intOrderStatus = 9;
+            }
+            break;
+            default:
+        }
+        return intOrderStatus;
+    }
+
+
 }

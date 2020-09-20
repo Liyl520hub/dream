@@ -69,7 +69,11 @@ ext {
             //自定义相册
             "luban"                        : 'top.zibin:Luban:1.1.8',
             //自定义相册
-            "EasyPhotos"                   : 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
+            "EasyPhotos"                   : 'com.github.HuanTanSheng:EasyPhotos:3.0.6',
+            //上拉加载 下拉刷新
+            "smartrefresh"                 : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
+            "header"                       : 'com.scwang.smart:refresh-header-classics:2.0.1',
+            "footer"                       : 'com.scwang.smart:refresh-footer-classics:2.0.1',
 
     ]
 }

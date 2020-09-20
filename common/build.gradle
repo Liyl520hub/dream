@@ -95,4 +95,8 @@ dependencies {
     api rootProject.ext.dependencies.luban
     //自定义相册
     api rootProject.ext.dependencies.EasyPhotos
+    //上拉加载下拉刷新
+    api rootProject.ext.dependencies.smartrefresh
+    api rootProject.ext.dependencies.header
+    api rootProject.ext.dependencies.footer
 }

@@ -150,6 +150,9 @@
     <orderEntry type="library" name="Gradle: com.umeng.umsdk:crash:0.0.4@aar" level="project" />
     <orderEntry type="library" name="Gradle: top.zibin:Luban:1.1.8@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.github.HuanTanSheng:EasyPhotos:3.0.6@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.scwang.smart:refresh-layout-kernel:2.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.scwang.smart:refresh-header-classics:2.0.1@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.scwang.smart:refresh-footer-classics:2.0.1@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.appcompat:appcompat:1.2.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.legacy:legacy-support-core-ui:1.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.drawerlayout:drawerlayout:1.0.0@aar" level="project" />
@@ -185,5 +188,6 @@
     <orderEntry type="library" name="Gradle: androidx.lifecycle:lifecycle-livedata-core:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: androidx.arch.core:core-runtime:2.0.0@aar" level="project" />
     <orderEntry type="library" name="Gradle: com.contrarywind:wheelview:4.1.0@aar" level="project" />
+    <orderEntry type="library" name="Gradle: com.scwang.smart:refresh-drawable-paint:2.0.1@aar" level="project" />
   </component>
 </module>
