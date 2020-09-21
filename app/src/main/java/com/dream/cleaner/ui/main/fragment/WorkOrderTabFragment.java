@@ -66,6 +66,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     private String serviceTypeId = "";
     private int page = 1;
     private int pageSize = 10;
+    private List<WorkOrderTabBean.RecordsBean> records = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -84,128 +85,6 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
         if (arguments != null) {
             title = arguments.getString("title");
         }
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        mySmartRefresh.autoRefresh();
-    }
-
-    private void initData(String orderType, String serviceType) {
-        orderTypeId = orderType;
-        serviceTypeId = serviceType;
-        mPresenter.taskList(page + "", pageSize + "", getOrderStatus(title), orderTypeId, serviceTypeId);
-    }
-
-
-    @Override
-    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
-
-    }
-
-    @Override
-    public void returnTaskList(WorkOrderTabBean workOrderTabBean) {
-        List<WorkOrderTabBean.RecordsBean> records = workOrderTabBean.getRecords();
-        if (workOrderTabFragmentAdapter != null) {
-            workOrderTabFragmentAdapter.setList(records);
-        } else {
-            workOrderTabFragmentAdapter = new WorkOrderTabFragmentAdapter(records);
-            myRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-            myRecyclerview.setAdapter(workOrderTabFragmentAdapter);
-            EmptyLayout emptyLayout = new EmptyLayout(getActivity());
-            emptyLayout.setErrorType(3);
-            workOrderTabFragmentAdapter.setEmptyView(emptyLayout);
-            workOrderTabFragmentAdapter.addChildClickViewIds(R.id.cl_top, R.id.tv_submit);
-            workOrderTabFragmentAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
-                @Override
-                public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
-                    WorkOrderTabBean.RecordsBean item = workOrderTabFragmentAdapter.getItem(position);
-                    int orderStatus = item.getOrderStatus();
-                    int id = item.getId();
-                    Bundle bundle = new Bundle();
-                    bundle.putString("orderId", id + "");
-                    bundle.putString("orderStatus", orderStatus + "");
-                    switch (view.getId()) {
-                        case R.id.cl_top: {
-                            UiUtil.openActivity(getActivity(), TaskDetailsActivity.class, bundle);
-                        }
-                        break;
-
-                        case R.id.tv_submit: {
-                            // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
-                            switch (orderStatus) {
-                                case 0: {
-                                    //接单"
-                                    goNext("接单确认", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            canCelPop();
-                                            mPresenter.taskReceive(id + "");
-                                        }
-                                    });
-                                }
-                                break;
-                                case 1: {
-                                    //出发
-                                    goNext("是否确认出发", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            canCelPop();
-                                            mPresenter.taskGo(id + "");
-                                        }
-                                    });
-                                }
-                                break;
-                                case 2: {
-                                    //确认到达 -- 变成扫前准备
-                                    goNext("是否确认到达", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            canCelPop();
-                                            mPresenter.arrive(id + "");
-
-                                        }
-                                    });
-                                }
-                                break;
-                                case 4: {
-                                    //扫前准备
-                                    bundle.putBoolean("isBefore", true);
-                                    UiUtil.openActivity(getActivity(), WorkReadyActivity.class, bundle);
-                                }
-                                break;
-                                case 5: {
-                                    //完成服务
-                                    bundle.putBoolean("isBefore", false);
-                                    goNext("确认完成服务", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            canCelPop();
-                                            UiUtil.openActivity(getActivity(), WorkReadyActivity.class, bundle);
-                                        }
-                                    });
-                                }
-
-                                break;
-                                default:
-                            }
-
-                        }
-                        break;
-
-
-                        default:
-                    }
-
-
-                }
-
-
-            });
-        }
-
         mySmartRefresh.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
@@ -219,6 +98,146 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                 initData(orderTypeId, serviceTypeId);
             }
         });
+        initAdapter();
+
+    }
+
+    private void initAdapter() {
+        workOrderTabFragmentAdapter = new WorkOrderTabFragmentAdapter(records);
+        myRecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
+        myRecyclerview.setAdapter(workOrderTabFragmentAdapter);
+        EmptyLayout emptyLayout = new EmptyLayout(getActivity());
+        emptyLayout.setErrorType(3);
+        workOrderTabFragmentAdapter.setEmptyView(emptyLayout);
+        workOrderTabFragmentAdapter.addChildClickViewIds(R.id.cl_top, R.id.tv_submit);
+        workOrderTabFragmentAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                WorkOrderTabBean.RecordsBean item = workOrderTabFragmentAdapter.getItem(position);
+                int orderStatus = item.getOrderStatus();
+                int id = item.getId();
+                Bundle bundle = new Bundle();
+                bundle.putString("orderId", id + "");
+                bundle.putString("orderStatus", orderStatus + "");
+                switch (view.getId()) {
+                    case R.id.cl_top: {
+                        UiUtil.openActivity(getActivity(), TaskDetailsActivity.class, bundle);
+                    }
+                    break;
+
+                    case R.id.tv_submit: {
+                        // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
+                        switch (orderStatus) {
+                            case 0: {
+                                //接单"
+                                goNext("接单确认", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        canCelPop();
+                                        mPresenter.taskReceive(id + "");
+                                    }
+                                });
+                            }
+                            break;
+                            case 1: {
+                                //出发
+                                goNext("是否确认出发", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        canCelPop();
+                                        mPresenter.taskGo(id + "");
+                                    }
+                                });
+                            }
+                            break;
+                            case 2: {
+                                //确认到达 -- 变成扫前准备
+                                goNext("是否确认到达", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        canCelPop();
+                                        mPresenter.arrive(id + "");
+
+                                    }
+                                });
+                            }
+                            break;
+                            case 4: {
+                                //扫前准备
+                                bundle.putBoolean("isBefore", true);
+                                UiUtil.openActivity(getActivity(), WorkReadyActivity.class, bundle);
+                            }
+                            break;
+                            case 5: {
+                                //完成服务
+                                bundle.putBoolean("isBefore", false);
+                                goNext("确认完成服务", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        canCelPop();
+                                        UiUtil.openActivity(getActivity(), WorkReadyActivity.class, bundle);
+                                    }
+                                });
+                            }
+
+                            break;
+                            default:
+                        }
+
+                    }
+                    break;
+
+
+                    default:
+                }
+
+
+            }
+
+
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (workOrderTabFragmentAdapter == null) {
+            mySmartRefresh.autoRefresh();
+        } else {
+            if (workOrderTabFragmentAdapter.getData().size()==0) {
+                mySmartRefresh.autoRefresh();
+            }
+        }
+    }
+
+    private void initData(String orderType, String serviceType) {
+        orderTypeId = orderType;
+        serviceTypeId = serviceType;
+        mPresenter.taskList(page + "", pageSize + "", getOrderStatus(title), orderTypeId, serviceTypeId);
+    }
+
+
+    @Override
+    public void showErrorTip(ErrorType errorType, int errorCode, String message) {
+        if (page == 1) {
+            mySmartRefresh.finishRefresh();
+        } else {
+            mySmartRefresh.finishLoadMore();
+        }
+    }
+
+    @Override
+    public void returnTaskList(WorkOrderTabBean workOrderTabBean) {
+        List<WorkOrderTabBean.RecordsBean> newRecords = workOrderTabBean.getRecords();
+        //刷新
+        if (page == 1) {
+            workOrderTabFragmentAdapter.setNewInstance(newRecords);
+            mySmartRefresh.finishRefresh();
+        } else {
+            workOrderTabFragmentAdapter.addData(newRecords);
+            mySmartRefresh.finishLoadMore();
+
+        }
     }
 
     private void canCelPop() {

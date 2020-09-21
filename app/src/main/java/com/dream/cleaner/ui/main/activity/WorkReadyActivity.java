@@ -172,6 +172,8 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
         handler = new MyHandler(this);
         MyLogger.setHandler(handler);
         initPermission();
+        setMyPhotoAdapter(true);
+        setMyPhotoAdapter(false);
         initVoice();
         if (isBefore) {
             tvTitle.setText("扫前准备");
@@ -248,8 +250,6 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
         myRecognizer = new MyRecognizer(this, listener);
         // 替换掉原来的listener
         myRecognizer.setEventListener(chainRecogListener);
-        setMyPhotoAdapter(true);
-        setMyPhotoAdapter(false);
 
     }
 
@@ -341,7 +341,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                 .start(new SelectCallback() {
                     @Override
                     public void onResult(ArrayList<Photo> photos, boolean isOriginal) {
-                        int size = photos.size();
+                        int size = (photos == null ? 0 : photos.size());
                         if (size > 0) {
                             for (int i = 0; i < size; i++) {
                                 Photo photo = photos.get(i);
@@ -603,7 +603,6 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         running = false;
         if (requestCode == 2) {
             String message = "";
@@ -615,19 +614,21 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             } else {
                 message += "没有结果";
             }
-            etShuoMing.setText(message);
+            String oldString = etShuoMing.getText().toString();
+            String etContent = oldString + message;
+            etShuoMing.setText(etContent);
+            etShuoMing.setSelection(etContent.length());
             MyLogger.info(message);
         }
-
-
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         if (!running) {
-            myRecognizer.release();
-            finish();
+            if (myRecognizer != null) {
+                myRecognizer.release();
+            }
         }
     }
 }

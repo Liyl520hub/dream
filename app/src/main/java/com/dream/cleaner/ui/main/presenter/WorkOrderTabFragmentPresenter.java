@@ -68,6 +68,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
 
                     @Override
                     protected void onError(ErrorType errorType, int errorCode, String message, WorkOrderTabBean loginBean) {
+                        mContract.showErrorTip(errorType, errorCode, message);
                         SuperToast.showShortMessage(message);
                     }
                 });

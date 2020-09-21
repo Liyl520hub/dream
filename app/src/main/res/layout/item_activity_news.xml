@@ -28,6 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:text=""
+            android:autoLink="email"
             android:textSize="17sp" />
     </LinearLayout>
 

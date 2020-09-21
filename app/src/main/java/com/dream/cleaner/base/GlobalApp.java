@@ -89,6 +89,11 @@ public class GlobalApp {
     public static final String SERVICE_NAME = "serviceName";
 
     /**
+     * 星级
+     */
+    public static final String USER_LEVEL = "user_level";
+
+    /**
      * 直属联系人姓名
      */
     public static final String DIRECT_CONTACT_NAME = "directContactName";
@@ -118,7 +123,7 @@ public class GlobalApp {
      * app下载地址
      */
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory() + "/BaoJieIcon/";
-  /**
+    /**
      * FILE_PROVIDER
      */
     public static final String FILE_PROVIDER = "com.dream.cleaner.fileprovider";

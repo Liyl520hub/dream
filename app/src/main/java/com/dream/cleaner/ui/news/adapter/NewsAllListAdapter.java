@@ -19,6 +19,10 @@ import com.dream.cleaner.R;
 import com.dream.cleaner.beans.news.NewsListBean;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Create by moying
@@ -27,14 +31,12 @@ import org.jetbrains.annotations.NotNull;
  */
 public class NewsAllListAdapter extends BaseQuickAdapter<NewsListBean.RecordsBean, BaseViewHolder> {
 
-    public Context mContext;
     private static final String TAG = "NewsAllListAdapter";
     public static int wokeOrderType = 1;
     public int newsType = 1;
 
-    public NewsAllListAdapter(Context mContext, int layoutResId) {
-        super(layoutResId);
-        this.mContext = mContext;
+    public NewsAllListAdapter() {
+        super(R.layout.item_activity_news, new ArrayList<>());
     }
 
 
@@ -45,15 +47,18 @@ public class NewsAllListAdapter extends BaseQuickAdapter<NewsListBean.RecordsBea
         //messageType 1.工单  2公告  3请假
         if (recordsBean.getMessageType() == 1) {
             imageview.setImageResource(R.mipmap.news_neworder);
-
-            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(recordsBean.getTitle() + "  " + recordsBean.getMessageContent());
+            String messageContent = recordsBean.getMessageContent();
+            SpannableStringBuilder spannableStringBuilder = new SpannableStringBuilder(recordsBean.getTitle() + "  " + messageContent);
             //订单类型 文字变色
             int titleLength = recordsBean.getTitle().length();
             setMspan(spannableStringBuilder, 0, titleLength);
             //订单编号 数字变色        因为有的订单编号为null，所以先注释掉，不然会报错
-//                int orderNumLenght = recordsBean.getOrderNo().length();
-//                int orderNumber = titleLength + 11 + orderNumLenght;
-//                setMspan(spannableStringBuilder, titleLength + 10, orderNumber);
+            String orderNo = recordsBean.getOrderNo();
+            int orderNumLenght = orderNo.length();
+            if (orderNumLenght != 0) {
+                int index = messageContent.lastIndexOf(orderNo) + titleLength + 2;
+                setMspan(spannableStringBuilder, index, index + orderNumLenght);
+            }
             content.setText(spannableStringBuilder);
 
         } else if (recordsBean.getMessageType() == 2) {

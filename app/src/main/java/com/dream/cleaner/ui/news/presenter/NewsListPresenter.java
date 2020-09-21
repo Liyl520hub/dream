@@ -3,6 +3,7 @@ package com.dream.cleaner.ui.news.presenter;
 import com.dream.cleaner.beans.news.NewsListBean;
 import com.dream.cleaner.http.ApiService;
 import com.dream.cleaner.ui.news.contract.NewsListContract;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.common.base.BaseBean;
 import com.dream.common.base.BasePresenter;
 import com.dream.common.baserx.BaseRxSubscriber;
@@ -24,7 +25,7 @@ import okhttp3.RequestBody;
 public class NewsListPresenter extends BasePresenter<NewsListContract> {
 
 
-    public void newsList(int pageIndex, int userId, String messageType) {
+    public void newsList(int pageIndex, int pageSize, String messageType) {
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("pageIndex", pageIndex);
@@ -34,12 +35,11 @@ public class NewsListPresenter extends BasePresenter<NewsListContract> {
         pageSorts.addProperty("asc", true);
         jsonArray.add(pageSorts);
         jsonObject.add("pageSorts", jsonArray);
-
-        jsonObject.addProperty("userId", userId);
-        jsonObject.addProperty("pageSize", 0);
-        jsonObject.addProperty("userType", "userType");
+        jsonObject.addProperty("userId", InfoUtils.getCleanerId());
+        jsonObject.addProperty("pageSize", pageSize);
+        jsonObject.addProperty("userType", "");
         jsonObject.addProperty("isDel", 0);
-        jsonObject.addProperty("keyword", "keyword");
+        jsonObject.addProperty("keyword", "");
         jsonObject.addProperty("messageType", messageType);
 
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
@@ -56,6 +56,7 @@ public class NewsListPresenter extends BasePresenter<NewsListContract> {
 
                     @Override
                     protected void onError(ErrorType errorType, int errorCode, String message, NewsListBean data) {
+                       mContract.showErrorTip(errorType, errorCode, message);
                         SuperToast.showShortMessage(message);
 
                     }

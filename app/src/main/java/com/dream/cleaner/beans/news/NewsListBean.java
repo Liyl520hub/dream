@@ -94,11 +94,11 @@ public class NewsListBean {
         }
 
         public String getOrderNo() {
-            return orderNo;
+            return orderNo == null ? "" : orderNo;
         }
 
         public void setOrderNo(String orderNo) {
-            this.orderNo = orderNo;
+            this.orderNo = orderNo == null ? "" : orderNo;
         }
 
         public int getUserId() {
@@ -110,11 +110,11 @@ public class NewsListBean {
         }
 
         public String getUserType() {
-            return userType;
+            return userType == null ? "" : userType;
         }
 
         public void setUserType(String userType) {
-            this.userType = userType;
+            this.userType = userType == null ? "" : userType;
         }
 
         public int getMessageType() {
@@ -126,35 +126,35 @@ public class NewsListBean {
         }
 
         public String getTitle() {
-            return title;
+            return title == null ? "" : title;
         }
 
         public void setTitle(String title) {
-            this.title = title;
+            this.title = title == null ? "" : title;
         }
 
         public String getMessagePerson() {
-            return messagePerson;
+            return messagePerson == null ? "" : messagePerson;
         }
 
         public void setMessagePerson(String messagePerson) {
-            this.messagePerson = messagePerson;
+            this.messagePerson = messagePerson == null ? "" : messagePerson;
         }
 
         public String getMessageTime() {
-            return messageTime;
+            return messageTime == null ? "" : messageTime;
         }
 
         public void setMessageTime(String messageTime) {
-            this.messageTime = messageTime;
+            this.messageTime = messageTime == null ? "" : messageTime;
         }
 
         public String getMessageContent() {
-            return messageContent;
+            return messageContent == null ? "" : messageContent;
         }
 
         public void setMessageContent(String messageContent) {
-            this.messageContent = messageContent;
+            this.messageContent = messageContent == null ? "" : messageContent;
         }
 
         public int getStatus() {
@@ -174,19 +174,19 @@ public class NewsListBean {
         }
 
         public String getCreateTime() {
-            return createTime;
+            return createTime == null ? "" : createTime;
         }
 
         public void setCreateTime(String createTime) {
-            this.createTime = createTime;
+            this.createTime = createTime == null ? "" : createTime;
         }
 
         public String getUpdateTime() {
-            return updateTime;
+            return updateTime == null ? "" : updateTime;
         }
 
         public void setUpdateTime(String updateTime) {
-            this.updateTime = updateTime;
+            this.updateTime = updateTime == null ? "" : updateTime;
         }
     }
 
