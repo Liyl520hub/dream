@@ -187,7 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                  >
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="0dp"
@@ -212,12 +212,12 @@
                             android:id="@+id/et_shuo_ming"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:background="@drawable/bg_apply_stop_receiving_edit"
                             android:gravity="left"
                             android:hint="请输入说明"
                             android:paddingLeft="10dp"
-                            android:layout_gravity="center_vertical"
                             android:paddingTop="6dp"
                             android:paddingRight="10dp"
                             android:paddingBottom="6dp"
