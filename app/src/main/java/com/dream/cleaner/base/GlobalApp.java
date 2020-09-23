@@ -97,10 +97,21 @@ public class GlobalApp {
      * 直属联系人姓名
      */
     public static final String DIRECT_CONTACT_NAME = "directContactName";
+
     /**
      * 直属联系人手机号
      */
     public static final String DIRECT_CONTACT_PHONE = "directContactPhone";
+
+    /**
+     * 纬度
+     */
+    public static final String USER_LATITUDE = "user_latitude";
+
+    /**
+     * 经度
+     */
+    public static final String USER_LONGITUDE = "user_longitude";
 
 
     /**

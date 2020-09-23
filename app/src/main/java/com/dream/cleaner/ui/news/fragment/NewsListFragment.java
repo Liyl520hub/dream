@@ -29,6 +29,7 @@ import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -213,11 +214,21 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
     @Override
     public void returnNewsListBean(NewsListBean newsBean) {
         NewsAllListAdapter newsAllListAdapter = newsAllListAdapters.get(currentPosition);
+        List<NewsListBean.RecordsBean> records = newsBean.getRecords();
+        //过滤掉messageType不是 1 2 3 的
+        Iterator<NewsListBean.RecordsBean> iterator = records.iterator();
+        while (iterator.hasNext()) {
+            NewsListBean.RecordsBean next = iterator.next();
+            int messageType = next.getMessageType();
+            if (messageType < 1 || messageType > 3) {
+                iterator.remove();
+            }
+        }
         if (currentPage == 1) {
-            newsAllListAdapter.setList(newsBean.getRecords());
+            newsAllListAdapter.setNewInstance(records);
             mySmartRefresh.finishRefresh();
         } else {
-            newsAllListAdapter.addData(newsBean.getRecords());
+            newsAllListAdapter.addData(records);
             mySmartRefresh.finishLoadMore();
         }
     }

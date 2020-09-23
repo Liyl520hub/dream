@@ -137,6 +137,10 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
         return fragments;
     }
 
+    /**
+     * @param list
+     * @param b    true 代表是订单类型
+     */
     @Override
     public void returnPopWorkOrder(List<PopWorkOrderBean> list, boolean b) {
         if (list == null) {
@@ -152,9 +156,7 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
                 }
             }
         }
-        if (list.size()==0) {
-            SuperToast.showShortMessage("暂无类型");
-        }
+
         if (b) {
             orderTypeList.clear();
             orderTypeList.addAll(list);
@@ -162,7 +164,11 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
             serviceList.clear();
             serviceList.addAll(list);
         }
-        showPop(b);
+        if (list.size() == 0) {
+            SuperToast.showShortMessage("暂无类型");
+        } else {
+            showPop(b);
+        }
     }
 
     private void showPop(boolean b) {

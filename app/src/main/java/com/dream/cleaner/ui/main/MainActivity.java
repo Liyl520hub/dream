@@ -15,7 +15,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.blankj.utilcode.util.BusUtils;
+import com.blankj.utilcode.util.SPUtils;
+import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.BusBean;
@@ -24,6 +30,7 @@ import com.dream.cleaner.ui.main.fragment.WorkOrderFragment;
 import com.dream.cleaner.ui.my.fragment.UserFragment;
 import com.dream.cleaner.ui.news.fragment.NewsListFragment;
 import com.dream.cleaner.ui.plan.fragment.PlanFragment;
+import com.dream.cleaner.utils.LocationUtils;
 import com.dream.cleaner.widget.DataGenerator;
 import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.common.base.BaseActivity;
@@ -52,6 +59,7 @@ public class MainActivity extends BaseActivity {
     public String leftText;
     private PopTip popPermissionsTip;
     private static final String TAG = "MainActivity";
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_main;
@@ -72,15 +80,33 @@ public class MainActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         setDoubleClickExit(true);
         BusUtils.register(this);
-        Log.d(TAG, "initView: ");
-
-
-        MainAdapter mainAdapter = new MainAdapter(this, getFragments());
-        myViewPager.setAdapter(mainAdapter);
-        myViewPager.setUserInputEnabled(false);
-        myViewPager.setOffscreenPageLimit(4);
-        initTabLayout();
-
+        String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
+        String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
+        if (StringUtils.isEmpty(lat) && StringUtils.isEmpty(longitude)) {
+            initData();
+        } else {
+            LocationUtils.initLocation(AMapLocationClientOption.AMapLocationPurpose.SignIn, 0, new AMapLocationListener() {
+                @Override
+                public void onLocationChanged(AMapLocation aMapLocation) {
+                    if (aMapLocation != null) {
+                        if (aMapLocation.getErrorCode() == 0) {
+                            //纬度
+                            double latitude = aMapLocation.getLatitude();
+                            //经度
+                            double longitude = aMapLocation.getLongitude();
+                            SPUtils.getInstance().put(GlobalApp.USER_LATITUDE, latitude + "");
+                            SPUtils.getInstance().put(GlobalApp.USER_LONGITUDE, longitude + "");
+                            initData();
+                        } else {
+                            //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                            Log.e("AmapError", "location Error, ErrCode:"
+                                    + aMapLocation.getErrorCode() + ", errInfo:"
+                                    + aMapLocation.getErrorInfo());
+                        }
+                    }
+                }
+            });
+        }
     }
 
     @Override
@@ -92,7 +118,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     private void getMyPermissions() {
@@ -105,6 +130,7 @@ public class MainActivity extends BaseActivity {
         Disposable subscribe = new RxPermissions(MainActivity.this).requestEach(permissions)
                 .subscribe(aBoolean -> {
                     if (aBoolean.granted) {
+//                        LocationUtils.initLocation();
                     } else if (aBoolean.shouldShowRequestPermissionRationale) {
                         getMyPermissions();
                     } else {
@@ -126,6 +152,15 @@ public class MainActivity extends BaseActivity {
                                 }).build(MainActivity.this);
                     }
                 });
+    }
+
+    private void initData() {
+        MainAdapter mainAdapter = new MainAdapter(MainActivity.this, getFragments());
+        myViewPager.setAdapter(mainAdapter);
+        myViewPager.setUserInputEnabled(false);
+        myViewPager.setOffscreenPageLimit(4);
+        initTabLayout();
+        LocationUtils.initLocation();
     }
 
     private void initTabLayout() {

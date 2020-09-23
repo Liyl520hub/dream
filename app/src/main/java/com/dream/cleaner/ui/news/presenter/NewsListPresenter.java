@@ -35,10 +35,7 @@ public class NewsListPresenter extends BasePresenter<NewsListContract> {
         pageSorts.addProperty("asc", true);
         jsonArray.add(pageSorts);
         jsonObject.add("pageSorts", jsonArray);
-        jsonObject.addProperty("userId", InfoUtils.getCleanerId());
         jsonObject.addProperty("pageSize", pageSize);
-        jsonObject.addProperty("userType", "");
-        jsonObject.addProperty("isDel", 0);
         jsonObject.addProperty("keyword", "");
         jsonObject.addProperty("messageType", messageType);
 

@@ -1,5 +1,7 @@
 package com.dream.cleaner.ui.main.presenter;
 
+import com.blankj.utilcode.util.SPUtils;
+import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.cleaner.http.ApiService;
@@ -53,6 +55,9 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         jsonObject.addProperty("cleanerId", InfoUtils.getCleanerId());
         jsonObject.addProperty("orderTypeId", orderTypeId);
         jsonObject.addProperty("serviceClasssId", serviceClassId);
+        String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
+        String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
+        jsonObject.addProperty("startLonLat",longitude+","+lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).taskList(requestBody))
@@ -81,6 +86,9 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
     public void taskReceive(String id) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", id);
+        String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
+        String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
+        jsonObject.addProperty("startLonLat",longitude+","+lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).taskReceive(requestBody))
@@ -108,6 +116,9 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
     public void taskGo(String id) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", id);
+        String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
+        String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
+        jsonObject.addProperty("startLonLat",longitude+","+lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).taskGo(requestBody))
@@ -135,6 +146,9 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
     public void arrive(String id) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", id);
+        String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
+        String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
+        jsonObject.addProperty("startLonLat",longitude+","+lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).arrive(requestBody))

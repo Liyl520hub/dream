@@ -54,7 +54,9 @@
             android:value="152f0c1d7d509740460eee1eab4490b9" />
 
         <!--        <activity android:name=".ui.login.activity.LoginActivity"></activity>-->
-        <activity android:name=".ui.main.MainActivity"></activity>
+        <activity
+            android:name=".ui.main.MainActivity"
+            android:launchMode="singleTask"></activity>
         <!--        <activity android:name=".ui.main.MainActivity">-->
         <activity android:name=".ui.login.activity.LoginActivity">
             <intent-filter>
@@ -238,6 +240,7 @@
         </provider>
         <!-- 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 end-->
 
+        <service android:name="com.amap.api.location.APSService"></service>
 
         <activity
             android:name="com.amap.api.navi.AmapRouteActivity"
