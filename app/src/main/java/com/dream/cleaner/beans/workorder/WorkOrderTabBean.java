@@ -172,7 +172,17 @@ public class WorkOrderTabBean {
         private int visitFee;
         private String cancleTime;
         private String cancleReason;
+        private String distance;
         private List<PmsServiceRelationTypeListBean> pmsServiceRelationTypeList;
+
+
+        public String getDistance() {
+            return distance == null ? "0" : distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance == null ? "0" : distance;
+        }
 
         public int getId() {
             return id;

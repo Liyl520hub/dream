@@ -11,7 +11,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.blankj.utilcode.util.BusUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
@@ -25,6 +29,7 @@ import com.dream.cleaner.ui.main.activity.WorkReadyActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderTabFragmentAdapter;
 import com.dream.cleaner.ui.main.contract.WorkOrderTabFragmentContract;
 import com.dream.cleaner.ui.main.presenter.WorkOrderTabFragmentPresenter;
+import com.dream.cleaner.utils.LocationUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.EmptyLayout;
@@ -134,7 +139,28 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                                     @Override
                                     public void onClick(View v) {
                                         canCelPop();
-                                        mPresenter.taskReceive(id + "");
+                                        LocationUtils.initLocation(AMapLocationClientOption.AMapLocationPurpose.SignIn, 0, new AMapLocationListener() {
+                                            @Override
+                                            public void onLocationChanged(AMapLocation aMapLocation) {
+                                                if (aMapLocation != null) {
+                                                    if (aMapLocation.getErrorCode() == 0) {
+                                                        //纬度
+                                                        double latitude = aMapLocation.getLatitude();
+                                                        //经度
+                                                        double longitude = aMapLocation.getLongitude();
+                                                        SPUtils.getInstance().put(GlobalApp.USER_LATITUDE, latitude + "");
+                                                        SPUtils.getInstance().put(GlobalApp.USER_LONGITUDE, longitude + "");
+                                                        mPresenter.taskReceive(id + "");
+                                                    } else {
+                                                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                                                        Log.e("AmapError", "location Error, ErrCode:"
+                                                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                                                + aMapLocation.getErrorInfo());
+                                                    }
+                                                }
+                                            }
+                                        });
+
                                     }
                                 });
                             }
@@ -145,7 +171,28 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                                     @Override
                                     public void onClick(View v) {
                                         canCelPop();
-                                        mPresenter.taskGo(id + "");
+                                        LocationUtils.initLocation(AMapLocationClientOption.AMapLocationPurpose.SignIn, 0, new AMapLocationListener() {
+                                            @Override
+                                            public void onLocationChanged(AMapLocation aMapLocation) {
+                                                if (aMapLocation != null) {
+                                                    if (aMapLocation.getErrorCode() == 0) {
+                                                        //纬度
+                                                        double latitude = aMapLocation.getLatitude();
+                                                        //经度
+                                                        double longitude = aMapLocation.getLongitude();
+                                                        SPUtils.getInstance().put(GlobalApp.USER_LATITUDE, latitude + "");
+                                                        SPUtils.getInstance().put(GlobalApp.USER_LONGITUDE, longitude + "");
+                                                        mPresenter.taskGo(id + "");
+                                                    } else {
+                                                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                                                        Log.e("AmapError", "location Error, ErrCode:"
+                                                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                                                + aMapLocation.getErrorInfo());
+                                                    }
+                                                }
+                                            }
+                                        });
+
                                     }
                                 });
                             }
@@ -156,7 +203,27 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                                     @Override
                                     public void onClick(View v) {
                                         canCelPop();
-                                        mPresenter.arrive(id + "");
+                                        LocationUtils.initLocation(AMapLocationClientOption.AMapLocationPurpose.SignIn, 0, new AMapLocationListener() {
+                                            @Override
+                                            public void onLocationChanged(AMapLocation aMapLocation) {
+                                                if (aMapLocation != null) {
+                                                    if (aMapLocation.getErrorCode() == 0) {
+                                                        //纬度
+                                                        double latitude = aMapLocation.getLatitude();
+                                                        //经度
+                                                        double longitude = aMapLocation.getLongitude();
+                                                        SPUtils.getInstance().put(GlobalApp.USER_LATITUDE, latitude + "");
+                                                        SPUtils.getInstance().put(GlobalApp.USER_LONGITUDE, longitude + "");
+                                                        mPresenter.arrive(id + "");
+                                                    } else {
+                                                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                                                        Log.e("AmapError", "location Error, ErrCode:"
+                                                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                                                + aMapLocation.getErrorInfo());
+                                                    }
+                                                }
+                                            }
+                                        });
 
                                     }
                                 });
@@ -204,7 +271,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
         if (workOrderTabFragmentAdapter == null) {
             mySmartRefresh.autoRefresh();
         } else {
-            if (workOrderTabFragmentAdapter.getData().size()==0) {
+            if (workOrderTabFragmentAdapter.getData().size() == 0) {
                 mySmartRefresh.autoRefresh();
             }
         }
@@ -213,7 +280,27 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     private void initData(String orderType, String serviceType) {
         orderTypeId = orderType;
         serviceTypeId = serviceType;
-        mPresenter.taskList(page + "", pageSize + "", getOrderStatus(title), orderTypeId, serviceTypeId);
+        LocationUtils.initLocation(AMapLocationClientOption.AMapLocationPurpose.SignIn, 0, new AMapLocationListener() {
+            @Override
+            public void onLocationChanged(AMapLocation aMapLocation) {
+                if (aMapLocation != null) {
+                    if (aMapLocation.getErrorCode() == 0) {
+                        //纬度
+                        double latitude = aMapLocation.getLatitude();
+                        //经度
+                        double longitude = aMapLocation.getLongitude();
+                        SPUtils.getInstance().put(GlobalApp.USER_LATITUDE, latitude + "");
+                        SPUtils.getInstance().put(GlobalApp.USER_LONGITUDE, longitude + "");
+                        mPresenter.taskList(page + "", pageSize + "", getOrderStatus(title), orderTypeId, serviceTypeId);
+                    } else {
+                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                        Log.e("AmapError", "location Error, ErrCode:"
+                                + aMapLocation.getErrorCode() + ", errInfo:"
+                                + aMapLocation.getErrorInfo());
+                    }
+                }
+            }
+        });
     }
 
 

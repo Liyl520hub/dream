@@ -80,33 +80,29 @@ public class MainActivity extends BaseActivity {
     protected void initView(@Nullable Bundle savedInstanceState) {
         setDoubleClickExit(true);
         BusUtils.register(this);
-        String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
-        String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
-        if (StringUtils.isEmpty(lat) && StringUtils.isEmpty(longitude)) {
-            initData();
-        } else {
-            LocationUtils.initLocation(AMapLocationClientOption.AMapLocationPurpose.SignIn, 0, new AMapLocationListener() {
-                @Override
-                public void onLocationChanged(AMapLocation aMapLocation) {
-                    if (aMapLocation != null) {
-                        if (aMapLocation.getErrorCode() == 0) {
-                            //纬度
-                            double latitude = aMapLocation.getLatitude();
-                            //经度
-                            double longitude = aMapLocation.getLongitude();
-                            SPUtils.getInstance().put(GlobalApp.USER_LATITUDE, latitude + "");
-                            SPUtils.getInstance().put(GlobalApp.USER_LONGITUDE, longitude + "");
-                            initData();
-                        } else {
-                            //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
-                            Log.e("AmapError", "location Error, ErrCode:"
-                                    + aMapLocation.getErrorCode() + ", errInfo:"
-                                    + aMapLocation.getErrorInfo());
-                        }
-                    }
-                }
-            });
-        }
+        initData();
+//        LocationUtils.initLocation(AMapLocationClientOption.AMapLocationPurpose.SignIn, 0, new AMapLocationListener() {
+//            @Override
+//            public void onLocationChanged(AMapLocation aMapLocation) {
+//                if (aMapLocation != null) {
+//                    if (aMapLocation.getErrorCode() == 0) {
+//                        //纬度
+//                        double latitude = aMapLocation.getLatitude();
+//                        //经度
+//                        double longitude = aMapLocation.getLongitude();
+//                        SPUtils.getInstance().put(GlobalApp.USER_LATITUDE, latitude + "");
+//                        SPUtils.getInstance().put(GlobalApp.USER_LONGITUDE, longitude + "");
+//                        initData();
+//                    } else {
+//                        //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+//                        Log.e("AmapError", "location Error, ErrCode:"
+//                                + aMapLocation.getErrorCode() + ", errInfo:"
+//                                + aMapLocation.getErrorInfo());
+//                    }
+//                }
+//            }
+//        });
+
     }
 
     @Override
@@ -160,7 +156,7 @@ public class MainActivity extends BaseActivity {
         myViewPager.setUserInputEnabled(false);
         myViewPager.setOffscreenPageLimit(4);
         initTabLayout();
-        LocationUtils.initLocation();
+//        LocationUtils.initLocation();
     }
 
     private void initTabLayout() {

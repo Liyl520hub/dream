@@ -46,6 +46,14 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
         String orderString = getOrderString(orderStatus);
         tvSubmit.setVisibility(StringUtils.isEmpty(orderString) ? View.GONE : View.VISIBLE);
         tvSubmit.setText(orderString);
+        String distance = workOrderTabBean.getDistance();
+        int i = Integer.parseInt(distance);
+        String formatDistance = i + "m";
+        if (i > 1000) {
+            double doubleDistance = i / 1000.0;
+            formatDistance = doubleDistance + "km";
+        }
+        tvJuLi.setText(formatDistance);
 //        distanceSearch(tvJuLi);
 
     }
@@ -58,7 +66,7 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
             @Override
             public void onDistanceSearched(DistanceResult distanceResult, int i) {
                 float distance = distanceResult.getDistanceResults().get(0).getDistance();
-                tvJuLi.setText(distance+"km");
+                tvJuLi.setText(distance + "km");
             }
         });
 //设置起点和终点，其中起点支持多个
