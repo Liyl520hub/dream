@@ -30,6 +30,7 @@ public class NewsDetailsActivity extends BaseActivity<NewsDetailsPresenter> impl
     TextView tvContent;
     @BindView(R.id.tv_time)
     TextView tvTime;
+    private String id;
 
     @Override
     protected int getLayoutId() {
@@ -48,11 +49,11 @@ public class NewsDetailsActivity extends BaseActivity<NewsDetailsPresenter> impl
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-
-        int id = getIntent().getIntExtra("id", 0);
-        mPresenter.newsDetails(String.valueOf(id));
-        mPresenter.newsDetailsRead(String.valueOf(id));
-
+        if (getIntent() != null) {
+            id = getIntent().getStringExtra("id");
+        }
+        mPresenter.newsDetails(id);
+        mPresenter.newsDetailsRead(id);
     }
 
     @Override

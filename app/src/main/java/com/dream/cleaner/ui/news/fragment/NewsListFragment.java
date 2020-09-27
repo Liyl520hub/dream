@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.news.fragment;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import com.dream.cleaner.ui.news.activity.NewsDetailsActivity;
 import com.dream.cleaner.ui.news.adapter.NewsAllListAdapter;
 import com.dream.cleaner.ui.news.contract.NewsListContract;
 import com.dream.cleaner.ui.news.presenter.NewsListPresenter;
+import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.DataGenerator;
 import com.dream.cleaner.widget.EmptyLayout;
 import com.dream.common.base.BaseFragment;
@@ -115,7 +117,20 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
                 getData();
             }
         });
-        mySmartRefresh.autoRefresh();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (newsAllListAdapters != null) {
+            NewsAllListAdapter newsAllListAdapter = newsAllListAdapters.get(currentPosition);
+            List<NewsListBean.RecordsBean> data = newsAllListAdapter.getData();
+            if (data.size() == 0) {
+                mySmartRefresh.autoRefresh();
+            }
+        } else {
+            mySmartRefresh.autoRefresh();
+        }
     }
 
     private void getData() {
@@ -143,11 +158,10 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
             newsAllListAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
-                    Intent intent = new Intent(getActivity(), NewsDetailsActivity.class);
                     NewsListBean.RecordsBean recordsBean = (NewsListBean.RecordsBean) adapter.getItem(position);
-                    intent.putExtra("id", recordsBean.getId());
-                    startActivity(intent);
-
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id", recordsBean.getId() + "");
+                    UiUtil.openActivity(getActivity(), NewsDetailsActivity.class, bundle);
                 }
             });
             if (i == 0) {
@@ -172,6 +186,12 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
                 List<NewsListBean.RecordsBean> data = newsAllListAdapter.getData();
                 if (data.size() == 0) {
                     mySmartRefresh.autoRefresh();
+                }
+                if (mySmartRefresh.isRefreshing()) {
+                    mySmartRefresh.finishRefresh();
+                }
+                if (mySmartRefresh.isLoading()) {
+                    mySmartRefresh.finishLoadMore();
                 }
             }
 
