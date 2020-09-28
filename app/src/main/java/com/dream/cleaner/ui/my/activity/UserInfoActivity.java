@@ -204,6 +204,26 @@ public class UserInfoActivity extends BaseActivity<UserInfoActivityPresenter> im
         tvHealthCertificate.setText("健康证号   " + InfoUtils.getHealthCertNo());
         tvHealthCertificateDate.setText("有效日期   " + InfoUtils.getHealthCertDate());
         ImageLoaderUtils.loadImgCircle(InfoUtils.getHeadIcPath(), ivHead);
+        setLevel();
 
     }
+
+    /**
+     * 设置用户星级
+     */
+    private void setLevel() {
+        String userLevel = InfoUtils.getUserLevel();
+        if ("一星".equals(userLevel)) {
+            rbStar.setRating(1);
+        } else if ("二星".equals(userLevel)) {
+            rbStar.setRating(2);
+        } else if ("三星".equals(userLevel)) {
+            rbStar.setRating(3);
+        } else if ("四星".equals(userLevel)) {
+            rbStar.setRating(4);
+        } else if ("五星".equals(userLevel)) {
+            rbStar.setRating(5);
+        }
+    }
+
 }

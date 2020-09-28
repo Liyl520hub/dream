@@ -58,7 +58,7 @@
             android:id="@+id/tv_address"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:drawableLeft="@mipmap/icon_address"
             android:drawablePadding="7dp"
             android:paddingLeft="15dp"

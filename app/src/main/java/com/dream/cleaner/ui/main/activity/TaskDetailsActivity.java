@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.main.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -19,12 +20,18 @@ import com.amap.api.navi.AmapNaviParams;
 import com.amap.api.navi.AmapNaviType;
 import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.route.DistanceResult;
+import com.amap.api.services.route.DistanceSearch;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.R;
+import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.ui.main.contract.TaskDetailsActivityContract;
 import com.dream.cleaner.ui.main.presenter.TaskDetailsActivityPresenter;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.pop.PopTip;
@@ -33,6 +40,9 @@ import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.ToolbarBackTitle;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -112,6 +122,9 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     private String orderId;
     private PopTip popPermissionsTip;
     private PopTip popTip;
+    private String lat;
+    private String lon;
+    private String contactAddress;
 
     @Override
     protected int getLayoutId() {
@@ -144,24 +157,33 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
 
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void returnTaskDetail(TaskDetailsBean taskDetailsBean) {
         if (taskDetailsBean != null) {
+            lat = taskDetailsBean.getLat();
+            lon = taskDetailsBean.getLon();
             orderStatus = Integer.parseInt(taskDetailsBean.getOrderStatus());
             //任务信息地址
-            tvAddress.setText(taskDetailsBean.getContactAddress());
+            contactAddress = taskDetailsBean.getContactAddress();
+            tvAddress.setText(contactAddress);
             //日常保洁那一行
-            tvBeiZhu.setText(taskDetailsBean.getServiceProperty());
+            String serviceName = taskDetailsBean.getServiceName();
+            if (StringUtils.isEmpty(serviceName)) {
+                tvBeiZhu.setText("属性：" + taskDetailsBean.getServiceProperty());
+            } else {
+                tvBeiZhu.setText(serviceName + "  属性：" + taskDetailsBean.getServiceProperty());
+            }
             //任务日期时间
             tvTime.setText(taskDetailsBean.getServiceTime());
             //距离
-            tvJuLi.setText("2.1KM");
+            distanceSearch(tvJuLi);
             //姓名
             tvContactInformationName.setText(taskDetailsBean.getContacts());
             //电话
             tvContactInformationMobile.setText(taskDetailsBean.getContactNo());
             //特殊备注
-            tvContactInformationBeiZhu.setText(taskDetailsBean.getSpecialRequest());
+            tvContactInformationBeiZhu.setText(StringUtils.isEmpty(taskDetailsBean.getSpecialRequest()) ? "暂无备注" : taskDetailsBean.getSpecialRequest());
             //订单编号
             tvOrderInfoName.setText(taskDetailsBean.getOrderNo());
             //订单价格
@@ -241,13 +263,44 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
         return intOrderStatusString;
     }
 
+    private void distanceSearch(TextView tvJuLi) {
+        String userLon = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE, "0");
+        String userLat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE, "0");
+        LatLonPoint start = new LatLonPoint(Double.parseDouble(userLat), Double.parseDouble(userLon));
+        LatLonPoint dest = new LatLonPoint(Double.parseDouble(lat), Double.parseDouble(lon));
+        DistanceSearch distanceSearch = new DistanceSearch(TaskDetailsActivity.this);
+        distanceSearch.setDistanceSearchListener(new DistanceSearch.OnDistanceSearchListener() {
+            @Override
+            public void onDistanceSearched(DistanceResult distanceResult, int i) {
+                float distance = distanceResult.getDistanceResults().get(0).getDistance();
+                if (distance > 1000) {
+                    distance = distance / 1000;
+                    tvJuLi.setText(distance + "km");
+                }else{
+                    tvJuLi.setText(distance + "m");
+                }
+            }
+        });
+        //设置起点和终点，其中起点支持多个
+        List<LatLonPoint> latLonPoints = new ArrayList<LatLonPoint>();
+        latLonPoints.add(start);
+        DistanceSearch.DistanceQuery distanceQuery = new DistanceSearch.DistanceQuery();
+        distanceQuery.setOrigins(latLonPoints);
+        distanceQuery.setDestination(dest);
+        //设置测量方式，支持直线和驾车
+        distanceQuery.setType(DistanceSearch.TYPE_DRIVING_DISTANCE);
+        distanceSearch.calculateRouteDistanceAsyn(distanceQuery);
+    }
+
     @OnClick({R.id.tv_submit, R.id.tv_go_navigation})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_go_navigation: {
-                Poi start = new Poi("三元桥", new LatLng(39.96087, 116.45798), "");
+                String userLon = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE, "0");
+                String userLat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE, "0");
+                Poi start = new Poi("当前位置", new LatLng(Double.parseDouble(userLat), Double.parseDouble(userLon)), "");
                 /**终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点**/
-                Poi end = new Poi("北京站", new LatLng(39.904556, 116.427231), "B000A83M61");
+                Poi end = new Poi(contactAddress, new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)), "");
                 AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
                 amapNaviParams.setUseInnerVoice(true).setMultipleRouteNaviMode(true).setNeedCalculateRouteWhenPresent(true);
                 AmapNaviPage.getInstance().showRouteActivity(this, amapNaviParams, new INaviInfoCallback() {
@@ -355,8 +408,8 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
             break;
             case R.id.tv_submit: {
                 Bundle bundle = new Bundle();
-                bundle.putString("orderId",orderId);
-                bundle.putString("orderStatus",orderStatus+"");
+                bundle.putString("orderId", orderId);
+                bundle.putString("orderStatus", orderStatus + "");
                 // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
                 switch (orderStatus) {
                     case 0: {
@@ -395,18 +448,18 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
                     break;
                     case 4: {
                         //扫前准备
-                        bundle.putBoolean("isBefore",true);
-                        UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class,bundle);
+                        bundle.putBoolean("isBefore", true);
+                        UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class, bundle);
                     }
                     break;
                     case 5: {
                         //完成服务
-                        bundle.putBoolean("isBefore",false);
+                        bundle.putBoolean("isBefore", false);
                         goNext("确认完成服务", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 canCelPop();
-                                UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class,bundle);
+                                UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class, bundle);
                             }
                         });
                     }

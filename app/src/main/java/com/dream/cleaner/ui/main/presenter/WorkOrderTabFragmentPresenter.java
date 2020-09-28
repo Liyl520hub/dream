@@ -40,7 +40,6 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
      */
     public void taskList(String pageIndex, String pageSize, int orderStatus, String orderTypeId, String serviceClassId) {
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("id", "0");
         jsonObject.addProperty("pageIndex", pageIndex);
         JsonArray jsonArray = new JsonArray();
         JsonObject pageSorts = new JsonObject();
@@ -48,10 +47,11 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         pageSorts.addProperty("asc", true);
         jsonArray.add(pageSorts);
         jsonObject.add("pageSorts", jsonArray);
-        jsonObject.addProperty("orderStatus", orderStatus);
         jsonObject.addProperty("pageSize", pageSize);
         jsonObject.addProperty("keyword", "");
-        jsonObject.add("orderStatusList", new JsonArray());
+        JsonArray orderStatusList = new JsonArray();
+        orderStatusList.add(orderStatus);
+        jsonObject.add("orderStatusList",orderStatusList);
         jsonObject.addProperty("cleanerId", InfoUtils.getCleanerId());
         jsonObject.addProperty("orderTypeId", orderTypeId);
         jsonObject.addProperty("serviceClasssId", serviceClassId);

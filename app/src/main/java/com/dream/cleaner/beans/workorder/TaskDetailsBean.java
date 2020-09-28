@@ -53,6 +53,9 @@ public class TaskDetailsBean {
     private List<?> explainPicList;
     private List<?> beforePicList;
     private List<?> afterPicList;
+    private String lon;
+    private String lat;
+
 
     public int getOrderId() {
         return orderId;
@@ -180,6 +183,22 @@ public class TaskDetailsBean {
 
     public void setServiceReplenish(String serviceReplenish) {
         this.serviceReplenish = serviceReplenish == null ? "" : serviceReplenish;
+    }
+
+    public String getLon() {
+        return lon == null ? "0" : lon;
+    }
+
+    public void setLon(String lon) {
+        this.lon = lon == null ? "0" : lon;
+    }
+
+    public String getLat() {
+        return lat == null ? "0" : lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat == null ? "0" : lat;
     }
 
     public AfterSaleBean getAfterSale() {
@@ -432,6 +451,10 @@ public class TaskDetailsBean {
 
         public void setUpdateTime(String updateTime) {
             this.updateTime = updateTime == null ? "" : updateTime;
+        }
+
+        public String getServiceId() {
+            return serviceId == null ? "" : serviceId;
         }
     }
 

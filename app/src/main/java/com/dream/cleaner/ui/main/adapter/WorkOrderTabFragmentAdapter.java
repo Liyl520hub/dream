@@ -37,8 +37,12 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
         baseViewHolder.setText(R.id.tv_address, workOrderTabBean.getContactAddress());
         baseViewHolder.setText(R.id.tv_time, workOrderTabBean.getServiceTime());
         baseViewHolder.setText(R.id.tv_order_price, workOrderTabBean.getServicePrice() + "元");
-        baseViewHolder.setText(R.id.tv_bei_zhu, workOrderTabBean.getServiceProperty());
-
+        String serviceItemsName = workOrderTabBean.getServiceItemsName();
+        if (StringUtils.isEmpty(serviceItemsName)) {
+            baseViewHolder.setText(R.id.tv_bei_zhu, "属性：" + workOrderTabBean.getServiceProperty());
+        } else {
+            baseViewHolder.setText(R.id.tv_bei_zhu, serviceItemsName + "  属性：" + workOrderTabBean.getServiceProperty());
+        }
         TextView tvJuLi = baseViewHolder.getView(R.id.tv_ju_li);
         TextView tvSubmit = baseViewHolder.getView(R.id.tv_submit);
         //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
