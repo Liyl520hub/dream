@@ -25,7 +25,6 @@ android {
     signingConfigs {
         release {
             storeFile file('../cleaner.jks')
-            storePassword '12345679'
             keyAlias = rootProject.ext.android.keyAlias
             keyPassword = rootProject.ext.android.keyPassword
             storePassword = rootProject.ext.android.keyPassword
