@@ -147,7 +147,7 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     @Override
     public void returnTaskDetail(TaskDetailsBean taskDetailsBean) {
         if (taskDetailsBean != null) {
-            orderStatus = taskDetailsBean.getOrderStatus();
+            orderStatus = Integer.parseInt(taskDetailsBean.getOrderStatus());
             //任务信息地址
             tvAddress.setText(taskDetailsBean.getContactAddress());
             //日常保洁那一行
@@ -166,7 +166,7 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
             tvOrderInfoName.setText(taskDetailsBean.getOrderNo());
             //订单价格
             tvOrderInfoPrice.setText(taskDetailsBean.getServicePrice() + "元");
-            tvOrderInfoServiceStatus.setText(getOrderStatusString(taskDetailsBean.getOrderStatus()));
+            tvOrderInfoServiceStatus.setText(getOrderStatusString(Integer.parseInt(taskDetailsBean.getOrderStatus())));
             tvContactInformationCallMobile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

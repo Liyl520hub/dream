@@ -119,7 +119,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
                 WorkOrderTabBean.RecordsBean item = workOrderTabFragmentAdapter.getItem(position);
-                int orderStatus = item.getOrderStatus();
+                int orderStatus = Integer.parseInt(item.getOrderStatus());
                 int id = item.getId();
                 Bundle bundle = new Bundle();
                 bundle.putString("orderId", id + "");
@@ -306,7 +306,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
 
     @Override
     public void showErrorTip(ErrorType errorType, int errorCode, String message) {
-        if (page == 1) {
+        if (page <= 1) {
             mySmartRefresh.finishRefresh();
         } else {
             mySmartRefresh.finishLoadMore();
@@ -369,6 +369,8 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
 
     @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_WORK)
     public void postBusListener(BusBean busBean) {
+        serviceTypeId = busBean.getServiceTypeId();
+        orderTypeId = busBean.getOrderTypeId();
         if (isResumed()) {
             initData(busBean.getOrderTypeId(), busBean.getServiceTypeId());
         }

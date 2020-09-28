@@ -65,6 +65,15 @@ public class PopWorkOrderBean {
     private String endTime;
     private String categoryId;
     private String pmsServiceRelationTypeS;
+    private boolean isCheck;
+
+    public boolean isCheck() {
+        return isCheck;
+    }
+
+    public void setCheck(boolean check) {
+        isCheck = check;
+    }
 
     public String getName() {
         return name == null ? "" : name;

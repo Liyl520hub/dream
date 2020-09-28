@@ -182,6 +182,11 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
                 } else {
                     serviceTypeId = data.getId() + "";
                 }
+                List<PopWorkOrderBean> data1 = (List<PopWorkOrderBean>) adapter.getData();
+                int size = data1.size();
+                for (int i = 0; i < size; i++) {
+                    data1.get(i).setCheck(i==position);
+                }
                 //刷新当前页面
                 BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK, new BusBean(orderTypeId, serviceTypeId));
                 popWorkOrder.dismiss();

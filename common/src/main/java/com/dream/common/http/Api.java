@@ -106,7 +106,8 @@ public class Api {
     private static Retrofit getRetrofit(int headerType) {
         //Log拦截器
         HttpLoggingInterceptor logInterceptor = new HttpLoggingInterceptor();
-        logInterceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+//        logInterceptor.setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.BODY : HttpLoggingInterceptor.Level.NONE);
+        logInterceptor.setLevel( HttpLoggingInterceptor.Level.BODY);
 
         //网络缓存文件夹
         File cacheFile = new File(Utils.getApp().getApplicationContext().getCacheDir(), "cache");

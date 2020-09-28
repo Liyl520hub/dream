@@ -119,31 +119,31 @@ public class WorkOrderTabBean {
 
         private int id;
         private String orderNo;
-        private int contractType;
-        private int userId;
-        private int cycleServiceId;
+        private String contractType;
+        private String userId;
+        private String cycleServiceId;
         private String memberName;
         private String memberPhone;
         private String contacts;
         private String provinceName;
         private String cityName;
         private String countyName;
-        private int countyId;
+        private String countyId;
         private String contactAddress;
-        private int placeOrderUser;
+        private String placeOrderUser;
         private String placeOrderUsername;
-        private int serviceItemsId;
+        private String serviceItemsId;
         private String serviceItemsName;
         private String serviceTypeName;
-        private int serviceTimes;
+        private String serviceTimes;
         private String serviceAddress;
         private String contactNo;
         private String serviceTime;
         private String serviceUnit;
         private String serviceNum;
         private String serviceProperty;
-        private int cycleFlag;
-        private int cleanerId;
+        private String cycleFlag;
+        private String cleanerId;
         private String cleanerName;
         private String cleanerPhone;
         private String areaName;
@@ -155,34 +155,25 @@ public class WorkOrderTabBean {
         private String serviceEvalua;
         private String cleanerEvalua;
         private String description;
-        private int inputFlag;
-        private int orderStatus;
+        private String inputFlag;
+        private String orderStatus;
         private String orderStatusStr;
-        private int servicePrice;
-        private int favourablePrice;
-        private int paymentPrice;
+        private String servicePrice;
+        private String favourablePrice;
+        private String paymentPrice;
         private String placeOrderTime;
         private String endTime;
         private String serviceReplenish;
         private String specialRequest;
         private String remark;
-        private int isDel;
+        private String isDel;
         private String createTime;
         private String updateTime;
-        private int visitFee;
+        private String visitFee;
         private String cancleTime;
         private String cancleReason;
         private String distance;
         private List<PmsServiceRelationTypeListBean> pmsServiceRelationTypeList;
-
-
-        public String getDistance() {
-            return distance == null ? "0" : distance;
-        }
-
-        public void setDistance(String distance) {
-            this.distance = distance == null ? "0" : distance;
-        }
 
         public int getId() {
             return id;
@@ -200,28 +191,28 @@ public class WorkOrderTabBean {
             this.orderNo = orderNo == null ? "" : orderNo;
         }
 
-        public int getContractType() {
-            return contractType;
+        public String getContractType() {
+            return contractType == null ? "" : contractType;
         }
 
-        public void setContractType(int contractType) {
-            this.contractType = contractType;
+        public void setContractType(String contractType) {
+            this.contractType = contractType == null ? "" : contractType;
         }
 
-        public int getUserId() {
-            return userId;
+        public String getUserId() {
+            return userId == null ? "" : userId;
         }
 
-        public void setUserId(int userId) {
-            this.userId = userId;
+        public void setUserId(String userId) {
+            this.userId = userId == null ? "" : userId;
         }
 
-        public int getCycleServiceId() {
-            return cycleServiceId;
+        public String getCycleServiceId() {
+            return cycleServiceId == null ? "" : cycleServiceId;
         }
 
-        public void setCycleServiceId(int cycleServiceId) {
-            this.cycleServiceId = cycleServiceId;
+        public void setCycleServiceId(String cycleServiceId) {
+            this.cycleServiceId = cycleServiceId == null ? "" : cycleServiceId;
         }
 
         public String getMemberName() {
@@ -272,12 +263,12 @@ public class WorkOrderTabBean {
             this.countyName = countyName == null ? "" : countyName;
         }
 
-        public int getCountyId() {
-            return countyId;
+        public String getCountyId() {
+            return countyId == null ? "" : countyId;
         }
 
-        public void setCountyId(int countyId) {
-            this.countyId = countyId;
+        public void setCountyId(String countyId) {
+            this.countyId = countyId == null ? "" : countyId;
         }
 
         public String getContactAddress() {
@@ -288,12 +279,12 @@ public class WorkOrderTabBean {
             this.contactAddress = contactAddress == null ? "" : contactAddress;
         }
 
-        public int getPlaceOrderUser() {
-            return placeOrderUser;
+        public String getPlaceOrderUser() {
+            return placeOrderUser == null ? "" : placeOrderUser;
         }
 
-        public void setPlaceOrderUser(int placeOrderUser) {
-            this.placeOrderUser = placeOrderUser;
+        public void setPlaceOrderUser(String placeOrderUser) {
+            this.placeOrderUser = placeOrderUser == null ? "" : placeOrderUser;
         }
 
         public String getPlaceOrderUsername() {
@@ -304,12 +295,12 @@ public class WorkOrderTabBean {
             this.placeOrderUsername = placeOrderUsername == null ? "" : placeOrderUsername;
         }
 
-        public int getServiceItemsId() {
-            return serviceItemsId;
+        public String getServiceItemsId() {
+            return serviceItemsId == null ? "" : serviceItemsId;
         }
 
-        public void setServiceItemsId(int serviceItemsId) {
-            this.serviceItemsId = serviceItemsId;
+        public void setServiceItemsId(String serviceItemsId) {
+            this.serviceItemsId = serviceItemsId == null ? "" : serviceItemsId;
         }
 
         public String getServiceItemsName() {
@@ -328,12 +319,12 @@ public class WorkOrderTabBean {
             this.serviceTypeName = serviceTypeName == null ? "" : serviceTypeName;
         }
 
-        public int getServiceTimes() {
-            return serviceTimes;
+        public String getServiceTimes() {
+            return serviceTimes == null ? "" : serviceTimes;
         }
 
-        public void setServiceTimes(int serviceTimes) {
-            this.serviceTimes = serviceTimes;
+        public void setServiceTimes(String serviceTimes) {
+            this.serviceTimes = serviceTimes == null ? "" : serviceTimes;
         }
 
         public String getServiceAddress() {
@@ -384,20 +375,20 @@ public class WorkOrderTabBean {
             this.serviceProperty = serviceProperty == null ? "" : serviceProperty;
         }
 
-        public int getCycleFlag() {
-            return cycleFlag;
+        public String getCycleFlag() {
+            return cycleFlag == null ? "" : cycleFlag;
         }
 
-        public void setCycleFlag(int cycleFlag) {
-            this.cycleFlag = cycleFlag;
+        public void setCycleFlag(String cycleFlag) {
+            this.cycleFlag = cycleFlag == null ? "" : cycleFlag;
         }
 
-        public int getCleanerId() {
-            return cleanerId;
+        public String getCleanerId() {
+            return cleanerId == null ? "" : cleanerId;
         }
 
-        public void setCleanerId(int cleanerId) {
-            this.cleanerId = cleanerId;
+        public void setCleanerId(String cleanerId) {
+            this.cleanerId = cleanerId == null ? "" : cleanerId;
         }
 
         public String getCleanerName() {
@@ -488,20 +479,20 @@ public class WorkOrderTabBean {
             this.description = description == null ? "" : description;
         }
 
-        public int getInputFlag() {
-            return inputFlag;
+        public String getInputFlag() {
+            return inputFlag == null ? "" : inputFlag;
         }
 
-        public void setInputFlag(int inputFlag) {
-            this.inputFlag = inputFlag;
+        public void setInputFlag(String inputFlag) {
+            this.inputFlag = inputFlag == null ? "" : inputFlag;
         }
 
-        public int getOrderStatus() {
-            return orderStatus;
+        public String getOrderStatus() {
+            return orderStatus == null ? "0" : orderStatus;
         }
 
-        public void setOrderStatus(int orderStatus) {
-            this.orderStatus = orderStatus;
+        public void setOrderStatus(String orderStatus) {
+            this.orderStatus = orderStatus == null ? "0" : orderStatus;
         }
 
         public String getOrderStatusStr() {
@@ -512,28 +503,28 @@ public class WorkOrderTabBean {
             this.orderStatusStr = orderStatusStr == null ? "" : orderStatusStr;
         }
 
-        public int getServicePrice() {
-            return servicePrice;
+        public String getServicePrice() {
+            return servicePrice == null ? "" : servicePrice;
         }
 
-        public void setServicePrice(int servicePrice) {
-            this.servicePrice = servicePrice;
+        public void setServicePrice(String servicePrice) {
+            this.servicePrice = servicePrice == null ? "" : servicePrice;
         }
 
-        public int getFavourablePrice() {
-            return favourablePrice;
+        public String getFavourablePrice() {
+            return favourablePrice == null ? "" : favourablePrice;
         }
 
-        public void setFavourablePrice(int favourablePrice) {
-            this.favourablePrice = favourablePrice;
+        public void setFavourablePrice(String favourablePrice) {
+            this.favourablePrice = favourablePrice == null ? "" : favourablePrice;
         }
 
-        public int getPaymentPrice() {
-            return paymentPrice;
+        public String getPaymentPrice() {
+            return paymentPrice == null ? "" : paymentPrice;
         }
 
-        public void setPaymentPrice(int paymentPrice) {
-            this.paymentPrice = paymentPrice;
+        public void setPaymentPrice(String paymentPrice) {
+            this.paymentPrice = paymentPrice == null ? "" : paymentPrice;
         }
 
         public String getPlaceOrderTime() {
@@ -576,12 +567,12 @@ public class WorkOrderTabBean {
             this.remark = remark == null ? "" : remark;
         }
 
-        public int getIsDel() {
-            return isDel;
+        public String getIsDel() {
+            return isDel == null ? "" : isDel;
         }
 
-        public void setIsDel(int isDel) {
-            this.isDel = isDel;
+        public void setIsDel(String isDel) {
+            this.isDel = isDel == null ? "" : isDel;
         }
 
         public String getCreateTime() {
@@ -600,12 +591,12 @@ public class WorkOrderTabBean {
             this.updateTime = updateTime == null ? "" : updateTime;
         }
 
-        public int getVisitFee() {
-            return visitFee;
+        public String getVisitFee() {
+            return visitFee == null ? "" : visitFee;
         }
 
-        public void setVisitFee(int visitFee) {
-            this.visitFee = visitFee;
+        public void setVisitFee(String visitFee) {
+            this.visitFee = visitFee == null ? "" : visitFee;
         }
 
         public String getCancleTime() {
@@ -622,6 +613,14 @@ public class WorkOrderTabBean {
 
         public void setCancleReason(String cancleReason) {
             this.cancleReason = cancleReason == null ? "" : cancleReason;
+        }
+
+        public String getDistance() {
+            return distance == null ? "" : distance;
+        }
+
+        public void setDistance(String distance) {
+            this.distance = distance == null ? "" : distance;
         }
 
         public List<PmsServiceRelationTypeListBean> getPmsServiceRelationTypeList() {
@@ -655,18 +654,18 @@ public class WorkOrderTabBean {
              */
 
             private int id;
-            private int relationId;
-            private int relationType;
-            private int categoryId;
+            private String relationId;
+            private String relationType;
+            private String categoryId;
             private String categoryName;
-            private int serviceId;
+            private String serviceId;
             private String serviceName;
-            private int billingUnitId;
+            private String billingUnitId;
             private String billingUnitName;
-            private int unitProId;
+            private String unitProId;
             private String unitProName;
-            private int settlePrice;
-            private int isDel;
+            private String settlePrice;
+            private String isDel;
             private String createTime;
             private String updateTime;
 
@@ -678,28 +677,28 @@ public class WorkOrderTabBean {
                 this.id = id;
             }
 
-            public int getRelationId() {
-                return relationId;
+            public String getRelationId() {
+                return relationId == null ? "" : relationId;
             }
 
-            public void setRelationId(int relationId) {
-                this.relationId = relationId;
+            public void setRelationId(String relationId) {
+                this.relationId = relationId == null ? "" : relationId;
             }
 
-            public int getRelationType() {
-                return relationType;
+            public String getRelationType() {
+                return relationType == null ? "" : relationType;
             }
 
-            public void setRelationType(int relationType) {
-                this.relationType = relationType;
+            public void setRelationType(String relationType) {
+                this.relationType = relationType == null ? "" : relationType;
             }
 
-            public int getCategoryId() {
-                return categoryId;
+            public String getCategoryId() {
+                return categoryId == null ? "" : categoryId;
             }
 
-            public void setCategoryId(int categoryId) {
-                this.categoryId = categoryId;
+            public void setCategoryId(String categoryId) {
+                this.categoryId = categoryId == null ? "" : categoryId;
             }
 
             public String getCategoryName() {
@@ -710,12 +709,12 @@ public class WorkOrderTabBean {
                 this.categoryName = categoryName == null ? "" : categoryName;
             }
 
-            public int getServiceId() {
-                return serviceId;
+            public String getServiceId() {
+                return serviceId == null ? "" : serviceId;
             }
 
-            public void setServiceId(int serviceId) {
-                this.serviceId = serviceId;
+            public void setServiceId(String serviceId) {
+                this.serviceId = serviceId == null ? "" : serviceId;
             }
 
             public String getServiceName() {
@@ -726,12 +725,12 @@ public class WorkOrderTabBean {
                 this.serviceName = serviceName == null ? "" : serviceName;
             }
 
-            public int getBillingUnitId() {
-                return billingUnitId;
+            public String getBillingUnitId() {
+                return billingUnitId == null ? "" : billingUnitId;
             }
 
-            public void setBillingUnitId(int billingUnitId) {
-                this.billingUnitId = billingUnitId;
+            public void setBillingUnitId(String billingUnitId) {
+                this.billingUnitId = billingUnitId == null ? "" : billingUnitId;
             }
 
             public String getBillingUnitName() {
@@ -742,12 +741,12 @@ public class WorkOrderTabBean {
                 this.billingUnitName = billingUnitName == null ? "" : billingUnitName;
             }
 
-            public int getUnitProId() {
-                return unitProId;
+            public String getUnitProId() {
+                return unitProId == null ? "" : unitProId;
             }
 
-            public void setUnitProId(int unitProId) {
-                this.unitProId = unitProId;
+            public void setUnitProId(String unitProId) {
+                this.unitProId = unitProId == null ? "" : unitProId;
             }
 
             public String getUnitProName() {
@@ -758,20 +757,20 @@ public class WorkOrderTabBean {
                 this.unitProName = unitProName == null ? "" : unitProName;
             }
 
-            public int getSettlePrice() {
-                return settlePrice;
+            public String getSettlePrice() {
+                return settlePrice == null ? "" : settlePrice;
             }
 
-            public void setSettlePrice(int settlePrice) {
-                this.settlePrice = settlePrice;
+            public void setSettlePrice(String settlePrice) {
+                this.settlePrice = settlePrice == null ? "" : settlePrice;
             }
 
-            public int getIsDel() {
-                return isDel;
+            public String getIsDel() {
+                return isDel == null ? "" : isDel;
             }
 
-            public void setIsDel(int isDel) {
-                this.isDel = isDel;
+            public void setIsDel(String isDel) {
+                this.isDel = isDel == null ? "" : isDel;
             }
 
             public String getCreateTime() {

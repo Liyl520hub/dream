@@ -12,6 +12,7 @@ import com.dream.cleaner.utils.InfoUtils;
 import com.dream.common.base.BaseApplication;
 import com.dream.common.http.Api;
 import com.dream.common.http.config.ApiConfig;
+import com.dream.common.widget.SuperToast;
 import com.scwang.smart.refresh.footer.ClassicsFooter;
 import com.scwang.smart.refresh.header.ClassicsHeader;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;

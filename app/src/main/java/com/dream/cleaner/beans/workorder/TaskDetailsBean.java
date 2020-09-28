@@ -42,10 +42,10 @@ public class TaskDetailsBean {
     private String contactNo;
     private String specialRequest;
     private String orderNo;
-    private int servicePrice;
-    private int orderStatus;
-    private int suppleRefundType;
-    private int suppleRefundTPrice;
+    private String servicePrice;
+    private String orderStatus;
+    private String suppleRefundType;
+    private String suppleRefundTPrice;
     private String explain;
     private String remark;
     private String serviceReplenish;
@@ -126,36 +126,36 @@ public class TaskDetailsBean {
         this.orderNo = orderNo == null ? "" : orderNo;
     }
 
-    public int getServicePrice() {
-        return servicePrice;
+    public String getServicePrice() {
+        return servicePrice == null ? "" : servicePrice;
     }
 
-    public void setServicePrice(int servicePrice) {
-        this.servicePrice = servicePrice;
+    public void setServicePrice(String servicePrice) {
+        this.servicePrice = servicePrice == null ? "" : servicePrice;
     }
 
-    public int getOrderStatus() {
-        return orderStatus;
+    public String getOrderStatus() {
+        return orderStatus == null ? "" : orderStatus;
     }
 
-    public void setOrderStatus(int orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus == null ? "" : orderStatus;
     }
 
-    public int getSuppleRefundType() {
-        return suppleRefundType;
+    public String getSuppleRefundType() {
+        return suppleRefundType == null ? "" : suppleRefundType;
     }
 
-    public void setSuppleRefundType(int suppleRefundType) {
-        this.suppleRefundType = suppleRefundType;
+    public void setSuppleRefundType(String suppleRefundType) {
+        this.suppleRefundType = suppleRefundType == null ? "" : suppleRefundType;
     }
 
-    public int getSuppleRefundTPrice() {
-        return suppleRefundTPrice;
+    public String getSuppleRefundTPrice() {
+        return suppleRefundTPrice == null ? "" : suppleRefundTPrice;
     }
 
-    public void setSuppleRefundTPrice(int suppleRefundTPrice) {
-        this.suppleRefundTPrice = suppleRefundTPrice;
+    public void setSuppleRefundTPrice(String suppleRefundTPrice) {
+        this.suppleRefundTPrice = suppleRefundTPrice == null ? "" : suppleRefundTPrice;
     }
 
     public String getExplain() {
@@ -255,7 +255,7 @@ public class TaskDetailsBean {
         private String userId;
         private String contacts;
         private String contactNumber;
-        private int serviceId;
+        private String serviceId;
         private String cleanerId;
         private String cleanerName;
         private String cleanerPhone;
@@ -263,10 +263,10 @@ public class TaskDetailsBean {
         private String postReason;
         private String salePostTime;
         private String dealTime;
-        private int saleType;
+        private String saleType;
         private String reason;
-        private int saleStatus;
-        private int isDel;
+        private String saleStatus;
+        private String isDel;
         private String createTime;
         private String updateTime;
 
@@ -326,14 +326,6 @@ public class TaskDetailsBean {
             this.contactNumber = contactNumber == null ? "" : contactNumber;
         }
 
-        public int getServiceId() {
-            return serviceId;
-        }
-
-        public void setServiceId(int serviceId) {
-            this.serviceId = serviceId;
-        }
-
         public String getCleanerId() {
             return cleanerId == null ? "" : cleanerId;
         }
@@ -390,12 +382,16 @@ public class TaskDetailsBean {
             this.dealTime = dealTime == null ? "" : dealTime;
         }
 
-        public int getSaleType() {
-            return saleType;
+        public void setServiceId(String serviceId) {
+            this.serviceId = serviceId == null ? "" : serviceId;
         }
 
-        public void setSaleType(int saleType) {
-            this.saleType = saleType;
+        public String getSaleType() {
+            return saleType == null ? "" : saleType;
+        }
+
+        public void setSaleType(String saleType) {
+            this.saleType = saleType == null ? "" : saleType;
         }
 
         public String getReason() {
@@ -406,20 +402,20 @@ public class TaskDetailsBean {
             this.reason = reason == null ? "" : reason;
         }
 
-        public int getSaleStatus() {
-            return saleStatus;
+        public String getSaleStatus() {
+            return saleStatus == null ? "" : saleStatus;
         }
 
-        public void setSaleStatus(int saleStatus) {
-            this.saleStatus = saleStatus;
+        public void setSaleStatus(String saleStatus) {
+            this.saleStatus = saleStatus == null ? "" : saleStatus;
         }
 
-        public int getIsDel() {
-            return isDel;
+        public String getIsDel() {
+            return isDel == null ? "" : isDel;
         }
 
-        public void setIsDel(int isDel) {
-            this.isDel = isDel;
+        public void setIsDel(String isDel) {
+            this.isDel = isDel == null ? "" : isDel;
         }
 
         public String getCreateTime() {

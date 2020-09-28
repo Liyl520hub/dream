@@ -110,9 +110,9 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
                 } else if (currentPosition == 1) {
                     pageTwo++;
                 } else if (currentPosition == 2) {
-                    pageFour++;
-                } else if (currentPosition == 3) {
                     pageThree++;
+                } else if (currentPosition == 3) {
+                    pageFour++;
                 }
                 getData();
             }
@@ -255,7 +255,7 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
 
     @Override
     public void showErrorTip(ErrorType errorType, int errorCode, String message) {
-        if (currentPage == 1) {
+        if (currentPage <= 1) {
             mySmartRefresh.finishRefresh();
         } else {
             mySmartRefresh.finishLoadMore();

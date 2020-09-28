@@ -64,12 +64,12 @@ public class MaterielApplyListActivity extends BaseActivity<MaterielApplyPresent
     @Override
     protected void onRestart() {
         super.onRestart();
-        mPresenter.getPageList("1", "10");
+        mPresenter.getPageList("1", "1000");
     }
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
-        mPresenter.getPageList("1", "10");
+        mPresenter.getPageList("1", "1000");
     }
 
     @Override

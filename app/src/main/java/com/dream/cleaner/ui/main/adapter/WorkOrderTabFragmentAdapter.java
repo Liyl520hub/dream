@@ -42,7 +42,7 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
         TextView tvJuLi = baseViewHolder.getView(R.id.tv_ju_li);
         TextView tvSubmit = baseViewHolder.getView(R.id.tv_submit);
         //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
-        int orderStatus = workOrderTabBean.getOrderStatus();
+        int orderStatus = Integer.parseInt(workOrderTabBean.getOrderStatus());
         String orderString = getOrderString(orderStatus);
         tvSubmit.setVisibility(StringUtils.isEmpty(orderString) ? View.GONE : View.VISIBLE);
         tvSubmit.setText(orderString);

@@ -202,16 +202,16 @@ public class ApplyMaterielActivity extends BaseActivity<ApplyMaterielPresenter> 
     @Override
     public void returnMaterielBean(MaterielBean materielBean) {
         //审批状态；1->待审批；2->审核通过；3->拒绝；
-        int status = materielBean.getStatus();
+        String status = materielBean.getStatus();
         String statusString = "";
-        if (status == 1) {
+        if ("1".equals(status)) {
             statusString = "待审批";
             tvSubmit.setVisibility(View.GONE);
-        } else if (status == 2) {
+        } else if ("2".equals(status)) {
             statusString = "审核通过";
             tvSubmit.setText("立即领取");
             tvSubmit.setVisibility(View.VISIBLE);
-        } else if (status == 3) {
+        } else if ("3".equals(status)) {
             statusString = "拒绝";
             tvSubmit.setVisibility(View.GONE);
         }
@@ -238,7 +238,7 @@ public class ApplyMaterielActivity extends BaseActivity<ApplyMaterielPresenter> 
             tvSubmit.setVisibility(View.GONE);
         }
         List<MaterielTypeBean> items = materielBean.getItems();
-        ApplyMaterielItemAdapter applyMaterielItemAdapter = new ApplyMaterielItemAdapter(items, false);
+        ApplyMaterielItemAdapter applyMaterielItemAdapter = new ApplyMaterielItemAdapter(items, true, isNew);
         rvItem.setLayoutManager(new LinearLayoutManager(this));
         rvItem.setAdapter(applyMaterielItemAdapter);
 
@@ -256,7 +256,7 @@ public class ApplyMaterielActivity extends BaseActivity<ApplyMaterielPresenter> 
 
     @Override
     public void returnMaterielTypeBeans(List<MaterielTypeBean> list) {
-        applyMaterielItemAdapter = new ApplyMaterielItemAdapter(list, true);
+        applyMaterielItemAdapter = new ApplyMaterielItemAdapter(list, false, isNew);
         rvItem.setLayoutManager(new LinearLayoutManager(this));
         rvItem.setAdapter(applyMaterielItemAdapter);
     }

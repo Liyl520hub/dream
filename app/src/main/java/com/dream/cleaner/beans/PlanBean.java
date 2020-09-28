@@ -17,15 +17,15 @@ public class PlanBean implements Serializable {
      */
 
     private String planDate;
-    private int type;
+    private String type;
     private List<CleanerPlanItemsBean> cleanerPlanItems;
 
-    public int getType() {
-        return type;
+    public String getType() {
+        return type == null ? "" : type;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setType(String type) {
+        this.type = type == null ? "" : type;
     }
 
     public String getPlanDate() {
@@ -57,21 +57,21 @@ public class PlanBean implements Serializable {
          * type : 2
          */
 
-        private int id;
+        private String id;
         private String no;
         private String startTime;
         private String endTime;
         private String times;
-        private int type;
+        private String type;
         private String taskStartTime;
         private String taskEndTime;
 
-        public int getId() {
-            return id;
+        public String getId() {
+            return id == null ? "" : id;
         }
 
-        public void setId(int id) {
-            this.id = id;
+        public void setId(String id) {
+            this.id = id == null ? "" : id;
         }
 
         public String getNo() {
@@ -106,12 +106,12 @@ public class PlanBean implements Serializable {
             this.times = times == null ? "" : times;
         }
 
-        public int getType() {
-            return type;
+        public String getType() {
+            return type == null ? "" : type;
         }
 
-        public void setType(int type) {
-            this.type = type;
+        public void setType(String type) {
+            this.type = type == null ? "" : type;
         }
 
         public String getTaskStartTime() {

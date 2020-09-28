@@ -89,7 +89,12 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
                         mErrorData = t.getData();
                         mStatus = t.isSuccess();
                         mCode = t.getCode();
-                        return Observable.just(t.getData());
+                        if (mStatus) {
+                            return Observable.just(t.getData());
+                        } else {
+                            Throwable mThrowable = new Throwable("接口返回了错误业务码-----" + t.getCode());
+                            throw new ApiException(t.getCode(), ErrorType.ERROR_API, mTMessage, mThrowable);
+                        }
                     }
                 }).
                 subscribeOn(Schedulers.io()).
@@ -144,7 +149,7 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
                 if (mCode == 401) {
                     //token过期
                     mGlobalErrorListener.onReturn10007Code(this, mTMessage);
-                } else if (mCode==200) {
+                } else if (mCode == 200) {
                     //业务成功 但 data为null的情况 需回调界面作判空处理
                     SuperToast.showShortMessage(mTMessage);
                     onSuccess(mErrorData, mTMessage);

@@ -29,16 +29,16 @@ public class ApplyMaterielAdapter extends BaseQuickAdapter<ApplyMaterielBean.Rec
     protected void convert(@NotNull BaseViewHolder baseViewHolder, ApplyMaterielBean.RecordsBean item) {
         TextView tvStates = baseViewHolder.getView(R.id.tv_states);
         //审批状态；1->待审批；2->审核通过；3->拒绝；
-        int status = item.getStatus();
+        String status = item.getStatus();
         String statusString = "";
         int color = R.color.color_72BB38;
-        if (status == 1) {
+        if ("1".equals(status)) {
             statusString = "待审批";
             color = R.color.color_4986FA;
-        } else if (status == 2) {
+        } else if ("2".equals(status)) {
             statusString = "审核通过";
             color = R.color.color_72BB38;
-        } else if (status == 3) {
+        } else if ("3".equals(status)) {
             statusString = "拒绝";
             color = R.color.color_C50000;
         }

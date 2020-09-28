@@ -78,14 +78,14 @@ public class LeaveBean {
          */
 
         private int id;
-        private int cleanerId;
+        private String cleanerId;
         private String cleanerNo;
         private String approvalNo;
         private String name;
         private String phone;
         private String startTime;
         private String endTime;
-        private int duration;
+        private String duration;
         private String reason;
         private String approvalTime;
         private int status;
@@ -101,12 +101,12 @@ public class LeaveBean {
             this.id = id;
         }
 
-        public int getCleanerId() {
-            return cleanerId;
+        public String getCleanerId() {
+            return cleanerId == null ? "" : cleanerId;
         }
 
-        public void setCleanerId(int cleanerId) {
-            this.cleanerId = cleanerId;
+        public void setCleanerId(String cleanerId) {
+            this.cleanerId = cleanerId == null ? "" : cleanerId;
         }
 
         public String getCleanerNo() {
@@ -157,12 +157,12 @@ public class LeaveBean {
             this.endTime = endTime == null ? "" : endTime;
         }
 
-        public int getDuration() {
-            return duration;
+        public String getDuration() {
+            return duration == null ? "" : duration;
         }
 
-        public void setDuration(int duration) {
-            this.duration = duration;
+        public void setDuration(String duration) {
+            this.duration = duration == null ? "" : duration;
         }
 
         public String getReason() {

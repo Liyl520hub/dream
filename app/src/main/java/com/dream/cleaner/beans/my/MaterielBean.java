@@ -39,7 +39,7 @@ public class MaterielBean {
     private int id;
     private String applyNo;
     private String applyReason;
-    private int applyPerson;
+    private String applyPerson;
     private String applyPersonName;
     private String contactNumber;
     private String applyType;
@@ -47,15 +47,15 @@ public class MaterielBean {
     private String applyTime;
     private String collectTime;
     private String auditTime;
-    private int status;
-    private int auditPerson;
+    private String status;
+    private String auditPerson;
     private String auditPersonName;
     private String auditReason;
     private String buildTime;
-    private int isDel;
+    private String isDel;
     private String createTime;
     private String updateTime;
-    private int applyNums;
+    private String applyNums;
     private String applyTypeName;
     private List<MaterielTypeBean> items;
 
@@ -83,12 +83,12 @@ public class MaterielBean {
         this.applyReason = applyReason == null ? "" : applyReason;
     }
 
-    public int getApplyPerson() {
-        return applyPerson;
+    public String getApplyPerson() {
+        return applyPerson == null ? "" : applyPerson;
     }
 
-    public void setApplyPerson(int applyPerson) {
-        this.applyPerson = applyPerson;
+    public void setApplyPerson(String applyPerson) {
+        this.applyPerson = applyPerson == null ? "" : applyPerson;
     }
 
     public String getApplyPersonName() {
@@ -147,20 +147,20 @@ public class MaterielBean {
         this.auditTime = auditTime == null ? "" : auditTime;
     }
 
-    public int getStatus() {
-        return status;
+    public String getStatus() {
+        return status == null ? "" : status;
     }
 
-    public void setStatus(int status) {
-        this.status = status;
+    public void setStatus(String status) {
+        this.status = status == null ? "" : status;
     }
 
-    public int getAuditPerson() {
-        return auditPerson;
+    public String getAuditPerson() {
+        return auditPerson == null ? "" : auditPerson;
     }
 
-    public void setAuditPerson(int auditPerson) {
-        this.auditPerson = auditPerson;
+    public void setAuditPerson(String auditPerson) {
+        this.auditPerson = auditPerson == null ? "" : auditPerson;
     }
 
     public String getAuditPersonName() {
@@ -187,12 +187,12 @@ public class MaterielBean {
         this.buildTime = buildTime == null ? "" : buildTime;
     }
 
-    public int getIsDel() {
-        return isDel;
+    public String getIsDel() {
+        return isDel == null ? "" : isDel;
     }
 
-    public void setIsDel(int isDel) {
-        this.isDel = isDel;
+    public void setIsDel(String isDel) {
+        this.isDel = isDel == null ? "" : isDel;
     }
 
     public String getCreateTime() {
@@ -211,12 +211,12 @@ public class MaterielBean {
         this.updateTime = updateTime == null ? "" : updateTime;
     }
 
-    public int getApplyNums() {
-        return applyNums;
+    public String getApplyNums() {
+        return applyNums == null ? "" : applyNums;
     }
 
-    public void setApplyNums(int applyNums) {
-        this.applyNums = applyNums;
+    public void setApplyNums(String applyNums) {
+        this.applyNums = applyNums == null ? "" : applyNums;
     }
 
     public String getApplyTypeName() {
