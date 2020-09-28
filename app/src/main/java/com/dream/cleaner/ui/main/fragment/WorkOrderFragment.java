@@ -177,15 +177,20 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
             @Override
             public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
                 PopWorkOrderBean data = (PopWorkOrderBean) adapter.getItem(position);
-                if (b) {
-                    orderTypeId = data.getId() + "";
-                } else {
-                    serviceTypeId = data.getId() + "";
-                }
                 List<PopWorkOrderBean> data1 = (List<PopWorkOrderBean>) adapter.getData();
                 int size = data1.size();
                 for (int i = 0; i < size; i++) {
-                    data1.get(i).setCheck(i==position);
+                    if (i == position) {
+                        continue;
+                    }
+                    data1.get(i).setCheck(false);
+                }
+                //true 设置为false
+                data.setCheck(!data.isCheck());
+                if (b) {
+                    orderTypeId =data.isCheck()? data.getId() + "":"";
+                } else {
+                    serviceTypeId = data.isCheck()?data.getId() + "":"";
                 }
                 //刷新当前页面
                 BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK, new BusBean(orderTypeId, serviceTypeId));

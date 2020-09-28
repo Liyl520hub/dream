@@ -47,39 +47,16 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
         tvSubmit.setVisibility(StringUtils.isEmpty(orderString) ? View.GONE : View.VISIBLE);
         tvSubmit.setText(orderString);
         String distance = workOrderTabBean.getDistance();
-        int i = Integer.parseInt(distance);
-        String formatDistance = i + "m";
-        if (i > 1000) {
-            double doubleDistance = i / 1000.0;
-            formatDistance = doubleDistance + "km";
-        }
-        tvJuLi.setText(formatDistance);
-//        distanceSearch(tvJuLi);
+        tvJuLi.setText(distance + "km");
+//        double i = Double.parseDouble(distance);
+//        String formatDistance = i + "m";
+//        if (i > 1000) {
+//            double doubleDistance = i / 1000.0;
+//            formatDistance = doubleDistance + "km";
+//        }
+//        tvJuLi.setText(formatDistance);
 
     }
-
-    private void distanceSearch(TextView tvJuLi) {
-        LatLonPoint start = new LatLonPoint(39.90403, 116.407525);
-        LatLonPoint dest = new LatLonPoint(39.90455, 116.407555);
-        DistanceSearch distanceSearch = new DistanceSearch(getContext());
-        distanceSearch.setDistanceSearchListener(new DistanceSearch.OnDistanceSearchListener() {
-            @Override
-            public void onDistanceSearched(DistanceResult distanceResult, int i) {
-                float distance = distanceResult.getDistanceResults().get(0).getDistance();
-                tvJuLi.setText(distance + "km");
-            }
-        });
-//设置起点和终点，其中起点支持多个
-        List<LatLonPoint> latLonPoints = new ArrayList<LatLonPoint>();
-        latLonPoints.add(start);
-        DistanceSearch.DistanceQuery distanceQuery = new DistanceSearch.DistanceQuery();
-        distanceQuery.setOrigins(latLonPoints);
-        distanceQuery.setDestination(dest);
-////设置测量方式，支持直线和驾车
-        distanceQuery.setType(DistanceSearch.TYPE_DRIVING_DISTANCE);
-        distanceSearch.calculateRouteDistanceAsyn(distanceQuery);
-    }
-
 
     private String getOrderString(int intOrderStatus) {
         // 0新任务，1待服务，[2显示确认到达,3显示待客户确认,4显示扫前准备]2，3，4上门中，
