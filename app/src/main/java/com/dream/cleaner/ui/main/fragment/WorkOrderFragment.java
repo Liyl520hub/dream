@@ -147,15 +147,15 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
             list = new ArrayList<>();
         }
         //过滤未上架的
-        if (list.size() > 0) {
-            Iterator<PopWorkOrderBean> iterator = list.iterator();
-            while (iterator.hasNext()) {
-                PopWorkOrderBean next = iterator.next();
-                if (!"1".equals(next.getStatus())) {
-                    iterator.remove();
-                }
-            }
-        }
+//        if (list.size() > 0) {
+//            Iterator<PopWorkOrderBean> iterator = list.iterator();
+//            while (iterator.hasNext()) {
+//                PopWorkOrderBean next = iterator.next();
+//                if (!"1".equals(next.getStatus())) {
+//                    iterator.remove();
+//                }
+//            }
+//        }
 
         if (b) {
             orderTypeList.clear();

@@ -139,7 +139,7 @@ public class WorkReadyActivityPresenter extends BasePresenter<WorkReadyActivityC
     }
 
   /**
-     * 确认开始-扫前准备上传照片
+     *  确认完成
      */
     public void confirmFinish(String orderId, String orderStatus, boolean isBefore, ArrayList<String> urlList,
                             String serviceReplenish, String suppleRefundType, String price, String explain,
