@@ -131,22 +131,22 @@ public class MyIncomeListBean {
         private String contacts;
         private String provinceName;
         private String cityName;
-        private int countyId;
+        private String countyId;
         private String countyName;
         private String contactAddress;
         private String placeOrderUser;
         private String placeOrderUsername;
-        private int serviceItemsId;
+        private String serviceItemsId;
         private String serviceItemsName;
         private String serviceTypeName;
-        private int serviceTimes;
+        private String serviceTimes;
         private String serviceAddress;
         private String contactNo;
         private String serviceTime;
         private String serviceUnit;
         private String serviceNum;
         private String serviceProperty;
-        private int cycleFlag;
+        private String cycleFlag;
         private int cleanerId;
         private String cleanerName;
         private String cleanerPhone;
@@ -163,7 +163,7 @@ public class MyIncomeListBean {
         private String type;
         private int orderStatus;
         private String orderStatusStr;
-        private int servicePrice;
+        private String servicePrice;
         private String favourablePrice;
         private String paymentPrice;
         private String placeOrderTime;
@@ -171,7 +171,7 @@ public class MyIncomeListBean {
         private String serviceReplenish;
         private String specialRequest;
         private String remark;
-        private int isDel;
+        private String isDel;
         private String createTime;
         private String updateTime;
         private String pmsServiceRelationTypeList;
@@ -267,12 +267,12 @@ public class MyIncomeListBean {
             this.cityName = cityName == null ? "" : cityName;
         }
 
-        public int getCountyId() {
-            return countyId;
+        public String getCountyId() {
+            return countyId == null ? "" : countyId;
         }
 
-        public void setCountyId(int countyId) {
-            this.countyId = countyId;
+        public void setCountyId(String countyId) {
+            this.countyId = countyId == null ? "" : countyId;
         }
 
         public String getCountyName() {
@@ -307,12 +307,12 @@ public class MyIncomeListBean {
             this.placeOrderUsername = placeOrderUsername == null ? "" : placeOrderUsername;
         }
 
-        public int getServiceItemsId() {
-            return serviceItemsId;
+        public String getServiceItemsId() {
+            return serviceItemsId == null ? "" : serviceItemsId;
         }
 
-        public void setServiceItemsId(int serviceItemsId) {
-            this.serviceItemsId = serviceItemsId;
+        public void setServiceItemsId(String serviceItemsId) {
+            this.serviceItemsId = serviceItemsId == null ? "" : serviceItemsId;
         }
 
         public String getServiceItemsName() {
@@ -331,12 +331,12 @@ public class MyIncomeListBean {
             this.serviceTypeName = serviceTypeName == null ? "" : serviceTypeName;
         }
 
-        public int getServiceTimes() {
-            return serviceTimes;
+        public String getServiceTimes() {
+            return serviceTimes == null ? "" : serviceTimes;
         }
 
-        public void setServiceTimes(int serviceTimes) {
-            this.serviceTimes = serviceTimes;
+        public void setServiceTimes(String serviceTimes) {
+            this.serviceTimes = serviceTimes == null ? "" : serviceTimes;
         }
 
         public String getServiceAddress() {
@@ -387,12 +387,12 @@ public class MyIncomeListBean {
             this.serviceProperty = serviceProperty == null ? "" : serviceProperty;
         }
 
-        public int getCycleFlag() {
-            return cycleFlag;
+        public String getCycleFlag() {
+            return cycleFlag == null ? "" : cycleFlag;
         }
 
-        public void setCycleFlag(int cycleFlag) {
-            this.cycleFlag = cycleFlag;
+        public void setCycleFlag(String cycleFlag) {
+            this.cycleFlag = cycleFlag == null ? "" : cycleFlag;
         }
 
         public int getCleanerId() {
@@ -523,12 +523,12 @@ public class MyIncomeListBean {
             this.orderStatusStr = orderStatusStr == null ? "" : orderStatusStr;
         }
 
-        public int getServicePrice() {
-            return servicePrice;
+        public String getServicePrice() {
+            return servicePrice == null ? "" : servicePrice;
         }
 
-        public void setServicePrice(int servicePrice) {
-            this.servicePrice = servicePrice;
+        public void setServicePrice(String servicePrice) {
+            this.servicePrice = servicePrice == null ? "" : servicePrice;
         }
 
         public String getFavourablePrice() {
@@ -587,12 +587,12 @@ public class MyIncomeListBean {
             this.remark = remark == null ? "" : remark;
         }
 
-        public int getIsDel() {
-            return isDel;
+        public String getIsDel() {
+            return isDel == null ? "" : isDel;
         }
 
-        public void setIsDel(int isDel) {
-            this.isDel = isDel;
+        public void setIsDel(String isDel) {
+            this.isDel = isDel == null ? "" : isDel;
         }
 
         public String getCreateTime() {

@@ -8,7 +8,12 @@ import android.widget.TextView;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import com.bigkoo.pickerview.builder.TimePickerBuilder;
+import com.bigkoo.pickerview.listener.OnTimeSelectListener;
+import com.bigkoo.pickerview.view.TimePickerView;
+import com.blankj.utilcode.util.TimeUtils;
 import com.dream.cleaner.R;
+import com.dream.cleaner.beans.my.CleanerOrderCountBean;
 import com.dream.cleaner.ui.my.activity.MaterielApplyListActivity;
 import com.dream.cleaner.ui.my.activity.MyIncomeActivity;
 import com.dream.cleaner.ui.my.activity.SettingActivity;
@@ -21,6 +26,8 @@ import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseFragment;
 import com.dream.common.http.error.ErrorType;
+
+import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -72,6 +79,10 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
     TextView tvSetting;
     @BindView(R.id.ll_setting)
     LinearLayout llSetting;
+    /**
+     * 默认今日订单
+     */
+    private boolean isDayOrder = true;
 
     @Override
     protected int getLayoutId() {
@@ -89,6 +100,8 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
         tvName.setText(InfoUtils.getName());
         tvMobile.setText(InfoUtils.getPhone());
         setLevel();
+        String nowString = TimeUtils.getNowString(TimeUtils.getSafeDateFormat("yyyy-MM-dd"));
+        mPresenter.getCleanerOrderCount(nowString);
     }
 
     /**
@@ -118,8 +131,12 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
                 UiUtil.openActivity(getActivity(), UserInfoActivity.class);
                 break;
             case R.id.tv_month_order:
+                isDayOrder = false;
+                showTimePickerView();
                 break;
             case R.id.tv_day_order:
+                isDayOrder = true;
+                showTimePickerView();
                 break;
             case R.id.ll_income:
                 UiUtil.openActivity(getActivity(), MyIncomeActivity.class);
@@ -141,4 +158,39 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
     public void showErrorTip(ErrorType errorType, int errorCode, String message) {
 
     }
+
+    @Override
+    public void returnCleanerOrderCountBean(CleanerOrderCountBean cleanerOrderCountBean) {
+        if (cleanerOrderCountBean != null) {
+            tvOrderWanChengNum.setText(cleanerOrderCountBean.getFinishOrderCount() + "单");
+            tvOrderCancelNum.setText(cleanerOrderCountBean.getCancelOrderCount() + "单");
+            tvOrderShouHouNum.setText(cleanerOrderCountBean.getAfterOrderCount() + "单");
+        }
+    }
+
+
+    private void showTimePickerView() {
+        //时间选择器
+        TimePickerBuilder timePickerBuilder = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date, View v) {//选中事件回调
+                String time = "";
+                if (isDayOrder) {
+                    time = TimeUtils.date2String(date, "yyyy-MM-dd");
+                } else {
+                    time = TimeUtils.date2String(date, "yyyy-MM");
+                }
+                mPresenter.getCleanerOrderCount(time);
+            }
+        });
+        if (isDayOrder) {
+            timePickerBuilder.setType(new boolean[]{true, true, true, false, false, false});
+        } else {
+            timePickerBuilder.setType(new boolean[]{true, true, false, false, false, false});
+        }
+        TimePickerView pvTime = timePickerBuilder.build();
+        // pvTime.setDate(Calendar.getInstance());//注：根据需求来决定是否使用该方法（一般是精确到秒的情况），此项可以在弹出选择器的时候重新设置当前时间，避免在初始化之后由于时间已经设定，导致选中时间与当前时间不匹配的问题。
+        pvTime.show();
+    }
+
 }

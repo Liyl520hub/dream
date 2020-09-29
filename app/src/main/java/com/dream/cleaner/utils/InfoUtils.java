@@ -37,7 +37,7 @@ public class InfoUtils {
         SPUtils.getInstance().put(GlobalApp.DIRECT_CONTACT_PHONE, cleanerBean.getDirectContactPhone());
         SPUtils.getInstance().put(GlobalApp.SERVICE_AREA_NAME, cleanerBean.getServiceAreaName());
         SPUtils.getInstance().put(GlobalApp.SERVICE_NAME, cleanerBean.getServiceName());
-        SPUtils.getInstance().put(GlobalApp.USER_LEVEL, cleanerBean.getLevelId());
+        SPUtils.getInstance().put(GlobalApp.USER_LEVEL, cleanerBean.getLevelName());
     }
 
 

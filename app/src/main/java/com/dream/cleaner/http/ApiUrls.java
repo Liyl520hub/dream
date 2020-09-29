@@ -175,6 +175,11 @@ public class ApiUrls {
      */
     public static final String USER_INFO = "app/cleaner/userinfo/{id}";
 
+    /**
+     * 保洁员订单个数
+     */
+    public static final String GET_CLEANER_ORDER_COUNT = "app/cleaner/userinfo/getCleanerOrderCount";
+
     //--------------------------------------------保洁端oss上传图片------------------------------------------------------
 
     /**

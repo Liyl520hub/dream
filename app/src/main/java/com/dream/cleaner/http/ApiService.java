@@ -5,6 +5,7 @@ import com.dream.cleaner.beans.UploadImageBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.beans.my.ApplyMaterielBean;
+import com.dream.cleaner.beans.my.CleanerOrderCountBean;
 import com.dream.cleaner.beans.my.LeaveBean;
 import com.dream.cleaner.beans.my.MaterielBean;
 import com.dream.cleaner.beans.my.MaterielTypeBean;
@@ -149,11 +150,13 @@ public interface ApiService {
      */
     @POST(ApiUrls.TASK_RECEIVE)
     Observable<BaseBean<String>> taskReceive(@Body RequestBody body);
+
     /**
      * 出发-变成上门中
      */
     @POST(ApiUrls.TASK_GO)
     Observable<BaseBean<String>> taskGo(@Body RequestBody body);
+
     /**
      * 保洁员到达
      */
@@ -209,6 +212,12 @@ public interface ApiService {
      */
     @POST(ApiUrls.USER_INFO)
     Observable<BaseBean<LoginBean.CleanerBean>> userInfo(@Path("id") String id);
+
+    /**
+     * 保洁员订单个数
+     */
+    @POST(ApiUrls.GET_CLEANER_ORDER_COUNT)
+    Observable<BaseBean<CleanerOrderCountBean>> getCleanerOrderCount(@Body RequestBody body);
 
     //--------------------------------------------保洁端oss上传图片------------------------------------------------------
 

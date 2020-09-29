@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.plan.fragment;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -109,6 +110,7 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
         calendar.setDay(day);
         //如果单独标记颜色、则会使用这个颜色
         calendar.setSchemeColor(color);
+        Log.e("getSchemeCalendar: ", text + "");
         calendar.setScheme(text);
         calendar.addScheme(new Calendar.Scheme());
         calendar.addScheme(0xFF008800, "假");
@@ -123,17 +125,20 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
         for (int i = 0; i < size; i++) {
             PlanBean planBean = list.get(i);
             String planDate = planBean.getPlanDate();
-            //1为订单，2为请假
+            //0 无  1为订单，2为请假
             String type = planBean.getType();
-            java.util.Calendar calendar = java.util.Calendar.getInstance();
-            Date date = TimeUtils.string2Date(planDate, "yyyy-MM-dd");
-            if (date != null) {
-                calendar.setTime(date);
-                int year = calendar.get(java.util.Calendar.YEAR);
-                int month = calendar.get(java.util.Calendar.MONTH);
-                int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-                map.put(getSchemeCalendar(year, month + 1, day, 0xFF40db25, "1".equals(type) ? "单" : "假").toString(),
-                        getSchemeCalendar(year, month + 1, day, 0xFF40db25, "1".equals(type) ? "单" : "假"));
+            if (!"0".equals(type)) {
+                java.util.Calendar calendar = java.util.Calendar.getInstance();
+                Date date = TimeUtils.string2Date(planDate, "yyyy-MM-dd");
+                if (date != null) {
+                    calendar.setTime(date);
+                    int year = calendar.get(java.util.Calendar.YEAR);
+                    int month = calendar.get(java.util.Calendar.MONTH);
+                    int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
+                    String text = "1".equals(type) ? "单" : "假";
+                    map.put(getSchemeCalendar(year, month + 1, day, 0xFF40db25, text).toString(),
+                            getSchemeCalendar(year, month + 1, day, 0xFF40db25, text));
+                }
             }
         }
         //此方法在巨大的数据量上不影响遍历性能，推荐使用

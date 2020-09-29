@@ -17,6 +17,7 @@ import com.dream.cleaner.ui.my.adapter.ApplyMaterielAdapter;
 import com.dream.cleaner.ui.my.contract.MaterielApplyContract;
 import com.dream.cleaner.ui.my.presenter.MaterielApplyPresenter;
 import com.dream.cleaner.utils.UiUtil;
+import com.dream.cleaner.widget.EmptyLayout;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
@@ -82,6 +83,9 @@ public class MaterielApplyListActivity extends BaseActivity<MaterielApplyPresent
         if (applyMaterielBean != null) {
             List<ApplyMaterielBean.RecordsBean> records = applyMaterielBean.getRecords();
             applyMaterielAdapter = new ApplyMaterielAdapter(records);
+            EmptyLayout emptyLayout = new EmptyLayout(this);
+            emptyLayout.setErrorType(3);
+            applyMaterielAdapter.setEmptyView(emptyLayout);
             applyMaterielAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {
