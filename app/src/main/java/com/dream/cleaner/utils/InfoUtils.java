@@ -38,6 +38,7 @@ public class InfoUtils {
         SPUtils.getInstance().put(GlobalApp.SERVICE_AREA_NAME, cleanerBean.getServiceAreaName());
         SPUtils.getInstance().put(GlobalApp.SERVICE_NAME, cleanerBean.getServiceName());
         SPUtils.getInstance().put(GlobalApp.USER_LEVEL, cleanerBean.getLevelName());
+        SPUtils.getInstance().put(GlobalApp.USER_RECEIVE, cleanerBean.getIsReceive());
     }
 
 
@@ -182,11 +183,26 @@ public class InfoUtils {
     public static String getDirectContactPhone() {
         return SPUtils.getInstance().getString(GlobalApp.DIRECT_CONTACT_PHONE, "");
     }
+
     /**
      * @return 获取星级
      */
     public static String getUserLevel() {
         return SPUtils.getInstance().getString(GlobalApp.USER_LEVEL, "");
+    }
+
+    /**
+     * @return 获取推送开关
+     */
+    public static String getUserReceive() {
+        return SPUtils.getInstance().getString(GlobalApp.USER_RECEIVE, "");
+    }
+
+    /**
+     * @return 存储推送开关值
+     */
+    public static void setUserReceive(String s) {
+        SPUtils.getInstance().put(GlobalApp.USER_RECEIVE, s);
     }
 
 

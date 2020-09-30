@@ -102,34 +102,38 @@ public class UserInfoActivity extends BaseActivity<UserInfoActivityPresenter> im
         tvCallMobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] permissions = {Manifest.permission.CALL_PHONE};
-                Disposable subscribe = new RxPermissions(UserInfoActivity.this).requestEach(permissions)
-                        .subscribe(aBoolean -> {
-                            if (aBoolean.granted) {
-                                callPhone(InfoUtils.getDirectContactPhone());
-                            } else if (aBoolean.shouldShowRequestPermissionRationale) {
-                                callPhone(InfoUtils.getDirectContactPhone());
-                            } else {
-                                popPermissionsTip = new PopTip.Builder()
-                                        .setType(1)
-                                        .setTitle("提示")
-                                        .setSubmitText("立即获取")
-                                        .setMsg("考啦需要以下权限才能正常运行")
-                                        .setSubmitClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                // 帮跳转到该应用的设置界面，让用户手动授权
-                                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                                Uri uri = Uri.fromParts("package", UserInfoActivity.this.getPackageName(), null);
-                                                intent.setData(uri);
-                                                startActivity(intent);
-                                                popPermissionsTip.dismiss();
-                                            }
-                                        }).build(UserInfoActivity.this);
-                            }
-                        });
+                goCallPhone();
             }
         });
+    }
+
+    private void goCallPhone() {
+        String[] permissions = {Manifest.permission.CALL_PHONE};
+        Disposable subscribe = new RxPermissions(UserInfoActivity.this).requestEach(permissions)
+                .subscribe(aBoolean -> {
+                    if (aBoolean.granted) {
+                        callPhone(InfoUtils.getDirectContactPhone());
+                    } else if (aBoolean.shouldShowRequestPermissionRationale) {
+                        goCallPhone();
+                    } else {
+                        popPermissionsTip = new PopTip.Builder()
+                                .setType(1)
+                                .setTitle("提示")
+                                .setSubmitText("立即获取")
+                                .setMsg("考啦需要以下权限才能正常运行")
+                                .setSubmitClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // 帮跳转到该应用的设置界面，让用户手动授权
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", UserInfoActivity.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                        popPermissionsTip.dismiss();
+                                    }
+                                }).build(UserInfoActivity.this);
+                    }
+                });
     }
 
     /**

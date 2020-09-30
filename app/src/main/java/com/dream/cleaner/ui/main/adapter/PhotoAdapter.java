@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.dream.cleaner.R;
 import com.dream.cleaner.beans.MyPhotoBean;
 import com.dream.cleaner.ui.main.GlideEngine;
+import com.dream.cleaner.utils.ImageLoaderUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +33,9 @@ public class PhotoAdapter extends BaseQuickAdapter<MyPhotoBean, BaseViewHolder> 
         if ("1".equals(item.getType())) {
             ivClose.setVisibility(View.GONE);
             ivPhoto.setImageResource(R.mipmap.icon_add_photo);
+        } else if ("3".equals(item.getType())) {
+            ivClose.setVisibility(View.GONE);
+            GlideEngine.getInstance().loadPhoto(getContext(), item.getUri(), ivPhoto);
         } else {
             ivClose.setVisibility(View.VISIBLE);
             GlideEngine.getInstance().loadPhoto(getContext(), item.getUri(), ivPhoto);
@@ -41,7 +45,6 @@ public class PhotoAdapter extends BaseQuickAdapter<MyPhotoBean, BaseViewHolder> 
 
 
     /**
-     *
      * @return 获取显示图片数量
      */
     public int getPhotoSize() {

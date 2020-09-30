@@ -1,22 +1,40 @@
 package com.dream.cleaner.ui.main.adapter;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.provider.Settings;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
 
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.DistanceResult;
 import com.amap.api.services.route.DistanceSearch;
+import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.dream.cleaner.R;
+import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
+import com.dream.cleaner.ui.my.activity.UserInfoActivity;
+import com.dream.cleaner.utils.InfoUtils;
+import com.dream.cleaner.utils.ShapeUtils;
+import com.dream.cleaner.widget.pop.PopTip;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.reactivex.disposables.Disposable;
 
 /**
  * author : liyl
@@ -26,6 +44,9 @@ import java.util.List;
  * @author joy
  */
 public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBean.RecordsBean, BaseViewHolder> {
+
+    private PopTip popTip;
+
     public WorkOrderTabFragmentAdapter(@Nullable List<WorkOrderTabBean.RecordsBean> data) {
         super(R.layout.item_work_order_tab, data);
     }
@@ -52,13 +73,42 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
         tvSubmit.setText(orderString);
         String distance = workOrderTabBean.getDistance();
         tvJuLi.setText(distance + "km");
-//        double i = Double.parseDouble(distance);
-//        String formatDistance = i + "m";
-//        if (i > 1000) {
-//            double doubleDistance = i / 1000.0;
-//            formatDistance = doubleDistance + "km";
-//        }
-//        tvJuLi.setText(formatDistance);
+        TextView tvGoNavigation = baseViewHolder.getView(R.id.tv_go_navigation);
+        TextView tvContactInformationName = baseViewHolder.getView(R.id.tv_contact_information_name);
+        TextView tvContactInformationCallMobile = baseViewHolder.getView(R.id.tv_contact_information_call_mobile);
+        //待服务和上门中显示导航跟打电话按钮
+        tvContactInformationName.setText(workOrderTabBean.getContacts() + "  " + workOrderTabBean.getContactNo() + "  ");
+        if (orderStatus == 2 || orderStatus == 3 || orderStatus == 4) {
+            tvGoNavigation.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_4986FA));
+            tvContactInformationCallMobile.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_F6B351));
+            tvGoNavigation.setVisibility(View.VISIBLE);
+            tvContactInformationName.setVisibility(View.VISIBLE);
+            tvContactInformationCallMobile.setVisibility(View.VISIBLE);
+        } else {
+            if (orderStatus == 5 || orderStatus == 6) {
+                tvContactInformationName.setVisibility(View.VISIBLE);
+            } else {
+                tvContactInformationName.setVisibility(View.GONE);
+            }
+            tvGoNavigation.setVisibility(View.GONE);
+            tvContactInformationCallMobile.setVisibility(View.GONE);
+        }
+        //控制星级评价
+        TextView tvZongTiPingJia = baseViewHolder.getView(R.id.tv_zong_ti_ping_jia);
+        TextView tvPingJia = baseViewHolder.getView(R.id.tv_ping_jia);
+        RatingBar rbStar1 = baseViewHolder.getView(R.id.rb_star_1);
+        RatingBar rbStar2 = baseViewHolder.getView(R.id.rb_star_2);
+        tvZongTiPingJia.setVisibility(orderStatus == 7 ? View.VISIBLE : View.GONE);
+        tvPingJia.setVisibility(orderStatus == 7 ? View.VISIBLE : View.GONE);
+        rbStar1.setVisibility(orderStatus == 7 ? View.VISIBLE : View.GONE);
+        rbStar2.setVisibility(orderStatus == 7 ? View.VISIBLE : View.GONE);
+        if (orderStatus == 7) {
+            WorkOrderTabBean.RecordsBean.PmsServiceEvaluation pmsServiceEvaluation = workOrderTabBean.getPmsServiceEvaluation();
+            String serviceScore = pmsServiceEvaluation.getServiceScore();
+            String cleanerScore = pmsServiceEvaluation.getCleanerScore();
+            rbStar1.setRating(Integer.parseInt(serviceScore));
+            rbStar2.setRating(Integer.parseInt(cleanerScore));
+        }
 
     }
 

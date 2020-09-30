@@ -51,13 +51,19 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         jsonObject.addProperty("keyword", "");
         JsonArray orderStatusList = new JsonArray();
         orderStatusList.add(orderStatus);
-        jsonObject.add("orderStatusList",orderStatusList);
+        if (orderStatus == 2) {
+            orderStatusList.add(3);
+            orderStatusList.add(4);
+        } else if (orderStatus == 5) {
+            orderStatusList.add(6);
+        }
+        jsonObject.add("orderStatusList", orderStatusList);
         jsonObject.addProperty("cleanerId", InfoUtils.getCleanerId());
         jsonObject.addProperty("orderTypeId", orderTypeId);
         jsonObject.addProperty("serviceClasssId", serviceClassId);
         String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
         String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
-        jsonObject.addProperty("startLonLat",longitude+","+lat);
+        jsonObject.addProperty("startLonLat", longitude + "," + lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).taskList(requestBody))
@@ -88,7 +94,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         jsonObject.addProperty("id", id);
         String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
         String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
-        jsonObject.addProperty("startLonLat",longitude+","+lat);
+        jsonObject.addProperty("startLonLat", longitude + "," + lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).taskReceive(requestBody))
@@ -118,7 +124,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         jsonObject.addProperty("id", id);
         String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
         String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
-        jsonObject.addProperty("startLonLat",longitude+","+lat);
+        jsonObject.addProperty("startLonLat", longitude + "," + lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).taskGo(requestBody))
@@ -148,7 +154,7 @@ public class WorkOrderTabFragmentPresenter extends BasePresenter<WorkOrderTabFra
         jsonObject.addProperty("id", id);
         String lat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE);
         String longitude = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE);
-        jsonObject.addProperty("startLonLat",longitude+","+lat);
+        jsonObject.addProperty("startLonLat", longitude + "," + lat);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).arrive(requestBody))

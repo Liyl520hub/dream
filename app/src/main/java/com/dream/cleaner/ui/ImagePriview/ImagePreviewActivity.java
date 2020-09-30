@@ -29,6 +29,7 @@ public class ImagePreviewActivity extends AppCompatActivity {
     private boolean mIsReturning;
     private int mStartPosition;
     private int mCurrentPosition;
+    private String type;
     private ImagePreviewAdapter adapter;
     /**
      * 初始的Item位置
@@ -103,7 +104,7 @@ public class ImagePreviewActivity extends AppCompatActivity {
         } else {
             main_linear.setVisibility(View.VISIBLE);
         }
-        adapter = new ImagePreviewAdapter(this, imageList, itemPosition);
+        adapter = new ImagePreviewAdapter(this, imageList, itemPosition,type);
         viewPager.setAdapter(adapter);
         viewPager.setCurrentItem(mCurrentPosition);
 
@@ -115,6 +116,7 @@ public class ImagePreviewActivity extends AppCompatActivity {
             mCurrentPosition = mStartPosition;
             itemPosition = getIntent().getIntExtra(START_ITEM_POSITION, 0);
             imageList = getIntent().getParcelableArrayListExtra("imageList");
+            type = getIntent().getStringExtra("type");
         }
     }
 

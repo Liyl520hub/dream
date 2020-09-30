@@ -113,7 +113,13 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     LinearLayout llShuoMing;
     @BindView(R.id.ll_tui_kuan_rv)
     LinearLayout llTuiKuanRv;
+    /**
+     * 扫前或扫后适配器
+     */
     private PhotoAdapter photoAdapter;
+    /**
+     * 补退款说明适配器
+     */
     private PhotoAdapter photoAdapter2;
     private int maxSize = 9;
     private ArrayList<File> luBanListAfter = new ArrayList<>();
@@ -123,9 +129,12 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     private String orderId = "";
     private String orderStatus = "";
     /**
-     * 接口返回的图片地址
+     * 接口返回的图片地址 扫前 扫后
      */
     private ArrayList<String> picUrlList = new ArrayList<>();
+    /**
+     * 接口返回的图片地址  补退款说明
+     */
     private ArrayList<String> picUrlList2 = new ArrayList<>();
     /**
      * true 扫前准备
@@ -145,6 +154,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     private DigitalDialogInput input;
     protected boolean running = false;
     private MyHandler handler;
+    private ToolbarBackTitle toolbarBackTitle;
 
     @Override
     protected int getLayoutId() {
@@ -158,7 +168,8 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
 
     @Override
     protected MyToolbar getMyToolbar() {
-        return new ToolbarBackTitle(this, "扫前准备");
+        toolbarBackTitle = new ToolbarBackTitle(this, "扫前准备");
+        return toolbarBackTitle;
     }
 
     @Override
@@ -179,11 +190,17 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             tvTitle.setText("扫前准备");
             llBuTuiKuan.setVisibility(View.GONE);
             tvSubmit.setText("确认开始服务");
+            toolbarBackTitle.setTitle("扫前准备");
+            tvReasonTitle.setText("服务备注");
+            etReason.setHint("请输入服务备注");
         } else {
             tvTitle.setText("扫后拍照");
             llBuTuiKuan.setVisibility(View.VISIBLE);
             tvSubmit.setText("确认完成服务");
-
+            toolbarBackTitle.setTitle("完成服务");
+            setBuTuiKuan(2);
+            tvReasonTitle.setText("服务补充");
+            etReason.setHint("请输入服务补充");
         }
     }
 
@@ -381,7 +398,6 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             MyPhotoBean myPhotoBean = data.get(i);
             if ("2".equals(myPhotoBean.getType())) {
                 strings.add(myPhotoBean.getUri());
-
             }
         }
         intent.putParcelableArrayListExtra("imageList", strings);
@@ -442,9 +458,13 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
         }
     }
 
+    /**
+     * @param b true 扫前 扫后拍照   false 补退款说明照片
+     */
     private void upLoad(boolean b) {
         FileUtils.createOrExistsDir(getExternalFilesDir("android.os.Environment#DIRECTORY_PICTURES") + "/Icon/");
         luBanList = new ArrayList<>();
+        luBanListAfter.clear();
         //true 扫钱准备或扫后拍张 false 服务说明
         if (b) {
             picUrlList.clear();
@@ -454,20 +474,24 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                 luBanList.add(item.getPath());
             }
             if (photoSize == 0) {
-                mPresenter.beforeClean(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
+                if (isBefore) {
+                    mPresenter.beforeClean(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
+                } else {
+                    upLoad(false);
+                    return;
+                }
             }
         } else {
             picUrlList2.clear();
-            int photoSize = photoAdapter.getPhotoSize();
+            int photoSize = photoAdapter2.getPhotoSize();
             for (int i = 0; i < photoSize; i++) {
-                MyPhotoBean item = photoAdapter.getItem(i);
+                MyPhotoBean item = photoAdapter2.getItem(i);
                 luBanList.add(item.getPath());
             }
             if (photoSize == 0) {
                 mPresenter.confirmFinish(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
             }
         }
-
 
         final int[] success = {0};
         Luban
@@ -544,16 +568,11 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                     if (isBefore) {
                         mPresenter.beforeClean(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
                     } else {
-                        //判断有没有 true 有补退款说明图片
-                        if (photoAdapter2.getPhotoSize() > 0) {
-                            if (isSaoQianZhunBei) {
-                                postsPictureIndex = 0;
-                                upLoad(false);
-                            } else {
-                                mPresenter.confirmFinish(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
-                            }
-                        } else {
+                        int photoSize = photoAdapter2.getPhotoSize();
+                        if ( picUrlList2.size()==photoSize) {
                             mPresenter.confirmFinish(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
+                        } else {
+                            upLoad(false);
                         }
                     }
                 } else {
@@ -567,7 +586,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
 
     @Override
     public void returnBeforeClean(String s) {
-
+        finish();
     }
 
     private Map<String, Object> fetchParams() {

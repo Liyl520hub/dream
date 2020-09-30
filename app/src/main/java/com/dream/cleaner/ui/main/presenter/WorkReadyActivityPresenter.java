@@ -36,7 +36,7 @@ public class WorkReadyActivityPresenter extends BasePresenter<WorkReadyActivityC
     /**
      * 上传图片
      */
-    public void ossUpload(File file,boolean isSaoQianZhunBei) {
+    public void ossUpload(File file, boolean isSaoQianZhunBei) {
 
         if (NetworkUtils.isConnected()) {
             MultipartBody.Builder builder = new MultipartBody.Builder();
@@ -50,19 +50,22 @@ public class WorkReadyActivityPresenter extends BasePresenter<WorkReadyActivityC
                     doRequest(new BaseRxSubscriber<UploadImageBean, BaseBean<UploadImageBean>>() {
                         @Override
                         protected void onSuccess(UploadImageBean uploadImageBean, String successMessage) {
-                            mContract.returnUpLoadImageStatus(uploadImageBean.getWebUrl(), uploadImageBean.getWebUrl(),isSaoQianZhunBei);
-
+                            if (uploadImageBean != null) {
+                                mContract.returnUpLoadImageStatus(uploadImageBean.getWebUrl(), uploadImageBean.getWebUrl(), isSaoQianZhunBei);
+                            }else{
+                                mContract.returnUpLoadImageStatus("失败", "", isSaoQianZhunBei);
+                            }
                         }
 
                         @Override
                         protected void onError(ErrorType errorType, int errorCode, String message, UploadImageBean string) {
-                            mContract.returnUpLoadImageStatus("失败", "",isSaoQianZhunBei);
+                            mContract.returnUpLoadImageStatus("失败", "", isSaoQianZhunBei);
 
                         }
                     });
         } else {
             SuperToast.showShortMessage("当前无网络，请检查您的网络");
-            mContract.returnUpLoadImageStatus("无网络", "",isSaoQianZhunBei);
+            mContract.returnUpLoadImageStatus("无网络", "", isSaoQianZhunBei);
         }
 
 
@@ -74,49 +77,18 @@ public class WorkReadyActivityPresenter extends BasePresenter<WorkReadyActivityC
     public void beforeClean(String orderId, String orderStatus, boolean isBefore, ArrayList<String> urlList,
                             String serviceReplenish, String suppleRefundType, String price, String explain,
                             ArrayList<String> explainPicList) {
-//        {
-//            "id": 0,
-//                "orderStatus": 0,
-//                "orderType": 0,
-//                "cleanerId": 0,
-//                "beforePicList": [],扫前图片
-//            "remark": "",扫前备注
-//                "afterPicList": [],扫后图片
-//            "serviceReplenish": "",服务补充
-//                "suppleRefundType": 0,补退款
-//                "price": 0,金额
-//                "explain": "",补退款说明
-//                "explainPicList": []补退款照片
-//        }
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", orderId);
         jsonObject.addProperty("orderStatus", orderStatus);
         jsonObject.addProperty("cleanerId", InfoUtils.getCleanerId());
-        if ("4".equals(orderStatus)) {
-            int size = urlList.size();
-            JsonArray jsonArray = new JsonArray();
-            for (int i = 0; i < size; i++) {
-                jsonArray.add(urlList.get(i));
-            }
-            if (isBefore) {
-                jsonObject.add("beforePicList", jsonArray);
-                jsonObject.addProperty("serviceReplenish", serviceReplenish);
-            } else {
-                jsonObject.add("afterPicList", jsonArray);
-            }
-        } else {
-            jsonObject.addProperty("suppleRefundType", suppleRefundType);
-            if ("1".equals(suppleRefundType)) {
-                jsonObject.addProperty("price", price);
-                jsonObject.addProperty("explain", explain);
-                int size = explainPicList.size();
-                JsonArray jsonArray = new JsonArray();
-                for (int i = 0; i < size; i++) {
-                    jsonArray.add(explainPicList.get(i));
-                }
-                jsonObject.add("explainPicList", jsonArray);
-            }
+        int size = urlList.size();
+        JsonArray jsonArray = new JsonArray();
+        for (int i = 0; i < size; i++) {
+            jsonArray.add(urlList.get(i));
         }
+        //扫前
+        jsonObject.add("beforePicList", jsonArray);
+        jsonObject.addProperty("remark", serviceReplenish);
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).beforeClean(requestBody))
@@ -138,55 +110,39 @@ public class WorkReadyActivityPresenter extends BasePresenter<WorkReadyActivityC
 
     }
 
-  /**
-     *  确认完成
+    /**
+     * 确认完成
      */
     public void confirmFinish(String orderId, String orderStatus, boolean isBefore, ArrayList<String> urlList,
-                            String serviceReplenish, String suppleRefundType, String price, String explain,
-                            ArrayList<String> explainPicList) {
-//        {
-//            "id": 0,
-//                "orderStatus": 0,
-//                "orderType": 0,
-//                "cleanerId": 0,
-//                "beforePicList": [],扫前图片
-//            "remark": "",扫前备注
-//                "afterPicList": [],扫后图片
-//            "serviceReplenish": "",服务补充
-//                "suppleRefundType": 0,补退款
-//                "price": 0,金额
-//                "explain": "",补退款说明
-//                "explainPicList": []补退款照片
-//        }
+                              String serviceReplenish, String suppleRefundType, String price, String explain,
+                              ArrayList<String> explainPicList) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("id", orderId);
         jsonObject.addProperty("orderStatus", orderStatus);
         jsonObject.addProperty("cleanerId", InfoUtils.getCleanerId());
-        if ("4".equals(orderStatus)) {
-            int size = urlList.size();
-            JsonArray jsonArray = new JsonArray();
-            for (int i = 0; i < size; i++) {
-                jsonArray.add(urlList.get(i));
-            }
-            if (isBefore) {
-                jsonObject.add("beforePicList", jsonArray);
-                jsonObject.addProperty("serviceReplenish", serviceReplenish);
-            } else {
-                jsonObject.add("afterPicList", jsonArray);
-            }
-        } else {
-            jsonObject.addProperty("suppleRefundType", suppleRefundType);
-            if ("1".equals(suppleRefundType)) {
-                jsonObject.addProperty("price", price);
-                jsonObject.addProperty("explain", explain);
-                int size = explainPicList.size();
-                JsonArray jsonArray = new JsonArray();
-                for (int i = 0; i < size; i++) {
-                    jsonArray.add(explainPicList.get(i));
-                }
-                jsonObject.add("explainPicList", jsonArray);
-            }
+        int size = urlList.size();
+        JsonArray jsonArray = new JsonArray();
+        for (int i = 0; i < size; i++) {
+            jsonArray.add(urlList.get(i));
         }
+        jsonObject.add("afterPicList", jsonArray);
+        //服务补充
+        jsonObject.addProperty("serviceReplenish", serviceReplenish);
+        //补退款type
+        jsonObject.addProperty("suppleRefundType", suppleRefundType);
+        // 0，退款，1补款  2 不需要
+        if (!"2".equals(suppleRefundType)) {
+            jsonObject.addProperty("price", price);
+            //补退款说明
+            jsonObject.addProperty("explain", explain);
+            int explainPicListSize = explainPicList.size();
+            JsonArray jsonArray2 = new JsonArray();
+            for (int i = 0; i < explainPicListSize; i++) {
+                jsonArray2.add(explainPicList.get(i));
+            }
+            jsonObject.add("explainPicList", jsonArray2);
+        }
+
         RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
         Api
                 .observable(Api.getService(ApiService.class).confirmFinish(requestBody))

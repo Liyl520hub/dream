@@ -47,4 +47,34 @@ public class SettingActivityPresenter extends BasePresenter<SettingActivityContr
 
     }
 
+    /**
+     * 修改接收消息通知开关
+     */
+    public void updatePush(String isReceive) {
+        // 0 接收  1 不接受
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("id", InfoUtils.getCleanerId());
+        jsonObject.addProperty("isReceive", isReceive);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json;charset=UTF-8"), jsonObject.toString());
+
+        Api
+                .observable(Api.getService(ApiService.class).updatePush(requestBody))
+                .presenter(this)
+                .requestMode(RequestMode.SINGLE)
+                .showLoading(true)
+                .doRequest(new BaseRxSubscriber<String, BaseBean<String>>() {
+                    @Override
+                    protected void onSuccess(String string, String successMessage) {
+                        mContract.returnUpdate(string);
+
+                    }
+
+                    @Override
+                    protected void onError(ErrorType errorType, int errorCode, String message, String string) {
+                        SuperToast.showShortMessage(message);
+                    }
+                });
+
+    }
+
 }

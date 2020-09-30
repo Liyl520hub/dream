@@ -110,7 +110,6 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
         calendar.setDay(day);
         //如果单独标记颜色、则会使用这个颜色
         calendar.setSchemeColor(color);
-        Log.e("getSchemeCalendar: ", text + "");
         calendar.setScheme(text);
         calendar.addScheme(new Calendar.Scheme());
         calendar.addScheme(0xFF008800, "假");

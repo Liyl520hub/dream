@@ -28,6 +28,7 @@ import com.davemorrissey.labs.subscaleview.ImageViewState;
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.dream.cleaner.R;
 import com.dream.cleaner.ui.ImagePriview.photoview.PhotoView;
+import com.dream.cleaner.ui.main.GlideEngine;
 
 import java.io.File;
 import java.util.List;
@@ -44,11 +45,13 @@ public class ImagePreviewAdapter extends PagerAdapter {
     private static final int MAX_SIZE = 4096;
     private RequestManager mRequestManager;
     private RequestOptions options;
+    private String type;
 
-    public ImagePreviewAdapter(Context context, List<Uri> imageList, int itemPosition) {
+    public ImagePreviewAdapter(Context context, List<Uri> imageList, int itemPosition, String type) {
         this.context = context;
         this.imageList = imageList;
         this.itemPosition = itemPosition;
+        this.type = type;
         mRequestManager = Glide.with(context);
         options = new RequestOptions()
                 //加载错误之后的错误图
@@ -70,35 +73,26 @@ public class ImagePreviewAdapter extends PagerAdapter {
     public Object instantiateItem(ViewGroup container, final int position) {
         View inflate = View.inflate(context, R.layout.adapter_image_preview, null);
         SubsamplingScaleImageView scaleImageView = inflate.findViewById(R.id.sub_image_view);
-        Uri url = imageList.get(position);
-//        if (url.getPath().endsWith(".gif")) {
-//            PhotoView photoView = inflate.findViewById(R.id.m_photo_view);
-//            mRequestManager
-//                    .asGif()
-//                    .load(url)
-//                    .apply(options)
-//                    .thumbnail(0.1f)
-//                    .into(photoView);
-//        } else {
-//            mRequestManager
-//                    .asFile()
-//                    .load(url)
-//                    .apply(options)
-//                    .thumbnail(0.1f)
-//                    .into(new SimpleTarget<File>() {
-//                        @Override
-//                        public void onResourceReady(@NonNull File resource, @Nullable Transition<? super File> transition) {
-//                            scaleImageView.setVisibility(View.VISIBLE);
-//                            float scale = getImageScale(context, resource.getAbsolutePath());
-//                            scaleImageView.setImage(ImageSource.uri(resource.getAbsolutePath()),
-//                                    new ImageViewState(scale, new PointF(0, 0), 0));
-//                        }
-//                    });
-
-//        }
-        scaleImageView.setVisibility(View.VISIBLE);
-//        float scale = getImageScale(context, url.getAbsolutePath());
-        scaleImageView.setImage(ImageSource.uri(url));
+        Uri uri = imageList.get(position);
+        if ("3".equals(type)) {
+            mRequestManager
+                    .asFile()
+                    .load(uri)
+                    .apply(options)
+                    .thumbnail(0.1f)
+                    .into(new SimpleTarget<File>() {
+                        @Override
+                        public void onResourceReady(@NonNull File resource, @Nullable Transition<? super File> transition) {
+                            scaleImageView.setVisibility(View.VISIBLE);
+                            float scale = getImageScale(context, resource.getAbsolutePath());
+                            scaleImageView.setImage(ImageSource.uri(resource.getAbsolutePath()),
+                                    new ImageViewState(scale, new PointF(0, 0), 0));
+                        }
+                    });
+        } else {
+            scaleImageView.setVisibility(View.VISIBLE);
+            scaleImageView.setImage(ImageSource.uri(uri));
+        }
         scaleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

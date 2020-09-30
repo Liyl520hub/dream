@@ -1,19 +1,30 @@
 package com.dream.cleaner.ui.main.fragment;
 
+import android.Manifest;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
 import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
@@ -24,11 +35,14 @@ import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
+import com.dream.cleaner.ui.main.MyINaviInfoCallback;
 import com.dream.cleaner.ui.main.activity.TaskDetailsActivity;
 import com.dream.cleaner.ui.main.activity.WorkReadyActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderTabFragmentAdapter;
 import com.dream.cleaner.ui.main.contract.WorkOrderTabFragmentContract;
 import com.dream.cleaner.ui.main.presenter.WorkOrderTabFragmentPresenter;
+import com.dream.cleaner.ui.my.activity.UserInfoActivity;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.LocationUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
@@ -42,12 +56,14 @@ import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
 import com.scwang.smart.refresh.layout.listener.OnRefreshListener;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
 import razerdp.basepopup.BasePopupWindow;
 
 /**
@@ -72,6 +88,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     private int page = 1;
     private int pageSize = 10;
     private List<WorkOrderTabBean.RecordsBean> records = new ArrayList<>();
+    private PopTip popPermissionsTip;
 
     @Override
     protected int getLayoutId() {
@@ -114,7 +131,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
         EmptyLayout emptyLayout = new EmptyLayout(getActivity());
         emptyLayout.setErrorType(3);
         workOrderTabFragmentAdapter.setEmptyView(emptyLayout);
-        workOrderTabFragmentAdapter.addChildClickViewIds(R.id.cl_top, R.id.tv_submit);
+        workOrderTabFragmentAdapter.addChildClickViewIds(R.id.cl_top, R.id.tv_submit, R.id.tv_go_navigation, R.id.tv_contact_information_call_mobile);
         workOrderTabFragmentAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
             @Override
             public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
@@ -254,6 +271,23 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
                     }
                     break;
 
+                    case R.id.tv_contact_information_call_mobile: {
+                        goCallPhone(item.getContactNo());
+                    }
+                    break;
+                    case R.id.tv_go_navigation: {
+                        String lat = item.getLat();
+                        String lon = item.getLon();
+                        String userLon = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE, "0");
+                        String userLat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE, "0");
+                        Poi start = new Poi("当前位置", new LatLng(Double.parseDouble(userLat), Double.parseDouble(userLon)), "");
+                        /**终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点**/
+                        Poi end = new Poi(item.getContactAddress(), new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)), "");
+                        AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
+                        amapNaviParams.setUseInnerVoice(true).setMultipleRouteNaviMode(true).setNeedCalculateRouteWhenPresent(true);
+                        AmapNaviPage.getInstance().showRouteActivity(getActivity(), amapNaviParams, new MyINaviInfoCallback());
+                    }
+                    break;
 
                     default:
                 }
@@ -264,6 +298,7 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
 
         });
     }
+
 
     @Override
     public void onResume() {
@@ -414,5 +449,80 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
         return intOrderStatus;
     }
 
+
+    private void goCallPhone(String mobile) {
+
+        String[] permissions = {Manifest.permission.CALL_PHONE};
+        Disposable subscribe = new RxPermissions(getActivity()).requestEach(permissions)
+                .subscribe(aBoolean -> {
+                    if (aBoolean.granted) {
+                        callPhone(mobile);
+                    } else if (aBoolean.shouldShowRequestPermissionRationale) {
+                        goCallPhone(mobile);
+                    } else {
+                        popPermissionsTip = new PopTip.Builder()
+                                .setType(1)
+                                .setTitle("提示")
+                                .setSubmitText("立即获取")
+                                .setMsg("考啦需要以下权限才能正常运行")
+                                .setSubmitClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // 帮跳转到该应用的设置界面，让用户手动授权
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", getActivity().getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                        popPermissionsTip.dismiss();
+                                    }
+                                }).build(getActivity());
+                    }
+                });
+    }
+
+    /**
+     * 打电话
+     */
+    private void callPhone(final String phone) {
+        popTip = new PopTip.Builder().
+                setType(2).
+                setTitle("提示").
+                setMsg("确定拨打电话" + phone + "?").
+                setSubmitClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                }).
+                setCancelClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        popTip.dismiss();
+                    }
+                }).
+                setYesClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(Intent.ACTION_CALL);
+                        Uri data = Uri.parse("tel:" + phone);
+//                        Uri data = Uri.parse("tel:15733125211"  );
+                        intent.setData(data);
+                        //不影响程序的运行
+                        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+                            // TODO: Consider calling
+                            //    ActivityCompat#requestPermissions
+                            // here to request the missing permissions, and then overriding
+                            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+                            //                                          int[] grantResults)
+                            // to handle the case where the user grants the permission. See the documentation
+                            // for ActivityCompat#requestPermissions for more details.
+                            return;
+                        }
+                        startActivity(intent);
+                        popTip.dismiss();
+                    }
+                }).build(getActivity());
+        popTip.showPopupWindow();
+    }
 
 }

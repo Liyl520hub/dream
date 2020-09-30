@@ -50,9 +50,9 @@ public class TaskDetailsBean {
     private String remark;
     private String serviceReplenish;
     private AfterSaleBean afterSale;
-    private List<?> explainPicList;
-    private List<?> beforePicList;
-    private List<?> afterPicList;
+    private List<String> explainPicList;
+    private List<String> beforePicList;
+    private List<String> afterPicList;
     private String lon;
     private String lat;
 
@@ -209,37 +209,38 @@ public class TaskDetailsBean {
         this.afterSale = afterSale;
     }
 
-    public List<?> getExplainPicList() {
-        if (explainPicList == null) {
-            return new ArrayList<>();
-        }
-        return explainPicList;
-    }
 
-    public void setExplainPicList(List<?> explainPicList) {
-        this.explainPicList = explainPicList;
-    }
-
-    public List<?> getBeforePicList() {
+    public List<String> getBeforePicList() {
         if (beforePicList == null) {
             return new ArrayList<>();
         }
         return beforePicList;
     }
 
-    public void setBeforePicList(List<?> beforePicList) {
+    public void setBeforePicList(List<String> beforePicList) {
         this.beforePicList = beforePicList;
     }
 
-    public List<?> getAfterPicList() {
+    public List<String> getAfterPicList() {
         if (afterPicList == null) {
             return new ArrayList<>();
         }
         return afterPicList;
     }
 
-    public void setAfterPicList(List<?> afterPicList) {
+    public void setAfterPicList(List<String> afterPicList) {
         this.afterPicList = afterPicList;
+    }
+
+    public void setExplainPicList(List<String> explainPicList) {
+        this.explainPicList = explainPicList;
+    }
+
+    public List<String> getExplainPicList() {
+        if (explainPicList == null) {
+            return new ArrayList<>();
+        }
+        return explainPicList;
     }
 
     public static class AfterSaleBean {

@@ -14,6 +14,7 @@ public class MyPhotoBean implements Parcelable {
     /**
      * 1 添加图片
      * 2 显示图片
+     * 3 任务详情回显图片
      */
     private String type;
     /**
@@ -24,6 +25,10 @@ public class MyPhotoBean implements Parcelable {
      * 图片Uri
      */
     public Uri uri;
+    /**
+     * 图片网络Url
+     */
+    public String url;
 
 
     public MyPhotoBean(String type, String path) {
@@ -36,10 +41,22 @@ public class MyPhotoBean implements Parcelable {
         this.uri = uri;
     }
 
+    public MyPhotoBean(String type) {
+        this.type = type;
+    }
+
     public MyPhotoBean(String type, Uri uri, String path) {
         this.type = type;
         this.uri = uri;
         this.path = path;
+    }
+
+    public String getUrl() {
+        return url == null ? "" : url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url == null ? "" : url;
     }
 
     public String getType() {
@@ -66,6 +83,7 @@ public class MyPhotoBean implements Parcelable {
         this.uri = uri;
     }
 
+
     @Override
     public int describeContents() {
         return 0;
@@ -76,12 +94,14 @@ public class MyPhotoBean implements Parcelable {
         dest.writeString(this.type);
         dest.writeString(this.path);
         dest.writeParcelable(this.uri, flags);
+        dest.writeString(this.url);
     }
 
     protected MyPhotoBean(Parcel in) {
         this.type = in.readString();
         this.path = in.readString();
         this.uri = in.readParcelable(Uri.class.getClassLoader());
+        this.url = in.readString();
     }
 
     public static final Parcelable.Creator<MyPhotoBean> CREATOR = new Parcelable.Creator<MyPhotoBean>() {

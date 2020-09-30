@@ -122,12 +122,12 @@ public class ApiUrls {
      */
     public static final String TASK_LIST = "app/cleaner/task/list";
 
-   /**
+    /**
      * 获取服务列表
      */
     public static final String GET_SERVICE_CLASS_LIST = "app/cleaner/task/getServiceClassList";
 
-   /**
+    /**
      * 获取订单类型列表
      */
     public static final String GET_ORDER_TYPE_LIST = "app/cleaner/task/getOrderTypeList";
@@ -152,7 +152,7 @@ public class ApiUrls {
      */
     public static final String GET_CLEANER_PLAN_MONTH = "app/cleaner/userinfo/getCleanerMonthPlan";
 
-   /**
+    /**
      * 获取个人计划 月
      */
     public static final String GET_CLEANER_PLAN_DAY = "app/cleaner/userinfo/getCleanerDayPlan";
@@ -174,6 +174,11 @@ public class ApiUrls {
      * 个人信息
      */
     public static final String USER_INFO = "app/cleaner/userinfo/{id}";
+
+    /**
+     * 修改消息推送
+     */
+    public static final String UPDATE_PUSH = "app/cleaner/userinfo/update";
 
     /**
      * 保洁员订单个数

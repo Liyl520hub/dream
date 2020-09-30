@@ -74,6 +74,12 @@ public interface ApiService {
     Observable<BaseBean<String>> logout();
 
     /**
+     * 保洁端退出登录
+     */
+    @POST(ApiUrls.UPDATE_PUSH)
+    Observable<BaseBean<String>> updatePush(@Body RequestBody body);
+
+    /**
      * 保洁端检查验证码
      */
     @POST(ApiUrls.CHECK_PHONE_CODE)

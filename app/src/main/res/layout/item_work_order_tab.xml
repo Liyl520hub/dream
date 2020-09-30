@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="5dp"
@@ -10,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp">
 
         <TextView
             android:id="@+id/tv_order_type"
@@ -47,11 +49,11 @@
             android:layout_marginLeft="16dp"
             android:layout_marginTop="13dp"
             android:layout_marginRight="15dp"
-            android:text="200元"
             android:textColor="@color/color_C50000"
             android:textSize="17sp"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="200元" />
 
 
         <TextView
@@ -65,10 +67,10 @@
             android:paddingTop="3dp"
             android:paddingRight="15dp"
             android:paddingBottom="3dp"
-            android:text="亦城财富中心1号楼A座1008"
             android:textColor="@color/color_333333"
             android:textSize="17sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_order_type" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_order_type"
+            tools:text="亦城财富中心1号楼A座1008" />
 
         <TextView
             android:id="@+id/tv_bei_zhu"
@@ -80,10 +82,10 @@
             android:paddingTop="3dp"
             android:paddingRight="15dp"
             android:paddingBottom="3dp"
-            android:text="日常保洁"
             android:textColor="@color/color_333333"
             android:textSize="17sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_address" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_address"
+            tools:text="日常保洁" />
 
         <TextView
             android:id="@+id/tv_time"
@@ -95,14 +97,14 @@
             android:paddingTop="3dp"
             android:paddingRight="15dp"
             android:paddingBottom="3dp"
-            android:text="2020-07-11  11:30-13:00"
             android:textColor="@color/color_333333"
             android:textSize="17sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_bei_zhu" />
+            app:layout_constraintTop_toBottomOf="@+id/tv_bei_zhu"
+            tools:text="2020-07-11  11:30-13:00" />
 
         <TextView
             android:id="@+id/tv_ju_li"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@mipmap/icon_juli"
             android:drawablePadding="7dp"
@@ -110,10 +112,108 @@
             android:paddingTop="3dp"
             android:paddingRight="15dp"
             android:paddingBottom="3dp"
-            android:text="2.5KM"
             android:textColor="@color/color_333333"
             android:textSize="17sp"
-            app:layout_constraintTop_toBottomOf="@+id/tv_time" />
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_time"
+            tools:text="2.5KM" />
+
+        <TextView
+            android:id="@+id/tv_go_navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.5dp"
+            android:paddingLeft="13.5dp"
+            android:paddingTop="2.5dp"
+            android:paddingRight="13.5dp"
+            android:paddingBottom="2.5dp"
+            android:text="去导航"
+            android:textColor="@color/color_4986FA"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_ju_li"
+            app:layout_constraintLeft_toRightOf="@+id/tv_ju_li" />
+
+        <TextView
+            android:id="@+id/tv_contact_information_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@mipmap/icon_lxfs_head"
+            android:drawablePadding="7dp"
+            android:paddingLeft="15dp"
+            android:paddingTop="3dp"
+            android:paddingRight="15dp"
+            android:paddingBottom="3dp"
+            android:textColor="@color/color_333333"
+            android:textSize="17sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_ju_li"
+            tools:text="李先生" />
+
+
+        <TextView
+            android:id="@+id/tv_contact_information_call_mobile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5.5dp"
+            android:paddingLeft="13.5dp"
+            android:paddingTop="2.5dp"
+            android:paddingRight="13.5dp"
+            android:paddingBottom="2.5dp"
+            android:text="拨打电话"
+            android:textColor="@color/color_F6B351"
+            android:visibility="gone"
+            app:layout_constraintBaseline_toBaselineOf="@+id/tv_contact_information_name"
+            app:layout_constraintLeft_toRightOf="@+id/tv_contact_information_name" />
+
+        <TextView
+            android:id="@+id/tv_zong_ti_ping_jia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="本次服务的总体评价"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_name" />
+
+        <RatingBar
+            android:id="@+id/rb_star_1"
+            style="@style/MyRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:numStars="5"
+            android:rating="5"
+            app:layout_constraintLeft_toRightOf="@+id/tv_zong_ti_ping_jia"
+            app:layout_constraintTop_toBottomOf="@+id/tv_contact_information_name" />
+
+
+        <TextView
+            android:id="@+id/tv_ping_jia"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="5dp"
+            android:text="客户人员的评价"
+            android:textColor="@color/color_333333"
+            android:textSize="16sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_zong_ti_ping_jia" />
+
+        <RatingBar
+            android:id="@+id/rb_star_2"
+            style="@style/MyRatingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:numStars="5"
+            android:rating="5"
+            app:layout_constraintLeft_toLeftOf="@+id/rb_star_1"
+            app:layout_constraintLeft_toRightOf="@+id/tv_ping_jia"
+            app:layout_constraintTop_toBottomOf="@+id/tv_zong_ti_ping_jia" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView

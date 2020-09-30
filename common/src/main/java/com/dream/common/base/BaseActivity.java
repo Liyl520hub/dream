@@ -325,7 +325,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
                 ActivityUtils.finishAllActivities();
             } else {
                 mLastClickTime = time;
-                SuperToast.showShortMessage("再按一次退出保洁端");
+                SuperToast.showShortMessage("再按一次退出壹佳保洁");
             }
 
         }

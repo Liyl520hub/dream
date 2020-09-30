@@ -92,6 +92,10 @@ public class GlobalApp {
      * 星级
      */
     public static final String USER_LEVEL = "user_level";
+    /**
+     * 推送开关
+     */
+    public static final String USER_RECEIVE = "user_Receive";
 
     /**
      * 直属联系人姓名

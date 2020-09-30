@@ -174,6 +174,34 @@ public class WorkOrderTabBean {
         private String cancleReason;
         private String distance;
         private List<PmsServiceRelationTypeListBean> pmsServiceRelationTypeList;
+        private String lon;
+        private String lat;
+        private PmsServiceEvaluation pmsServiceEvaluation;
+
+
+        public PmsServiceEvaluation getPmsServiceEvaluation() {
+            return pmsServiceEvaluation == null ? new PmsServiceEvaluation() : pmsServiceEvaluation;
+        }
+
+        public void setPmsServiceEvaluation(PmsServiceEvaluation pmsServiceEvaluation) {
+            this.pmsServiceEvaluation = pmsServiceEvaluation;
+        }
+
+        public String getLon() {
+            return lon == null ? "" : lon;
+        }
+
+        public void setLon(String lon) {
+            this.lon = lon == null ? "" : lon;
+        }
+
+        public String getLat() {
+            return lat == null ? "" : lat;
+        }
+
+        public void setLat(String lat) {
+            this.lat = lat == null ? "" : lat;
+        }
 
         public int getId() {
             return id;
@@ -789,6 +817,36 @@ public class WorkOrderTabBean {
                 this.updateTime = updateTime == null ? "" : updateTime;
             }
         }
+
+
+        public static class PmsServiceEvaluation {
+            /**
+             * 整体评价分数
+             */
+            private String serviceScore;
+            /**
+             * 保洁员分数
+             */
+            private String cleanerScore;
+
+            public String getServiceScore() {
+                return serviceScore == null ? "1" : serviceScore;
+            }
+
+            public void setServiceScore(String serviceScore) {
+                this.serviceScore = serviceScore == null ? "1" : serviceScore;
+            }
+
+            public String getCleanerScore() {
+                return cleanerScore == null ? "1" : cleanerScore;
+            }
+
+            public void setCleanerScore(String cleanerScore) {
+                this.cleanerScore = cleanerScore == null ? "1" : cleanerScore;
+            }
+        }
+
+
     }
 
 }
