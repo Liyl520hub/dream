@@ -93,7 +93,9 @@
             android:value="cleaner" />
 
 
-        <activity android:name=".ui.main.activity.WorkReadyActivity" android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.main.activity.WorkReadyActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.ImagePriview.ImagePreviewActivity" />
         <!-- 以下为基本配置信息，需要自行添加至您的AndroidManifest文件中 start-->
         <service

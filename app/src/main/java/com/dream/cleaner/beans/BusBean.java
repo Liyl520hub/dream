@@ -10,10 +10,19 @@ public class BusBean {
     private String name;
     private String orderTypeId;
     private String serviceTypeId;
+    private String orderStatus;
 
     public BusBean(String orderTypeId, String serviceTypeId) {
         this.orderTypeId = orderTypeId;
         this.serviceTypeId = serviceTypeId;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus == null ? "" : orderStatus;
+    }
+
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus == null ? "" : orderStatus;
     }
 
     public String getOrderTypeId() {

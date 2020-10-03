@@ -3,14 +3,11 @@ package com.dream.cleaner.ui.main.fragment;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -29,11 +26,9 @@ import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
-import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.BusBean;
-import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
 import com.dream.cleaner.ui.main.MyINaviInfoCallback;
 import com.dream.cleaner.ui.main.activity.TaskDetailsActivity;
@@ -41,17 +36,12 @@ import com.dream.cleaner.ui.main.activity.WorkReadyActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderTabFragmentAdapter;
 import com.dream.cleaner.ui.main.contract.WorkOrderTabFragmentContract;
 import com.dream.cleaner.ui.main.presenter.WorkOrderTabFragmentPresenter;
-import com.dream.cleaner.ui.my.activity.UserInfoActivity;
-import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.LocationUtils;
-import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.EmptyLayout;
 import com.dream.cleaner.widget.pop.PopTip;
-import com.dream.cleaner.widget.pop.PopWorkOrder;
 import com.dream.common.base.BaseFragment;
 import com.dream.common.http.error.ErrorType;
-import com.dream.common.widget.SuperToast;
 import com.scwang.smart.refresh.layout.SmartRefreshLayout;
 import com.scwang.smart.refresh.layout.api.RefreshLayout;
 import com.scwang.smart.refresh.layout.listener.OnLoadMoreListener;
@@ -62,9 +52,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 import io.reactivex.disposables.Disposable;
-import razerdp.basepopup.BasePopupWindow;
 
 /**
  * author : liyl
@@ -402,14 +390,11 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
         BusUtils.unregister(this);
     }
 
-    @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_WORK)
+    @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_WORK_TAB)
     public void postBusListener(BusBean busBean) {
         serviceTypeId = busBean.getServiceTypeId();
         orderTypeId = busBean.getOrderTypeId();
-        if (isResumed()) {
-            initData(busBean.getOrderTypeId(), busBean.getServiceTypeId());
-        }
-
+        initData(busBean.getOrderTypeId(), busBean.getServiceTypeId());
     }
 
     private int getOrderStatus(String title) {

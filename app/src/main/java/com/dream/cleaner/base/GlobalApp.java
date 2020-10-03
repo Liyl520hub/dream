@@ -10,6 +10,7 @@ import android.os.Environment;
 public class GlobalApp {
 
     public static final String BUS_FRAGMENT_PLAN = "bus_fragment_plan";
+    public static final String BUS_FRAGMENT_WORK_TAB = "bus_fragment_work_tab";
     public static final String BUS_FRAGMENT_WORK = "bus_fragment_work";
     public static final String BUS_LOGIN_ACTIVITY = "bus_login_activity";
     public static final String TOKEN = "token";

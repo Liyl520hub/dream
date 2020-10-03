@@ -27,6 +27,7 @@ import com.amap.api.navi.model.AMapNaviLocation;
 import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.route.DistanceResult;
 import com.amap.api.services.route.DistanceSearch;
+import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
@@ -34,6 +35,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.MyPhotoBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
 import com.dream.cleaner.ui.ImagePriview.ImagePreviewActivity;
@@ -186,6 +188,7 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
+        BusUtils.register(this);
         Intent intent = getIntent();
         if (intent != null) {
             orderId = intent.getStringExtra("orderId");
@@ -536,6 +539,7 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
                         //扫前准备
                         bundle.putBoolean("isBefore", true);
                         UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class, bundle);
+                        finish();
                     }
                     break;
                     case 5: {
@@ -546,6 +550,7 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
                             public void onClick(View v) {
                                 canCelPop();
                                 UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class, bundle);
+                                finish();
                             }
                         });
                     }
@@ -588,8 +593,10 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
 
     @Override
     public void returnTaskReceive(String s) {
-
-
+        BusBean busBean = new BusBean();
+        busBean.setOrderStatus(orderStatus+"");
+        BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK,busBean);
+        finish();
     }
 
     private int getOrderStatus(String title) {
@@ -724,6 +731,11 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
         popTip.showPopupWindow();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BusUtils.unregister(this);
 
+    }
 }
 

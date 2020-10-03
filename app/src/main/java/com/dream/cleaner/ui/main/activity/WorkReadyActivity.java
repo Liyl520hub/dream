@@ -31,6 +31,7 @@ import com.baidu.aip.asrwakeup3.uiasr.params.CommonRecogParams;
 import com.baidu.aip.asrwakeup3.uiasr.params.OnlineRecogParams;
 import com.baidu.voicerecognition.android.ui.BaiduASRDigitalDialog;
 import com.baidu.voicerecognition.android.ui.DigitalDialogInput;
+import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.FileUtils;
 import com.blankj.utilcode.util.ResourceUtils;
 import com.blankj.utilcode.util.SPUtils;
@@ -38,12 +39,14 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.MyPhotoBean;
 import com.dream.cleaner.ui.ImagePriview.ImagePreviewActivity;
 import com.dream.cleaner.ui.main.GlideEngine;
 import com.dream.cleaner.ui.main.adapter.PhotoAdapter;
 import com.dream.cleaner.ui.main.contract.WorkReadyActivityContract;
 import com.dream.cleaner.ui.main.presenter.WorkReadyActivityPresenter;
+import com.dream.cleaner.utils.SoftKeyboardFixerForFullscreen;
 import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
@@ -180,6 +183,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             orderId = intent.getStringExtra("orderId");
             orderStatus = intent.getStringExtra("orderStatus");
         }
+        SoftKeyboardFixerForFullscreen.assistActivity(this);
         handler = new MyHandler(this);
         MyLogger.setHandler(handler);
         initPermission();
@@ -202,6 +206,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             tvReasonTitle.setText("服务补充");
             etReason.setHint("请输入服务补充");
         }
+        BusUtils.register(this);
     }
 
     private void initPermission() {
@@ -586,6 +591,9 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
 
     @Override
     public void returnBeforeClean(String s) {
+        BusBean busBean = new BusBean();
+        busBean.setOrderStatus(orderStatus);
+        BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK,busBean);
         finish();
     }
 
@@ -649,5 +657,6 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                 myRecognizer.release();
             }
         }
+        BusUtils.unregister(this);
     }
 }

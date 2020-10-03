@@ -2,9 +2,7 @@ package com.dream.cleaner.ui.main.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,14 +16,10 @@ import com.dream.cleaner.R;
 import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.BusBean;
 import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
-import com.dream.cleaner.beans.workorder.PopWorkOrderTypeListBean;
-import com.dream.cleaner.ui.main.activity.WorkReadyActivity;
 import com.dream.cleaner.ui.main.adapter.WorkOrderFragmentTabLayoutAdapter;
 import com.dream.cleaner.ui.main.contract.WorkOrderFragmentContract;
 import com.dream.cleaner.ui.main.presenter.WorkOrderFragmentPresenter;
 import com.dream.cleaner.utils.ShapeUtils;
-import com.dream.cleaner.utils.UiUtil;
-import com.dream.cleaner.widget.DataGenerator;
 import com.dream.cleaner.widget.pop.PopWorkOrder;
 import com.dream.common.base.BaseFragment;
 import com.dream.common.http.error.ErrorType;
@@ -34,7 +28,6 @@ import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
@@ -66,6 +59,7 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
     private List<PopWorkOrderBean> orderTypeList = new ArrayList<>();
     private List<PopWorkOrderBean> serviceList = new ArrayList<>();
     private WorkOrderFragmentTabLayoutAdapter mainAdapter;
+    private int currentPosition;
 
 
     @Override
@@ -120,7 +114,22 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
                 tab.setText(tabTitles[position]);
             }
         }).attach();
+        myTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                currentPosition = tab.getPosition();
+            }
 
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
     }
 
@@ -188,12 +197,12 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
                 //true 设置为false
                 data.setCheck(!data.isCheck());
                 if (b) {
-                    orderTypeId =data.isCheck()? data.getId() + "":"";
+                    orderTypeId = data.isCheck() ? data.getId() + "" : "";
                 } else {
-                    serviceTypeId = data.isCheck()?data.getId() + "":"";
+                    serviceTypeId = data.isCheck() ? data.getId() + "" : "";
                 }
                 //刷新当前页面
-                BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK, new BusBean(orderTypeId, serviceTypeId));
+                BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK_TAB, new BusBean(orderTypeId, serviceTypeId));
                 popWorkOrder.dismiss();
 
             }
@@ -218,6 +227,31 @@ public class WorkOrderFragment extends BaseFragment<WorkOrderFragmentPresenter> 
     public void onDestroyView() {
         super.onDestroyView();
         BusUtils.unregister(this);
+    }
+
+
+    @BusUtils.Bus(tag = GlobalApp.BUS_FRAGMENT_WORK)
+    public void postBusListener(BusBean busBean) {
+        //新任务 0  待服务 1  上门中 2 3 4 服务中  5 6
+        String orderStatus = busBean.getOrderStatus();
+        switch (orderStatus) {
+            case "0":
+            case "1":
+            case "4":
+            case "6": {
+                myViewPager.setCurrentItem(currentPosition + 1);
+            }
+            break;
+            case "2":
+            case "3":
+            case "5": {
+                myViewPager.setCurrentItem(currentPosition);
+            }
+            break;
+            default:
+        }
+        //刷新下一状态的tab页
+        BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK_TAB, new BusBean(orderTypeId, serviceTypeId));
     }
 
 }
