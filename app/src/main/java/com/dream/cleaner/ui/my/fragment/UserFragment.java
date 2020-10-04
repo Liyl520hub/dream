@@ -1,5 +1,6 @@
 package com.dream.cleaner.ui.my.fragment;
 
+import android.graphics.Typeface;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -133,9 +134,19 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
             case R.id.tv_month_order:
                 isDayOrder = false;
                 showTimePickerView();
+                //月订单加粗
+                tvMonthOrder.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                tvMonthOrder.setTextSize(19);
+                tvDayOrder.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                tvDayOrder.setTextSize(17);
                 break;
             case R.id.tv_day_order:
                 isDayOrder = true;
+                //今日加粗
+                tvDayOrder.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                tvDayOrder.setTextSize(19);
+                tvMonthOrder.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                tvMonthOrder.setTextSize(17);
                 showTimePickerView();
                 break;
             case R.id.ll_income:

@@ -394,7 +394,8 @@ public class WorkOrderTabFragment extends BaseFragment<WorkOrderTabFragmentPrese
     public void postBusListener(BusBean busBean) {
         serviceTypeId = busBean.getServiceTypeId();
         orderTypeId = busBean.getOrderTypeId();
-        initData(busBean.getOrderTypeId(), busBean.getServiceTypeId());
+        mySmartRefresh.autoRefresh();
+//        initData(busBean.getOrderTypeId(), busBean.getServiceTypeId());
     }
 
     private int getOrderStatus(String title) {
