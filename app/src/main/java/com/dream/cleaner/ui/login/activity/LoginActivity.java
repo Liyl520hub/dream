@@ -40,6 +40,7 @@ import com.dream.cleaner.utils.UiUtil;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
+import com.dream.common.widget.SuperToast;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
 
@@ -229,10 +230,11 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
     public void returnLoginBean(LoginBean loginBean) {
         PushAgent mPushAgent = PushAgent.getInstance(this);
 
-        mPushAgent.setAlias(loginBean.getCleaner().getId()+"", "test", new UTrack.ICallBack() {
+        mPushAgent.addAlias(loginBean.getCleaner().getId()+"", "test", new UTrack.ICallBack() {
             @Override
             public void onMessage(boolean b, String s) {
-                Log.d("ddddd", "onMessage: " + s);
+//                Log.d("ddddd", "onMessage: " + s);
+//                SuperToast.showShortMessage(b+s+"--注册");
             }
         });
         InfoUtils.setLoginBean(loginBean);

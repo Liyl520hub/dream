@@ -132,22 +132,10 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
                 UiUtil.openActivity(getActivity(), UserInfoActivity.class);
                 break;
             case R.id.tv_month_order:
-                isDayOrder = false;
-                showTimePickerView();
-                //月订单加粗
-                tvMonthOrder.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                tvMonthOrder.setTextSize(19);
-                tvDayOrder.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-                tvDayOrder.setTextSize(17);
+                showTimePickerView(false);
                 break;
             case R.id.tv_day_order:
-                isDayOrder = true;
-                //今日加粗
-                tvDayOrder.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-                tvDayOrder.setTextSize(19);
-                tvMonthOrder.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
-                tvMonthOrder.setTextSize(17);
-                showTimePickerView();
+                showTimePickerView(true);
                 break;
             case R.id.ll_income:
                 UiUtil.openActivity(getActivity(), MyIncomeActivity.class);
@@ -180,15 +168,25 @@ public class UserFragment extends BaseFragment<UserFragmentPresenter> implements
     }
 
 
-    private void showTimePickerView() {
+    private void showTimePickerView(boolean isDayOrder) {
         //时间选择器
         TimePickerBuilder timePickerBuilder = new TimePickerBuilder(getActivity(), new OnTimeSelectListener() {
             @Override
             public void onTimeSelect(Date date, View v) {//选中事件回调
                 String time = "";
                 if (isDayOrder) {
+                    //今日加粗
+                    tvDayOrder.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                    tvDayOrder.setTextSize(19);
+                    tvMonthOrder.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                    tvMonthOrder.setTextSize(17);
                     time = TimeUtils.date2String(date, "yyyy-MM-dd");
                 } else {
+                    //月订单加粗
+                    tvMonthOrder.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+                    tvMonthOrder.setTextSize(19);
+                    tvDayOrder.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+                    tvDayOrder.setTextSize(17);
                     time = TimeUtils.date2String(date, "yyyy-MM");
                 }
                 mPresenter.getCleanerOrderCount(time);
