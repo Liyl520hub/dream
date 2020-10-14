@@ -154,11 +154,11 @@ public class TaskDetailsBean {
     }
 
     public String getSuppleRefundTPrice() {
-        return suppleRefundTPrice == null ? "" : suppleRefundTPrice;
+        return suppleRefundTPrice == null ? "0" : suppleRefundTPrice;
     }
 
     public void setSuppleRefundTPrice(String suppleRefundTPrice) {
-        this.suppleRefundTPrice = suppleRefundTPrice == null ? "" : suppleRefundTPrice;
+        this.suppleRefundTPrice = suppleRefundTPrice == null ? "0" : suppleRefundTPrice;
     }
 
     public String getExplain() {

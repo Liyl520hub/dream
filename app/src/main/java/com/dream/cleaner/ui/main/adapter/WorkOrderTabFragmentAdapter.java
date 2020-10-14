@@ -54,6 +54,8 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, WorkOrderTabBean.RecordsBean workOrderTabBean) {
         //赋值
+        String cycleFlag = workOrderTabBean.getCycleFlag();
+        baseViewHolder.setText(R.id.tv_order_type_imge, "0".equals(cycleFlag) ? "单次单" : "周期服务单");
         baseViewHolder.setText(R.id.tv_order_type, workOrderTabBean.getOrderStatusStr());
         baseViewHolder.setText(R.id.tv_address, workOrderTabBean.getContactAddress());
         baseViewHolder.setText(R.id.tv_time, workOrderTabBean.getServiceTime());
