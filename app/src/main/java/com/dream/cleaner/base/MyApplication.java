@@ -1,15 +1,30 @@
 package com.dream.cleaner.base;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
+import android.view.View;
 
 import androidx.multidex.MultiDex;
 
+import com.blankj.utilcode.util.ActivityUtils;
+import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.BuildConfig;
 import com.dream.cleaner.R;
+import com.dream.cleaner.ui.login.activity.LoginActivity;
+import com.dream.cleaner.ui.my.activity.UserInfoActivity;
 import com.dream.cleaner.utils.InfoUtils;
+import com.dream.cleaner.utils.UiUtil;
+import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.common.base.BaseApplication;
+import com.dream.common.baserx.BaseRxSubscriber;
 import com.dream.common.http.Api;
 import com.dream.common.http.config.ApiConfig;
 import com.dream.common.widget.SuperToast;
@@ -74,9 +89,11 @@ public class MyApplication extends BaseApplication {
                 Log.e(TAG, "注册失败：-------->  " + "s:" + s + ",s1:" + s1);
             }
         });
+        registerGlobalErrorListener();
 
 
     }
+
     //static 代码段可以防止内存泄露
     static {
         //设置全局的Header构建器
@@ -96,6 +113,7 @@ public class MyApplication extends BaseApplication {
             }
         });
     }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
@@ -116,5 +134,62 @@ public class MyApplication extends BaseApplication {
         mApiConfig.setConnectTimeOut(BuildConfig.CONNECT_TIME_OUT);
         Api.setConfig(mApiConfig);
     }
+
+    private void registerGlobalErrorListener() {
+
+        BaseRxSubscriber.registerGlobalErrorListener(new BaseRxSubscriber.GlobalErrorListener() {
+
+            private PopTip mDialog;
+
+            @Override
+            public void onReturn10007Code(BaseRxSubscriber rxSubscriber, String message) {
+                final Activity mActivity;
+                if (rxSubscriber.getActivity() != null) {
+                    mActivity = rxSubscriber.getActivity();
+                } else if (rxSubscriber.getFragment() != null) {
+                    mActivity = rxSubscriber.getFragment().getActivity();
+                } else {
+                    mActivity = ActivityUtils.getTopActivity();
+                }
+                if (mActivity != null) {
+
+                    mDialog = new PopTip.Builder()
+                            .setType(2)
+                            .setTitle("提示")
+                            .setSubmitText("确定")
+                            .setCancelText("取消")
+                            .setMsg(message)
+                            .setCancelClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mDialog.dismiss();
+                                    mDialog = null;
+                                }
+                            })
+                            .setSubmitClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mDialog.dismiss();
+                                    Bundle bundle = new Bundle();
+                                    //从哪来 回哪去
+                                    bundle.putBoolean("TokenVerificationFailed", true);
+                                    UiUtil.openActivity(mActivity, LoginActivity.class, bundle);
+                                    mDialog = null;
+                                }
+                            }).build(mActivity);
+                    if (!mDialog.isShowing()) {
+                        try {
+                            mDialog.showPopupWindow();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                } else {
+                    SuperToast.showShortMessage(message);
+                }
+            }
+        });
+    }
+
 
 }

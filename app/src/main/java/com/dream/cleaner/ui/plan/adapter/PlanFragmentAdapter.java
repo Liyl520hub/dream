@@ -34,8 +34,8 @@ public class PlanFragmentAdapter extends BaseSectionQuickAdapter<PlanSectionBean
     protected void convert(@NotNull BaseViewHolder baseViewHolder, PlanSectionBean planSectionBean) {
         PlanBean.CleanerPlanItemsBean item = (PlanBean.CleanerPlanItemsBean) planSectionBean.getItem();
         //0 无  1为订单，2为请假
-        String type = item.getType();
-        String text = "1".equals(type) ? "单" : "2".equals(type) ? "假" : "";
-        baseViewHolder.setText(R.id.tv_content, text);
+//        String type = item.getType();
+//        String text = "1".equals(type) ? "单" : "2".equals(type) ? "假" : "";
+        baseViewHolder.setText(R.id.tv_content, item.getPlanTaskName());
     }
 }

@@ -1,8 +1,10 @@
 package com.dream.cleaner.ui.main.activity;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -116,6 +118,8 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     LinearLayout llShuoMing;
     @BindView(R.id.ll_tui_kuan_rv)
     LinearLayout llTuiKuanRv;
+    @BindView(R.id.my_examples_rv)
+    RecyclerView myExamplesRv;
     /**
      * 扫前或扫后适配器
      */
@@ -197,6 +201,11 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             toolbarBackTitle.setTitle("扫前准备");
             tvReasonTitle.setText("服务备注");
             etReason.setHint("请输入服务备注");
+            ArrayList<MyPhotoBean> myPhotoBeans = new ArrayList<>();
+            myPhotoBeans.add(new MyPhotoBean("4", getMipmapToUri(R.mipmap.bg_da_sao_qian_mi_ni_1), getMipmapToUri(R.mipmap.bg_da_sao_qian_1)));
+            myPhotoBeans.add(new MyPhotoBean("4", getMipmapToUri(R.mipmap.bg_da_sao_qian_mi_ni_2), getMipmapToUri(R.mipmap.bg_da_sao_qian_2)));
+            myPhotoBeans.add(new MyPhotoBean("4", getMipmapToUri(R.mipmap.bg_da_sao_qian_mi_ni_3), getMipmapToUri(R.mipmap.bg_da_sao_qian_3)));
+            setExamplesAdapter(myPhotoBeans);
         } else {
             tvTitle.setText("扫后拍照");
             llBuTuiKuan.setVisibility(View.VISIBLE);
@@ -205,8 +214,60 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
             setBuTuiKuan(2);
             tvReasonTitle.setText("服务补充");
             etReason.setHint("请输入服务补充");
+            ArrayList<MyPhotoBean> myPhotoBeans = new ArrayList<>();
+            myPhotoBeans.add(new MyPhotoBean("4", getMipmapToUri(R.mipmap.bg_da_sao_hou_mi_ni_1), getMipmapToUri(R.mipmap.bg_da_sao_hou_1)));
+            myPhotoBeans.add(new MyPhotoBean("4", getMipmapToUri(R.mipmap.bg_da_sao_hou_mi_ni_2), getMipmapToUri(R.mipmap.bg_da_sao_hou_2)));
+            myPhotoBeans.add(new MyPhotoBean("4", getMipmapToUri(R.mipmap.bg_da_sao_hou_mi_ni_3), getMipmapToUri(R.mipmap.bg_da_sao_hou_3)));
+            setExamplesAdapter(myPhotoBeans);
         }
         BusUtils.register(this);
+    }
+
+    /**
+     * 设置示例适配器
+     *
+     * @param myPhotoBeans
+     */
+    private void setExamplesAdapter(ArrayList<MyPhotoBean> myPhotoBeans) {
+        PhotoAdapter examplesAdapter = new PhotoAdapter(myPhotoBeans);
+        examplesAdapter.addChildClickViewIds(R.id.iv_photo, R.id.iv_close);
+        examplesAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                MyPhotoBean item = examplesAdapter.getItem(position);
+                String type = item.getType();
+                switch (view.getId()) {
+                    case R.id.iv_photo: {
+                        if ("1".equals(type)) {
+                            getPic(examplesAdapter);
+                        } else {
+                            //查看大图
+                            lookOld(examplesAdapter, position, "4");
+                        }
+                    }
+                    break;
+                    case R.id.iv_close: {
+                        cleanAdapterItem(examplesAdapter, item);
+                    }
+                    default:
+                }
+            }
+        });
+        myExamplesRv.setLayoutManager(new GridLayoutManager(this, 4));
+        myExamplesRv.setAdapter(examplesAdapter);
+
+
+    }
+
+    private Uri getMipmapToUri(int resId) {
+
+        Resources r = getResources();
+        Uri uri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE + "://"
+                + r.getResourcePackageName(resId) + "/"
+                + r.getResourceTypeName(resId) + "/"
+                + r.getResourceEntryName(resId));
+
+        return uri;
     }
 
     private void initPermission() {
@@ -295,7 +356,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                                 getPic(photoAdapter);
                             } else {
                                 //查看大图
-                                lookOld(photoAdapter, position);
+                                lookOld(photoAdapter, position, "");
                             }
                         }
                         break;
@@ -324,7 +385,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                                 getPic(photoAdapter2);
                             } else {
                                 //查看大图
-                                lookOld(photoAdapter2, position);
+                                lookOld(photoAdapter2, position, "");
                             }
                         }
                         break;
@@ -394,18 +455,19 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
 
     }
 
-    private void lookOld(PhotoAdapter photoAdapter, int position) {
+    private void lookOld(PhotoAdapter photoAdapter, int position, String type) {
         Intent intent = new Intent(WorkReadyActivity.this, ImagePreviewActivity.class);
         List<MyPhotoBean> data = photoAdapter.getData();
         int size = data.size();
         ArrayList<Uri> strings = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             MyPhotoBean myPhotoBean = data.get(i);
-            if ("2".equals(myPhotoBean.getType())) {
+            if ("2".equals(myPhotoBean.getType()) || "4".equals(myPhotoBean.getType())) {
                 strings.add(myPhotoBean.getUri());
             }
         }
         intent.putParcelableArrayListExtra("imageList", strings);
+        intent.putExtra("type", type);
         intent.putExtra(ImagePreviewActivity.START_ITEM_POSITION, position);
         intent.putExtra(ImagePreviewActivity.START_IAMGE_POSITION, position);
         startActivity(intent);
@@ -424,10 +486,12 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
         unCheck.setBounds(0, 0, unCheck.getMinimumWidth(), unCheck.getMinimumHeight());
         if (isYes) {
             myRv.setVisibility(View.VISIBLE);
+            myExamplesRv.setVisibility(View.VISIBLE);
             tvOk.setCompoundDrawables(check, null, null, null);
             tvNo.setCompoundDrawables(unCheck, null, null, null);
         } else {
             myRv.setVisibility(View.GONE);
+            myExamplesRv.setVisibility(View.GONE);
             tvOk.setCompoundDrawables(unCheck, null, null, null);
             tvNo.setCompoundDrawables(check, null, null, null);
         }
@@ -574,7 +638,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
                         mPresenter.beforeClean(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
                     } else {
                         int photoSize = photoAdapter2.getPhotoSize();
-                        if ( picUrlList2.size()==photoSize) {
+                        if (picUrlList2.size() == photoSize) {
                             mPresenter.confirmFinish(orderId, orderStatus, isBefore, picUrlList, etReason.getText().toString(), suppleRefundType + "", etPrice.getText().toString(), etShuoMing.getText().toString(), picUrlList2);
                         } else {
                             upLoad(false);
@@ -593,7 +657,7 @@ public class WorkReadyActivity extends BaseActivity<WorkReadyActivityPresenter> 
     public void returnBeforeClean(String s) {
         BusBean busBean = new BusBean();
         busBean.setOrderStatus(orderStatus);
-        BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK,busBean);
+        BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK, busBean);
         finish();
     }
 

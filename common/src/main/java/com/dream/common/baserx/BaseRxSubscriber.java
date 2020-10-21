@@ -146,7 +146,7 @@ public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Obse
         if (e instanceof ApiException) {
             ApiException exception = (ApiException) e;
             if (mStatus) {
-                if (mCode == 401) {
+                if (mCode == 5101) {
                     //token过期
                     mGlobalErrorListener.onReturn10007Code(this, mTMessage);
                 } else if (mCode == 200) {

@@ -36,6 +36,10 @@ public class PhotoAdapter extends BaseQuickAdapter<MyPhotoBean, BaseViewHolder> 
         } else if ("3".equals(item.getType())) {
             ivClose.setVisibility(View.GONE);
             GlideEngine.getInstance().loadPhoto(getContext(), item.getUri(), ivPhoto);
+        } else if ("4".equals(item.getType())) {
+            //加载示例图
+            ivClose.setVisibility(View.GONE);
+            GlideEngine.getInstance().loadPhoto(getContext(), item.getMiNiUri(), ivPhoto);
         } else {
             ivClose.setVisibility(View.VISIBLE);
             GlideEngine.getInstance().loadPhoto(getContext(), item.getUri(), ivPhoto);
@@ -52,7 +56,7 @@ public class PhotoAdapter extends BaseQuickAdapter<MyPhotoBean, BaseViewHolder> 
         List<MyPhotoBean> data = getData();
         int size = data.size();
         for (int i = 0; i < size; i++) {
-            if ("2".equals(data.get(i).getType())) {
+            if ("2".equals(data.get(i).getType())||"4".equals(data.get(i).getType())) {
                 count++;
             }
         }

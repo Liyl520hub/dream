@@ -65,6 +65,7 @@ public class PlanBean implements Serializable {
         private String type;
         private String taskStartTime;
         private String taskEndTime;
+        private String planTaskName;
 
         public String getId() {
             return id == null ? "" : id;
@@ -128,6 +129,14 @@ public class PlanBean implements Serializable {
 
         public void setTaskEndTime(String taskEndTime) {
             this.taskEndTime = taskEndTime == null ? "" : taskEndTime;
+        }
+
+        public String getPlanTaskName() {
+            return planTaskName == null ? "" : planTaskName;
+        }
+
+        public void setPlanTaskName(String planTaskName) {
+            this.planTaskName = planTaskName == null ? "" : planTaskName;
         }
     }
 }

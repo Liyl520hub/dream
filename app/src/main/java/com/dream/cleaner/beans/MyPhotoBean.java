@@ -26,6 +26,10 @@ public class MyPhotoBean implements Parcelable {
      */
     public Uri uri;
     /**
+     * 图片Uri 小图
+     */
+    public Uri miNiUri;
+    /**
      * 图片网络Url
      */
     public String url;
@@ -38,6 +42,12 @@ public class MyPhotoBean implements Parcelable {
 
     public MyPhotoBean(String type, Uri uri) {
         this.type = type;
+        this.uri = uri;
+    }
+
+    public MyPhotoBean(String type, Uri miNiUri, Uri uri) {
+        this.type = type;
+        this.miNiUri = miNiUri;
         this.uri = uri;
     }
 
@@ -79,6 +89,14 @@ public class MyPhotoBean implements Parcelable {
         return uri;
     }
 
+    public Uri getMiNiUri() {
+        return miNiUri;
+    }
+
+    public void setMiNiUri(Uri miNiUri) {
+        this.miNiUri = miNiUri;
+    }
+
     public void setUri(Uri uri) {
         this.uri = uri;
     }
@@ -94,6 +112,7 @@ public class MyPhotoBean implements Parcelable {
         dest.writeString(this.type);
         dest.writeString(this.path);
         dest.writeParcelable(this.uri, flags);
+        dest.writeParcelable(this.miNiUri, flags);
         dest.writeString(this.url);
     }
 
@@ -101,6 +120,7 @@ public class MyPhotoBean implements Parcelable {
         this.type = in.readString();
         this.path = in.readString();
         this.uri = in.readParcelable(Uri.class.getClassLoader());
+        this.miNiUri = in.readParcelable(Uri.class.getClassLoader());
         this.url = in.readString();
     }
 

@@ -4,6 +4,7 @@ package com.dream.cleaner.ui.ImagePriview;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.PointF;
@@ -18,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.blankj.utilcode.util.StringUtils;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
@@ -29,6 +31,7 @@ import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView;
 import com.dream.cleaner.R;
 import com.dream.cleaner.ui.ImagePriview.photoview.PhotoView;
 import com.dream.cleaner.ui.main.GlideEngine;
+import com.dream.cleaner.utils.ShapeUtils;
 
 import java.io.File;
 import java.util.List;
@@ -89,6 +92,16 @@ public class ImagePreviewAdapter extends PagerAdapter {
                                     new ImageViewState(scale, new PointF(0, 0), 0));
                         }
                     });
+        } else if ("4".equals(type)) {
+//            android.resource://com.dream.cleaner/mipmap/bg_da_sao_qian_1
+            String path = uri.getPath();
+            if (!StringUtils.isEmpty(path)) {
+                String[] split = path.split("/");
+                Resources resources = context.getResources();
+                int identifier = resources.getIdentifier(split[split.length - 1], "mipmap", "com.dream.cleaner");
+                scaleImageView.setVisibility(View.VISIBLE);
+                scaleImageView.setImage(ImageSource.resource(identifier));
+            }
         } else {
             scaleImageView.setVisibility(View.VISIBLE);
             scaleImageView.setImage(ImageSource.uri(uri));

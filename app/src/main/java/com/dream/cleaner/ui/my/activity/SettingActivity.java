@@ -184,6 +184,7 @@ public class SettingActivity extends BaseActivity<SettingActivityPresenter> impl
                     @Override
                     public void onClick(View v) {
                         mPresenter.logout();
+                        InfoUtils.clean();
                         popLogoutTip.dismiss();
                     }
                 }).build(SettingActivity.this);
