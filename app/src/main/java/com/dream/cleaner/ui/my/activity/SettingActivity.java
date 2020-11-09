@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -34,6 +35,7 @@ import com.dream.cleaner.widget.pop.PopTip;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
+import com.dream.common.widget.SuperToast;
 import com.dream.common.widget.ToolbarBackTitle;
 
 import butterknife.BindView;
@@ -83,6 +85,14 @@ public class SettingActivity extends BaseActivity<SettingActivityPresenter> impl
     protected void initView(@Nullable Bundle savedInstanceState) {
         long cacheSize = CacheDiskUtils.getInstance(Utils.getApp().getCacheDir().getPath()).getCacheSize();
         tvCache.setText(cacheSize < 1024 ? "0MB" : ConvertUtils.byte2FitMemorySize(cacheSize));
+        String userReceive = InfoUtils.getUserReceive();
+        mySwitch.setChecked("0".equals(userReceive));
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mPresenter.updatePush(isChecked ? "0" : "1");
+            }
+        });
     }
 
 
@@ -130,7 +140,7 @@ public class SettingActivity extends BaseActivity<SettingActivityPresenter> impl
     private void cleanCache() {
         popCacheTip = new PopTip.Builder().
                 setType(2).
-                setMsg("是否清楚应用缓存").
+                setMsg("是否清除应用缓存").
                 setSubmitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -174,6 +184,7 @@ public class SettingActivity extends BaseActivity<SettingActivityPresenter> impl
                     @Override
                     public void onClick(View v) {
                         mPresenter.logout();
+                        InfoUtils.clean();
                         popLogoutTip.dismiss();
                     }
                 }).build(SettingActivity.this);
@@ -189,5 +200,12 @@ public class SettingActivity extends BaseActivity<SettingActivityPresenter> impl
     public void returnLogout(String loginBean) {
         InfoUtils.clean();
         ActivityUtils.startActivity(LoginActivity.class);
+    }
+
+    @Override
+    public void returnUpdate(String string) {
+//        SuperToast.showShortMessage("修改成功");
+        InfoUtils.setUserReceive(mySwitch.isChecked() ? "0" : "1");
+
     }
 }

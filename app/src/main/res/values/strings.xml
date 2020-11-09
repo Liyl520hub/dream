@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">保洁端</string>
+    <string name="app_name">壹佳保洁</string>
     <string name="title_activity_login">登录</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

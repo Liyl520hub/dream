@@ -1,6 +1,7 @@
 package com.dream.cleaner.ui.plan.fragment;
 
 import android.annotation.SuppressLint;
+import android.util.Log;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -123,9 +124,9 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
         for (int i = 0; i < size; i++) {
             PlanBean planBean = list.get(i);
             String planDate = planBean.getPlanDate();
-            //1为订单，2为请假
-            int type = planBean.getType();
-            if (type != 0) {
+            //0 无  1为订单，2为请假
+            String type = planBean.getType();
+            if (!"0".equals(type)) {
                 java.util.Calendar calendar = java.util.Calendar.getInstance();
                 Date date = TimeUtils.string2Date(planDate, "yyyy-MM-dd");
                 if (date != null) {
@@ -133,8 +134,9 @@ public class PlanFragment extends BaseFragment<PlanFragmentPresenter> implements
                     int year = calendar.get(java.util.Calendar.YEAR);
                     int month = calendar.get(java.util.Calendar.MONTH);
                     int day = calendar.get(java.util.Calendar.DAY_OF_MONTH);
-                    map.put(getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假").toString(),
-                            getSchemeCalendar(year, month + 1, day, 0xFF40db25, type == 1 ? "单" : "假"));
+                    String text = "1".equals(type) ? "单" : "假";
+                    map.put(getSchemeCalendar(year, month + 1, day, 0xFF40db25, text).toString(),
+                            getSchemeCalendar(year, month + 1, day, 0xFF40db25, text));
                 }
             }
         }

@@ -1,9 +1,14 @@
 package com.dream.cleaner.widget.pop.adapter;
 
+import android.view.View;
+import android.widget.TextView;
+
+import com.blankj.utilcode.util.ResourceUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.dream.cleaner.R;
 import com.dream.cleaner.beans.workorder.PopWorkOrderBean;
+import com.dream.cleaner.utils.ShapeUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,10 +30,12 @@ public class PopWorkOrderAdapter extends BaseQuickAdapter<PopWorkOrderBean, Base
 
     @Override
     protected void convert(@NotNull BaseViewHolder baseViewHolder, PopWorkOrderBean popWorkOrderBean) {
+        TextView tvName = baseViewHolder.getView(R.id.tv_name);
+        tvName.setTextColor(popWorkOrderBean.isCheck() ? ShapeUtils.getColor(R.color.color_72BB38) : ShapeUtils.getColor(R.color.color_333333));
         if (isOrderType) {
-            baseViewHolder.setText(R.id.tv_name, popWorkOrderBean.getName());
-        }else{
-            baseViewHolder.setText(R.id.tv_name, popWorkOrderBean.getCategoryName());
+            tvName.setText(popWorkOrderBean.getName());
+        } else {
+            tvName.setText(popWorkOrderBean.getCategoryName());
         }
     }
 }

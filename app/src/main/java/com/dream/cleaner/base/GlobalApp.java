@@ -10,6 +10,7 @@ import android.os.Environment;
 public class GlobalApp {
 
     public static final String BUS_FRAGMENT_PLAN = "bus_fragment_plan";
+    public static final String BUS_FRAGMENT_WORK_TAB = "bus_fragment_work_tab";
     public static final String BUS_FRAGMENT_WORK = "bus_fragment_work";
     public static final String BUS_LOGIN_ACTIVITY = "bus_login_activity";
     public static final String TOKEN = "token";
@@ -89,13 +90,33 @@ public class GlobalApp {
     public static final String SERVICE_NAME = "serviceName";
 
     /**
+     * 星级
+     */
+    public static final String USER_LEVEL = "user_level";
+    /**
+     * 推送开关
+     */
+    public static final String USER_RECEIVE = "user_Receive";
+
+    /**
      * 直属联系人姓名
      */
     public static final String DIRECT_CONTACT_NAME = "directContactName";
+
     /**
      * 直属联系人手机号
      */
     public static final String DIRECT_CONTACT_PHONE = "directContactPhone";
+
+    /**
+     * 纬度
+     */
+    public static final String USER_LATITUDE = "user_latitude";
+
+    /**
+     * 经度
+     */
+    public static final String USER_LONGITUDE = "user_longitude";
 
 
     /**
@@ -118,7 +139,7 @@ public class GlobalApp {
      * app下载地址
      */
     public static final String DOWNLOAD_PATH = Environment.getExternalStorageDirectory() + "/BaoJieIcon/";
-  /**
+    /**
      * FILE_PROVIDER
      */
     public static final String FILE_PROVIDER = "com.dream.cleaner.fileprovider";

@@ -35,6 +35,30 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/include_contact_information" />
 
+        <include
+            android:id="@+id/include_supplementary_refund"
+            layout="@layout/include_supplementary_refund"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/include_order_info"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/include_before_list"
+            layout="@layout/include_before_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/include_supplementary_refund"
+            android:visibility="gone" />
+
+        <include
+            android:id="@+id/include_after_list"
+            layout="@layout/include_after_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/include_before_list"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/tv_submit"
             android:layout_width="match_parent"

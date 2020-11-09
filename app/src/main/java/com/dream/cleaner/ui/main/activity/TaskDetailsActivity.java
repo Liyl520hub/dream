@@ -1,23 +1,49 @@
 package com.dream.cleaner.ui.main.activity;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Poi;
+import com.amap.api.navi.AmapNaviPage;
+import com.amap.api.navi.AmapNaviParams;
+import com.amap.api.navi.AmapNaviType;
+import com.amap.api.navi.INaviInfoCallback;
+import com.amap.api.navi.model.AMapNaviLocation;
+import com.amap.api.services.core.LatLonPoint;
+import com.amap.api.services.route.DistanceResult;
+import com.amap.api.services.route.DistanceSearch;
+import com.blankj.utilcode.util.BusUtils;
 import com.blankj.utilcode.util.ConvertUtils;
+import com.blankj.utilcode.util.SPUtils;
 import com.blankj.utilcode.util.StringUtils;
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemChildClickListener;
 import com.dream.cleaner.R;
+import com.dream.cleaner.base.GlobalApp;
+import com.dream.cleaner.beans.BusBean;
+import com.dream.cleaner.beans.MyPhotoBean;
 import com.dream.cleaner.beans.workorder.TaskDetailsBean;
+import com.dream.cleaner.ui.ImagePriview.ImagePreviewActivity;
+import com.dream.cleaner.ui.main.MyINaviInfoCallback;
+import com.dream.cleaner.ui.main.adapter.PhotoAdapter;
 import com.dream.cleaner.ui.main.contract.TaskDetailsActivityContract;
 import com.dream.cleaner.ui.main.presenter.TaskDetailsActivityPresenter;
+import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.pop.PopTip;
@@ -26,6 +52,10 @@ import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
 import com.dream.common.widget.ToolbarBackTitle;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -101,10 +131,45 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     TextView tvOrderInfoPrice;
     @BindView(R.id.tv_submit)
     TextView tvSubmit;
+    /**
+     * 扫前准备
+     */
+    @BindView(R.id.include_before_list)
+    LinearLayout includeBeforeList;
+    @BindView(R.id.my_before_rv)
+    RecyclerView myBeforeRv;
+    @BindView(R.id.tv_before_bei_zhu)
+    TextView tvBeforeBeiZhu;
+    /**
+     * 扫后记录
+     */
+    @BindView(R.id.include_after_list)
+    LinearLayout includeAfterList;
+    @BindView(R.id.my_after_rv)
+    RecyclerView myAfterRv;
+    @BindView(R.id.tv_service_bu_chong)
+    TextView tvServiceBuChong;
+    /**
+     * 补退款
+     */
+    @BindView(R.id.include_supplementary_refund)
+    LinearLayout includeSupplementaryRefund;
+    @BindView(R.id.my_bu_tui_kuan_rv)
+    RecyclerView myBuTuiKuanRv;
+    @BindView(R.id.tv_bu_tui_kuan)
+    TextView tvBuTuiKuan;
+    @BindView(R.id.tv_bu_tui_kuan_price)
+    TextView tvBuTuiKuanPrice;
+    @BindView(R.id.tv_bu_tui_kuan_reson)
+    TextView tvBuTuiKuanReson;
     private int orderStatus;
-    private String id;
+    private String orderId;
     private PopTip popPermissionsTip;
     private PopTip popTip;
+    private String lat;
+    private String lon;
+    private String contactAddress;
+    private PhotoAdapter photoAdapter;
 
     @Override
     protected int getLayoutId() {
@@ -123,10 +188,11 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
 
     @Override
     protected void initView(@Nullable Bundle savedInstanceState) {
+        BusUtils.register(this);
         Intent intent = getIntent();
         if (intent != null) {
-            id = intent.getStringExtra("id");
-            mPresenter.taskInfoId(id);
+            orderId = intent.getStringExtra("orderId");
+            mPresenter.taskInfoId(orderId);
         }
         tvGoNavigation.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_4986FA));
         tvContactInformationCallMobile.setBackground(ShapeUtils.getDiyGradientDrawable(R.color.white, 0, ConvertUtils.dp2px(1), R.color.color_F6B351));
@@ -140,64 +206,216 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
     @Override
     public void returnTaskDetail(TaskDetailsBean taskDetailsBean) {
         if (taskDetailsBean != null) {
-            orderStatus = taskDetailsBean.getOrderStatus();
+            lat = taskDetailsBean.getLat();
+            lon = taskDetailsBean.getLon();
+            orderStatus = Integer.parseInt(taskDetailsBean.getOrderStatus());
             //任务信息地址
-            tvAddress.setText(taskDetailsBean.getContactAddress());
+            contactAddress = taskDetailsBean.getContactAddress();
+            tvAddress.setText(contactAddress);
             //日常保洁那一行
-            tvBeiZhu.setText(taskDetailsBean.getServiceProperty());
+            String serviceName = taskDetailsBean.getServiceName();
+            if (StringUtils.isEmpty(serviceName)) {
+                tvBeiZhu.setText("属性：" + taskDetailsBean.getServiceProperty());
+            } else {
+                tvBeiZhu.setText(serviceName + "  属性：" + taskDetailsBean.getServiceProperty());
+            }
             //任务日期时间
             tvTime.setText(taskDetailsBean.getServiceTime());
             //距离
-            tvJuLi.setText("2.1KM");
+            distanceSearch(tvJuLi);
             //姓名
             tvContactInformationName.setText(taskDetailsBean.getContacts());
             //电话
             tvContactInformationMobile.setText(taskDetailsBean.getContactNo());
             //特殊备注
-            tvContactInformationBeiZhu.setText(taskDetailsBean.getSpecialRequest());
+            tvContactInformationBeiZhu.setText(StringUtils.isEmpty(taskDetailsBean.getSpecialRequest()) ? "暂无备注" : taskDetailsBean.getSpecialRequest());
             //订单编号
             tvOrderInfoName.setText(taskDetailsBean.getOrderNo());
             //订单价格
             tvOrderInfoPrice.setText(taskDetailsBean.getServicePrice() + "元");
-            tvOrderInfoServiceStatus.setText(getOrderStatusString(taskDetailsBean.getOrderStatus()));
+            tvOrderInfoServiceStatus.setText(getOrderStatusString(Integer.parseInt(taskDetailsBean.getOrderStatus())));
             tvContactInformationCallMobile.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String[] permissions = {Manifest.permission.CALL_PHONE};
-                    Disposable subscribe = new RxPermissions(TaskDetailsActivity.this).requestEach(permissions)
-                            .subscribe(aBoolean -> {
-                                if (aBoolean.granted) {
-                                    callPhone(taskDetailsBean.getContactNo());
-                                } else if (aBoolean.shouldShowRequestPermissionRationale) {
-                                    callPhone(taskDetailsBean.getContactNo());
-                                } else {
-                                    popPermissionsTip = new PopTip.Builder()
-                                            .setType(1)
-                                            .setTitle("提示")
-                                            .setSubmitText("立即获取")
-                                            .setMsg("考啦需要以下权限才能正常运行")
-                                            .setSubmitClickListener(new View.OnClickListener() {
-                                                @Override
-                                                public void onClick(View v) {
-                                                    // 帮跳转到该应用的设置界面，让用户手动授权
-                                                    Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                                    Uri uri = Uri.fromParts("package", TaskDetailsActivity.this.getPackageName(), null);
-                                                    intent.setData(uri);
-                                                    startActivity(intent);
-                                                    popPermissionsTip.dismiss();
-                                                }
-                                            }).build(TaskDetailsActivity.this);
-                                }
-                            });
+                    goCallPhone(taskDetailsBean.getContactNo());
                 }
             });
-
             String orderString = getOrderString(orderStatus);
             tvSubmit.setVisibility(StringUtils.isEmpty(orderString) ? View.GONE : View.VISIBLE);
             tvSubmit.setText(orderString);
+            //扫前准备
+            includeBeforeList.setVisibility(orderStatus == 5 || orderStatus == 6 ? View.VISIBLE : View.GONE);
+            includeAfterList.setVisibility(orderStatus == 6 ? View.VISIBLE : View.GONE);
+            String remark = taskDetailsBean.getRemark();
+            if (StringUtils.isEmpty(remark)) {
+                remark = "服务备注：暂无备注";
+            }
+            tvBeforeBeiZhu.setText(remark);
+            setBeforeList(taskDetailsBean.getBeforePicList());
+            //扫后记录
+            String serviceReplenish = taskDetailsBean.getServiceReplenish();
+            if (StringUtils.isEmpty(serviceReplenish)) {
+                serviceReplenish = "服务补充：暂无补充";
+            }
+            tvServiceBuChong.setText(serviceReplenish);
+            setAfterList(taskDetailsBean.getAfterPicList());
+            //补退款  0，退款，1补款  2 不需要
+            if (orderStatus>=6) {
+                includeSupplementaryRefund.setVisibility(!"2".equals(taskDetailsBean.getSuppleRefundType()) ? View.VISIBLE : View.GONE);
+                tvBuTuiKuan.setText("0".equals(taskDetailsBean.getSuppleRefundType()) ? "退款" : "补款");
+                tvBuTuiKuanPrice.setText(taskDetailsBean.getSuppleRefundTPrice() + "元");
+                tvBuTuiKuanReson.setText(taskDetailsBean.getExplain());
+                setBuTuiKuanList(taskDetailsBean.getExplainPicList());
+            }
+
         }
     }
 
+    /**
+     * @param afterList 补退款list
+     */
+    private void setBuTuiKuanList(List<String> afterList) {
+        int size = afterList.size();
+        ArrayList<MyPhotoBean> myPhotoBeans = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            MyPhotoBean myPhotoBean = new MyPhotoBean("3");
+            myPhotoBean.setUri(Uri.parse(afterList.get(i)));
+            myPhotoBeans.add(myPhotoBean);
+        }
+        PhotoAdapter photoAdapter3 = new PhotoAdapter(myPhotoBeans);
+        photoAdapter3.addChildClickViewIds(R.id.iv_photo, R.id.iv_close);
+        photoAdapter3.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                MyPhotoBean item = photoAdapter3.getItem(position);
+                String type = item.getType();
+                switch (view.getId()) {
+                    case R.id.iv_photo: {
+                        //查看大图
+                        lookOld(photoAdapter3, position);
+                    }
+                    break;
+                    default:
+                }
+            }
+        });
+        myBuTuiKuanRv.setLayoutManager(new GridLayoutManager(this, 4));
+        myBuTuiKuanRv.setAdapter(photoAdapter3);
+    }
+
+    /**
+     * @param afterList 扫后记录list
+     */
+    private void setAfterList(List<String> afterList) {
+        int size = afterList.size();
+        ArrayList<MyPhotoBean> myPhotoBeans = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            MyPhotoBean myPhotoBean = new MyPhotoBean("3");
+            myPhotoBean.setUri(Uri.parse(afterList.get(i)));
+            myPhotoBeans.add(myPhotoBean);
+        }
+        PhotoAdapter photoAdapter2 = new PhotoAdapter(myPhotoBeans);
+        photoAdapter2.addChildClickViewIds(R.id.iv_photo, R.id.iv_close);
+        photoAdapter2.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                MyPhotoBean item = photoAdapter2.getItem(position);
+                String type = item.getType();
+                switch (view.getId()) {
+                    case R.id.iv_photo: {
+                        //查看大图
+                        lookOld(photoAdapter2, position);
+                    }
+                    break;
+                    default:
+                }
+            }
+        });
+        myAfterRv.setLayoutManager(new GridLayoutManager(this, 4));
+        myAfterRv.setAdapter(photoAdapter2);
+    }
+
+    private void setBeforeList(List<String> beforePicList) {
+        int size = beforePicList.size();
+        ArrayList<MyPhotoBean> myPhotoBeans = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            MyPhotoBean myPhotoBean = new MyPhotoBean("3");
+            myPhotoBean.setUri(Uri.parse(beforePicList.get(i)));
+            myPhotoBeans.add(myPhotoBean);
+        }
+        photoAdapter = new PhotoAdapter(myPhotoBeans);
+        photoAdapter.addChildClickViewIds(R.id.iv_photo, R.id.iv_close);
+        photoAdapter.setOnItemChildClickListener(new OnItemChildClickListener() {
+            @Override
+            public void onItemChildClick(@NonNull BaseQuickAdapter adapter, @NonNull View view, int position) {
+                MyPhotoBean item = photoAdapter.getItem(position);
+                String type = item.getType();
+                switch (view.getId()) {
+                    case R.id.iv_photo: {
+                        //查看大图
+                        lookOld(photoAdapter, position);
+                    }
+                    break;
+                    default:
+                }
+            }
+        });
+        myBeforeRv.setLayoutManager(new GridLayoutManager(this, 4));
+        myBeforeRv.setAdapter(photoAdapter);
+    }
+
+    private void lookOld(PhotoAdapter photoAdapter, int position) {
+        Intent intent = new Intent(TaskDetailsActivity.this, ImagePreviewActivity.class);
+        List<MyPhotoBean> data = photoAdapter.getData();
+        int size = data.size();
+        ArrayList<Uri> strings = new ArrayList<>();
+        for (int i = 0; i < size; i++) {
+            MyPhotoBean myPhotoBean = data.get(i);
+            if ("3".equals(myPhotoBean.getType())) {
+                strings.add(myPhotoBean.getUri());
+            }
+        }
+        intent.putParcelableArrayListExtra("imageList", strings);
+        intent.putExtra(ImagePreviewActivity.START_ITEM_POSITION, position);
+        intent.putExtra(ImagePreviewActivity.START_IAMGE_POSITION, position);
+        intent.putExtra("type", "3");
+        startActivity(intent);
+
+    }
+
+    private void goCallPhone(String mobile) {
+        String[] permissions = {Manifest.permission.CALL_PHONE};
+        Disposable subscribe = new RxPermissions(TaskDetailsActivity.this).requestEach(permissions)
+                .subscribe(aBoolean -> {
+                    if (aBoolean.granted) {
+                        callPhone(mobile);
+                    } else if (aBoolean.shouldShowRequestPermissionRationale) {
+                        goCallPhone(mobile);
+                    } else {
+                        popPermissionsTip = new PopTip.Builder()
+                                .setType(1)
+                                .setTitle("提示")
+                                .setSubmitText("立即获取")
+                                .setMsg("考啦需要以下权限才能正常运行")
+                                .setSubmitClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // 帮跳转到该应用的设置界面，让用户手动授权
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", TaskDetailsActivity.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                        popPermissionsTip.dismiss();
+                                    }
+                                }).build(TaskDetailsActivity.this);
+                    }
+                });
+    }
+
+    /**
+     * @param intOrderStatus 根据订单状态获取按钮文案
+     * @return
+     */
     private String getOrderString(int intOrderStatus) {
         // 0新任务，1待服务，[2显示确认到达,3显示待客户确认,4显示扫前准备]2，3，4上门中，
         // [5显示确认完成，6显示待用户确认]5，6服务中，8售后，7已完成，9已取消
@@ -234,66 +452,116 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
         return intOrderStatusString;
     }
 
-    @OnClick(R.id.tv_submit)
-    public void onViewClicked() {
+    private void distanceSearch(TextView tvJuLi) {
+        String userLon = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE, "0");
+        String userLat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE, "0");
+        LatLonPoint start = new LatLonPoint(Double.parseDouble(userLat), Double.parseDouble(userLon));
+        LatLonPoint dest = new LatLonPoint(Double.parseDouble(lat), Double.parseDouble(lon));
+        DistanceSearch distanceSearch = new DistanceSearch(TaskDetailsActivity.this);
+        distanceSearch.setDistanceSearchListener(new DistanceSearch.OnDistanceSearchListener() {
+            @Override
+            public void onDistanceSearched(DistanceResult distanceResult, int i) {
+                float distance = distanceResult.getDistanceResults().get(0).getDistance();
+                if (distance > 1000) {
+                    distance = distance / 1000;
+                    tvJuLi.setText(distance + "km");
+                } else {
+                    tvJuLi.setText(distance + "m");
+                }
+            }
+        });
+        //设置起点和终点，其中起点支持多个
+        List<LatLonPoint> latLonPoints = new ArrayList<LatLonPoint>();
+        latLonPoints.add(start);
+        DistanceSearch.DistanceQuery distanceQuery = new DistanceSearch.DistanceQuery();
+        distanceQuery.setOrigins(latLonPoints);
+        distanceQuery.setDestination(dest);
+        //设置测量方式，支持直线和驾车
+        distanceQuery.setType(DistanceSearch.TYPE_DRIVING_DISTANCE);
+        distanceSearch.calculateRouteDistanceAsyn(distanceQuery);
+    }
 
-        // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
-        switch (orderStatus) {
-            case 0: {
-                //接单"
-                goNext("接单确认", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        mPresenter.taskReceive(id + "");
-                    }
-                });
+    @OnClick({R.id.tv_submit, R.id.tv_go_navigation})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_go_navigation: {
+                String userLon = SPUtils.getInstance().getString(GlobalApp.USER_LONGITUDE, "0");
+                String userLat = SPUtils.getInstance().getString(GlobalApp.USER_LATITUDE, "0");
+                Poi start = new Poi("当前位置", new LatLng(Double.parseDouble(userLat), Double.parseDouble(userLon)), "");
+                /**终点传入的是北京站坐标,但是POI的ID "B000A83M61"对应的是北京西站，所以实际算路以北京西站作为终点**/
+                Poi end = new Poi(contactAddress, new LatLng(Double.parseDouble(lat), Double.parseDouble(lon)), "");
+                AmapNaviParams amapNaviParams = new AmapNaviParams(start, null, end, AmapNaviType.DRIVER);
+                amapNaviParams.setUseInnerVoice(true).setMultipleRouteNaviMode(true).setNeedCalculateRouteWhenPresent(true);
+                AmapNaviPage.getInstance().showRouteActivity(this, amapNaviParams, new MyINaviInfoCallback());
             }
             break;
-            case 1: {
-                //出发
-                goNext("是否确认出发", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        mPresenter.taskGo(id + "");
+            case R.id.tv_submit: {
+                Bundle bundle = new Bundle();
+                bundle.putString("orderId", orderId);
+                bundle.putString("orderStatus", orderStatus + "");
+                // //订单状态：0待接单,1待服务,2上门中,3保洁员确认，4用户确认，5服务中,6保洁员扫后确认，7用户确认已完成，8售后单,9已取消
+                switch (orderStatus) {
+                    case 0: {
+                        //接单"
+                        goNext("接单确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                mPresenter.taskReceive(orderId + "");
+                            }
+                        });
                     }
-                });
-            }
-            break;
-            case 2: {
-                //确认到达 -- 变成扫前准备
-                goNext("是否确认到达", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        mPresenter.arrive(id + "");
+                    break;
+                    case 1: {
+                        //出发
+                        goNext("是否确认出发", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                mPresenter.taskGo(orderId + "");
+                            }
+                        });
+                    }
+                    break;
+                    case 2: {
+                        //确认到达 -- 变成扫前准备
+                        goNext("是否确认到达", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                mPresenter.arrive(orderId + "");
 
+                            }
+                        });
                     }
-                });
-            }
-            break;
-            case 4: {
-                //扫前准备
-                UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class);
-            }
-            break;
-            case 5: {
-                //完成服务
-                goNext("确认完成服务", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        canCelPop();
-                        UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class);
+                    break;
+                    case 4: {
+                        //扫前准备
+                        bundle.putBoolean("isBefore", true);
+                        UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class, bundle);
+                        finish();
                     }
-                });
-            }
+                    break;
+                    case 5: {
+                        //完成服务
+                        bundle.putBoolean("isBefore", false);
+                        goNext("确认完成服务", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                canCelPop();
+                                UiUtil.openActivity(TaskDetailsActivity.this, WorkReadyActivity.class, bundle);
+                                finish();
+                            }
+                        });
+                    }
 
+                    break;
+                    default:
+                }
+            }
             break;
             default:
         }
-
-
     }
 
     private void canCelPop() {
@@ -325,8 +593,10 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
 
     @Override
     public void returnTaskReceive(String s) {
-
-
+        BusBean busBean = new BusBean();
+        busBean.setOrderStatus(orderStatus+"");
+        BusUtils.post(GlobalApp.BUS_FRAGMENT_WORK,busBean);
+        finish();
     }
 
     private int getOrderStatus(String title) {
@@ -391,11 +661,11 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
             }
             break;
             case 5: {
-                orderStatusString = "确认完成";
+                orderStatusString = "服务中";
             }
             break;
             case 6: {
-                orderStatusString = "服务中";
+                orderStatusString = "确认完成";
             }
             break;
             case 7: {
@@ -461,6 +731,11 @@ public class TaskDetailsActivity extends BaseActivity<TaskDetailsActivityPresent
         popTip.showPopupWindow();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        BusUtils.unregister(this);
 
+    }
 }
 

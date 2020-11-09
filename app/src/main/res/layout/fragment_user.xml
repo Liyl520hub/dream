@@ -21,7 +21,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:background="@mipmap/ic_launcher"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -75,7 +74,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/tv_month_order"
+        android:id="@+id/tv_day_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
@@ -83,12 +82,13 @@
         android:paddingBottom="6.5dp"
         android:text="今日订单"
         android:textColor="@color/color_333333"
-        android:textSize="17sp"
+        android:textSize="19sp"
+        android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cl_user_info" />
 
     <TextView
-        android:id="@+id/tv_day_order"
+        android:id="@+id/tv_month_order"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -97,7 +97,8 @@
         android:text="月订单"
         android:textColor="@color/color_333333"
         android:textSize="17sp"
-        app:layout_constraintLeft_toRightOf="@+id/tv_month_order"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_day_order"
+        app:layout_constraintLeft_toRightOf="@+id/tv_day_order"
         app:layout_constraintTop_toBottomOf="@+id/cl_user_info" />
 
 

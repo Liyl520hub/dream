@@ -5,6 +5,7 @@ import com.dream.cleaner.beans.UploadImageBean;
 import com.dream.cleaner.beans.login.AgreementBean;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.beans.my.ApplyMaterielBean;
+import com.dream.cleaner.beans.my.CleanerOrderCountBean;
 import com.dream.cleaner.beans.my.LeaveBean;
 import com.dream.cleaner.beans.my.MaterielBean;
 import com.dream.cleaner.beans.my.MaterielTypeBean;
@@ -71,6 +72,12 @@ public interface ApiService {
      */
     @POST(ApiUrls.LOGOUT)
     Observable<BaseBean<String>> logout();
+
+    /**
+     * 保洁端退出登录
+     */
+    @POST(ApiUrls.UPDATE_PUSH)
+    Observable<BaseBean<String>> updatePush(@Body RequestBody body);
 
     /**
      * 保洁端检查验证码
@@ -149,11 +156,13 @@ public interface ApiService {
      */
     @POST(ApiUrls.TASK_RECEIVE)
     Observable<BaseBean<String>> taskReceive(@Body RequestBody body);
+
     /**
      * 出发-变成上门中
      */
     @POST(ApiUrls.TASK_GO)
     Observable<BaseBean<String>> taskGo(@Body RequestBody body);
+
     /**
      * 保洁员到达
      */
@@ -164,13 +173,13 @@ public interface ApiService {
      * 确认开始-扫前准备上传照片
      */
     @POST(ApiUrls.BEFORE_CLEAN)
-    Observable<BaseBean<UploadImageBean>> beforeClean(@Body RequestBody body);
+    Observable<BaseBean<String>> beforeClean(@Body RequestBody body);
 
     /**
      * 确认完成
      */
     @POST(ApiUrls.CONFIRM_FINISH)
-    Observable<BaseBean<LoginBean>> confirmFinish(@Body RequestBody body);
+    Observable<BaseBean<String>> confirmFinish(@Body RequestBody body);
 
     /**
      * 任务订单详情
@@ -210,13 +219,19 @@ public interface ApiService {
     @POST(ApiUrls.USER_INFO)
     Observable<BaseBean<LoginBean.CleanerBean>> userInfo(@Path("id") String id);
 
+    /**
+     * 保洁员订单个数
+     */
+    @POST(ApiUrls.GET_CLEANER_ORDER_COUNT)
+    Observable<BaseBean<CleanerOrderCountBean>> getCleanerOrderCount(@Body RequestBody body);
+
     //--------------------------------------------保洁端oss上传图片------------------------------------------------------
 
     /**
      * OSS文件上传
      */
     @POST(ApiUrls.OSS_UPLOAD)
-    Observable<BaseBean<LoginBean>> ossUpload(@Body RequestBody body);
+    Observable<BaseBean<UploadImageBean>> ossUpload(@Body RequestBody body);
 
     //--------------------------------------------保洁员端请假------------------------------------------------------
 

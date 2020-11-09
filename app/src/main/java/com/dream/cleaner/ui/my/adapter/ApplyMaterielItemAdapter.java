@@ -27,11 +27,13 @@ import java.util.List;
  * desc   :申请物料明细适配器
  */
 public class ApplyMaterielItemAdapter extends BaseQuickAdapter<MaterielTypeBean, BaseViewHolder> {
-    private boolean isEdit;
+    private boolean isDetail;
+    private boolean isNew;
 
-    public ApplyMaterielItemAdapter(@Nullable List<MaterielTypeBean> data, boolean isEdit) {
+    public ApplyMaterielItemAdapter(@Nullable List<MaterielTypeBean> data, boolean isDetail,boolean isNew) {
         super(R.layout.item_materiel_info, data);
-        this.isEdit = isEdit;
+        this.isDetail = isDetail;
+        this.isNew = isNew;
     }
 
     @Override
@@ -39,30 +41,39 @@ public class ApplyMaterielItemAdapter extends BaseQuickAdapter<MaterielTypeBean,
         TextView textView = baseViewHolder.getView(R.id.tv_materiel_num);
         textView.setText(item.getMaterielName());
         EditText editText = baseViewHolder.getView(R.id.et_ma_bu_num);
-        if (isEdit) {
-            editText.setClickable(true);
-            editText.setBackground(ResourceUtils.getDrawable(R.drawable.login_bg_edit_text));
-            editText.addTextChangedListener(new TextWatcher() {
-                @Override
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-                }
-
-                @Override
-                public void onTextChanged(CharSequence s, int start, int before, int count) {
-                    item.setApplyNum(s.toString());
-                }
-
-                @Override
-                public void afterTextChanged(Editable s) {
-
-                }
-            });
-        } else {
+        //是查看详情  不可编辑 取值getApplyNum
+        if (isDetail) {
             editText.setBackground(null);
             editText.setFocusable(false);
             editText.setClickable(false);
             editText.setText(item.getApplyNum() + "");
+        } else {
+            //不是查看详情 且 是新人 不可编辑 取值 defaultBase
+            if (isNew) {
+                editText.setBackground(null);
+                editText.setFocusable(false);
+                editText.setClickable(false);
+                editText.setText(item.getDefaultBase() + "");
+            }else {
+                editText.setClickable(true);
+                editText.setBackground(ResourceUtils.getDrawable(R.drawable.login_bg_edit_text));
+                editText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence s, int start, int before, int count) {
+                        item.setApplyNum(s.toString());
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable s) {
+
+                    }
+                });
+            }
         }
     }
 

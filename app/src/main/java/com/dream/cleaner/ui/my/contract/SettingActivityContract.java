@@ -9,4 +9,6 @@ import com.dream.common.base.BaseContract;
  */
 public interface SettingActivityContract extends BaseContract {
     void returnLogout(String loginBean);
+
+    void returnUpdate(String string);
 }

@@ -6,7 +6,7 @@ ext {
             applicationId    : "com.dream.cleaner",
             minSdkVersion    : 19,
             targetSdkVersion : 29,
-            versionCode      : 1,
+            versionCode      : 15,
             versionName      : "1.0.0",
             keyAlias         : "cleaner",
             keyPassword      : "12345679",
@@ -67,7 +67,13 @@ ext {
             //日历
             "calendarview"                 : 'com.haibin:calendarview:3.6.9',
             //自定义相册
-            "EasyPhotos"                 : 'com.github.HuanTanSheng:EasyPhotos:3.0.6'
+            "luban"                        : 'top.zibin:Luban:1.1.8',
+            //自定义相册
+            "EasyPhotos"                   : 'com.github.HuanTanSheng:EasyPhotos:3.0.6',
+            //上拉加载 下拉刷新
+            "smartrefresh"                 : 'com.scwang.smart:refresh-layout-kernel:2.0.1',
+            "header"                       : 'com.scwang.smart:refresh-header-classics:2.0.1',
+            "footer"                       : 'com.scwang.smart:refresh-footer-classics:2.0.1',
 
     ]
 }

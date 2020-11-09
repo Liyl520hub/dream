@@ -127,6 +127,15 @@ public class LoginBean {
         private String updateTime;
         private String directContactName;
         private String directContactPhone;
+        private String isReceive;
+
+        public String getIsReceive() {
+            return isReceive == null ? "" : isReceive;
+        }
+
+        public void setIsReceive(String isReceive) {
+            this.isReceive = isReceive == null ? "" : isReceive;
+        }
 
         public int getId() {
             return id;

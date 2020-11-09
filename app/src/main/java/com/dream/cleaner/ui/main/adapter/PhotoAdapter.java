@@ -8,6 +8,7 @@ import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.dream.cleaner.R;
 import com.dream.cleaner.beans.MyPhotoBean;
 import com.dream.cleaner.ui.main.GlideEngine;
+import com.dream.cleaner.utils.ImageLoaderUtils;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -32,6 +33,13 @@ public class PhotoAdapter extends BaseQuickAdapter<MyPhotoBean, BaseViewHolder> 
         if ("1".equals(item.getType())) {
             ivClose.setVisibility(View.GONE);
             ivPhoto.setImageResource(R.mipmap.icon_add_photo);
+        } else if ("3".equals(item.getType())) {
+            ivClose.setVisibility(View.GONE);
+            GlideEngine.getInstance().loadPhoto(getContext(), item.getUri(), ivPhoto);
+        } else if ("4".equals(item.getType())) {
+            //加载示例图
+            ivClose.setVisibility(View.GONE);
+            GlideEngine.getInstance().loadPhoto(getContext(), item.getMiNiUri(), ivPhoto);
         } else {
             ivClose.setVisibility(View.VISIBLE);
             GlideEngine.getInstance().loadPhoto(getContext(), item.getUri(), ivPhoto);
@@ -40,12 +48,15 @@ public class PhotoAdapter extends BaseQuickAdapter<MyPhotoBean, BaseViewHolder> 
     }
 
 
+    /**
+     * @return 获取显示图片数量
+     */
     public int getPhotoSize() {
         int count = 0;
         List<MyPhotoBean> data = getData();
         int size = data.size();
         for (int i = 0; i < size; i++) {
-            if ("2".equals(data.get(i).getType())) {
+            if ("2".equals(data.get(i).getType())||"4".equals(data.get(i).getType())) {
                 count++;
             }
         }

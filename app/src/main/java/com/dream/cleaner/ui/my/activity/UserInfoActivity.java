@@ -23,6 +23,7 @@ import com.dream.cleaner.R;
 import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.cleaner.ui.my.contract.UserInfoActivityContract;
 import com.dream.cleaner.ui.my.presenter.UserInfoActivityPresenter;
+import com.dream.cleaner.utils.ImageLoaderUtils;
 import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.widget.pop.PopTip;
@@ -101,34 +102,38 @@ public class UserInfoActivity extends BaseActivity<UserInfoActivityPresenter> im
         tvCallMobile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] permissions = {Manifest.permission.CALL_PHONE};
-                Disposable subscribe = new RxPermissions(UserInfoActivity.this).requestEach(permissions)
-                        .subscribe(aBoolean -> {
-                            if (aBoolean.granted) {
-                                callPhone(InfoUtils.getDirectContactPhone());
-                            } else if (aBoolean.shouldShowRequestPermissionRationale) {
-                                callPhone(InfoUtils.getDirectContactPhone());
-                            } else {
-                                popPermissionsTip = new PopTip.Builder()
-                                        .setType(1)
-                                        .setTitle("提示")
-                                        .setSubmitText("立即获取")
-                                        .setMsg("考啦需要以下权限才能正常运行")
-                                        .setSubmitClickListener(new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                // 帮跳转到该应用的设置界面，让用户手动授权
-                                                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-                                                Uri uri = Uri.fromParts("package", UserInfoActivity.this.getPackageName(), null);
-                                                intent.setData(uri);
-                                                startActivity(intent);
-                                                popPermissionsTip.dismiss();
-                                            }
-                                        }).build(UserInfoActivity.this);
-                            }
-                        });
+                goCallPhone();
             }
         });
+    }
+
+    private void goCallPhone() {
+        String[] permissions = {Manifest.permission.CALL_PHONE};
+        Disposable subscribe = new RxPermissions(UserInfoActivity.this).requestEach(permissions)
+                .subscribe(aBoolean -> {
+                    if (aBoolean.granted) {
+                        callPhone(InfoUtils.getDirectContactPhone());
+                    } else if (aBoolean.shouldShowRequestPermissionRationale) {
+                        goCallPhone();
+                    } else {
+                        popPermissionsTip = new PopTip.Builder()
+                                .setType(1)
+                                .setTitle("提示")
+                                .setSubmitText("立即获取")
+                                .setMsg("考啦需要以下权限才能正常运行")
+                                .setSubmitClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        // 帮跳转到该应用的设置界面，让用户手动授权
+                                        Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                                        Uri uri = Uri.fromParts("package", UserInfoActivity.this.getPackageName(), null);
+                                        intent.setData(uri);
+                                        startActivity(intent);
+                                        popPermissionsTip.dismiss();
+                                    }
+                                }).build(UserInfoActivity.this);
+                    }
+                });
     }
 
     /**
@@ -202,5 +207,27 @@ public class UserInfoActivity extends BaseActivity<UserInfoActivityPresenter> im
         tvDirectLeadershipMobile.setText("联系电话   " + InfoUtils.getDirectContactPhone());
         tvHealthCertificate.setText("健康证号   " + InfoUtils.getHealthCertNo());
         tvHealthCertificateDate.setText("有效日期   " + InfoUtils.getHealthCertDate());
+        ImageLoaderUtils.loadImgCircle(InfoUtils.getHeadIcPath(), ivHead);
+        setLevel();
+
     }
+
+    /**
+     * 设置用户星级
+     */
+    private void setLevel() {
+        String userLevel = InfoUtils.getUserLevel();
+        if ("一星".equals(userLevel)) {
+            rbStar.setRating(1);
+        } else if ("二星".equals(userLevel)) {
+            rbStar.setRating(2);
+        } else if ("三星".equals(userLevel)) {
+            rbStar.setRating(3);
+        } else if ("四星".equals(userLevel)) {
+            rbStar.setRating(4);
+        } else if ("五星".equals(userLevel)) {
+            rbStar.setRating(5);
+        }
+    }
+
 }

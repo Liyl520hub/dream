@@ -1,5 +1,6 @@
 package com.dream.cleaner.ui.my.contract;
 
+import com.dream.cleaner.beans.my.CleanerOrderCountBean;
 import com.dream.common.base.BaseContract;
 
 /**
@@ -8,5 +9,7 @@ import com.dream.common.base.BaseContract;
  * desc   :
  */
 public interface UserFragmentContract extends BaseContract {
+
+    void returnCleanerOrderCountBean(CleanerOrderCountBean cleanerOrderCountBean);
 
 }

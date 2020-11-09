@@ -17,6 +17,7 @@ import com.dream.cleaner.ui.my.adapter.StopReceivingOrdersAdapter;
 import com.dream.cleaner.ui.my.contract.StopReceivingOrdersActivityContract;
 import com.dream.cleaner.ui.my.presenter.StopReceivingOrdersActivityPresenter;
 import com.dream.cleaner.utils.UiUtil;
+import com.dream.cleaner.widget.EmptyLayout;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
@@ -83,6 +84,9 @@ public class StopReceivingOrdersActivity extends BaseActivity<StopReceivingOrder
         if (leaveBean != null) {
             List<LeaveBean.RecordsBean> records = leaveBean.getRecords();
             stopReceivingOrdersAdapter = new StopReceivingOrdersAdapter(records);
+            EmptyLayout emptyLayout = new EmptyLayout(this);
+            emptyLayout.setErrorType(3);
+            stopReceivingOrdersAdapter.setEmptyView(emptyLayout);
             stopReceivingOrdersAdapter.setOnItemClickListener(new OnItemClickListener() {
                 @Override
                 public void onItemClick(@NonNull BaseQuickAdapter<?, ?> adapter, @NonNull View view, int position) {

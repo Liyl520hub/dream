@@ -147,7 +147,7 @@ public class MobileVerificationActivity extends BaseActivity<MobileVerificationA
     }
 
     private void getLocalCode() {
-        String captchaUrl = BuildConfig.HOST_SERVER + "/api/app/cleaner/getImage";
+        String captchaUrl = BuildConfig.HOST_SERVER + "app/cleaner/getImage";
         HttpUrlConnectionUtil.setWallpaper(ivLocalCode, captchaUrl);
     }
 

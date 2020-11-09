@@ -89,15 +89,20 @@ public class MyIncomeActivity extends BaseActivity<MyIncomeActivityPresenter> im
             //总收入
             tvNum.setText(myIncomeBean.getTotalWages() + "元");
             //月份
-            int month = myIncomeBean.getMonth();
-            tvMouth.setText(month + "月");
+            String month = myIncomeBean.getMonth();
+            String[] split = month.split("-");
+            if (split.length == 2) {
+                tvMouth.setText(split[1] + "月");
+            } else {
+                tvMouth.setText(month);
+            }
             //订单数
             tvOrderNum.setText(myIncomeBean.getOrderNum() + "单");
             //实收
             tvNetWages.setText("+" + myIncomeBean.getNetWages() + "元");
             //扣款
             tvDeductionWages.setText("-" + myIncomeBean.getDeductionWages() + "元");
-            mPresenter.myIncomeList(myIncomeBean.getYear() + "-" + (month < 10 ? "0" + month : month + ""));
+            mPresenter.myIncomeList(month);
         }
 
     }

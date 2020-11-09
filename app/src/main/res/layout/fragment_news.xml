@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-<!--    <com.google.android.material.tabs.TabLayout-->
-<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent"&ndash;&gt;-->
-<!--        app:tabSelectedTextColor="@color/color_72BB38"-->
-<!--        app:tabTextColor="@color/color_999999"/>-->
+    <!--    <com.google.android.material.tabs.TabLayout-->
+    <!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="parent"&ndash;&gt;-->
+    <!--        app:tabSelectedTextColor="@color/color_72BB38"-->
+    <!--        app:tabTextColor="@color/color_999999"/>-->
 
 
     <com.google.android.material.tabs.TabLayout
@@ -16,20 +16,25 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/white"
-        app:tabIndicator="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:tabBackground="@android:color/transparent"
-        app:tabRippleColor="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:tabIndicator="@null"
+        app:tabRippleColor="@android:color/transparent" />
 
 
-
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_news"
+    <com.scwang.smart.refresh.layout.SmartRefreshLayout
+        android:id="@+id/my_smart_refresh"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp" />
+        android:layout_height="wrap_content">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_news"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp" />
+    </com.scwang.smart.refresh.layout.SmartRefreshLayout>
 
 
 </LinearLayout>

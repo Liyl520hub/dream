@@ -78,6 +78,7 @@ public class StopReceivingDetailActivity extends BaseActivity<StopReceivingOrder
             tvStartTime.setText("开始时间：" + item.getStartTime());
             tvEndTime.setText("结束时间：" + item.getStartTime());
             tvApplyTime.setText("申请时间：" + item.getCreateTime());
+//            int status = Integer.parseInt(item.getStatus());
             int status = item.getStatus();
             String statusString = "";
             if (status == 0) {
