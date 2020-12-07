@@ -177,6 +177,10 @@ public class WorkOrderTabBean {
         private String lon;
         private String lat;
         private PmsServiceEvaluation pmsServiceEvaluation;
+        /**
+         * 周期订单完工待支付-保洁员扫后确认，未支付状态的, 0 不是， 1 是
+         */
+        private String cycleNoPayStatus;
 
 
         public PmsServiceEvaluation getPmsServiceEvaluation() {
@@ -185,6 +189,14 @@ public class WorkOrderTabBean {
 
         public void setPmsServiceEvaluation(PmsServiceEvaluation pmsServiceEvaluation) {
             this.pmsServiceEvaluation = pmsServiceEvaluation;
+        }
+
+        public String getCycleNoPayStatus() {
+            return cycleNoPayStatus == null ? "" : cycleNoPayStatus;
+        }
+
+        public void setCycleNoPayStatus(String cycleNoPayStatus) {
+            this.cycleNoPayStatus = cycleNoPayStatus == null ? "" : cycleNoPayStatus;
         }
 
         public String getLon() {
