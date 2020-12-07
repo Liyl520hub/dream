@@ -11,3 +11,6 @@ gradlew
 gradle
 build
 local.properties
+.idea
+/.idea/
+/app/release/
