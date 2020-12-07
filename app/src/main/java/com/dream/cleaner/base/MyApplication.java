@@ -85,7 +85,7 @@ public class MyApplication extends BaseApplication {
                     mPushAgent.setAlias(cleanerId, "test", new UTrack.ICallBack() {
                         @Override
                         public void onMessage(boolean b, String s) {
-                            Log.d("ddddd", "onMessage: " + s);
+//                            Log.d("ddddd", "onMessage: " + s);
                         }
                     });
                 }
@@ -94,23 +94,21 @@ public class MyApplication extends BaseApplication {
 
             @Override
             public void onFailure(String s, String s1) {
-                Log.e(TAG, "注册失败：-------->  " + "s:" + s + ",s1:" + s1);
+//                Log.e(TAG, "注册失败：-------->  " + "s:" + s + ",s1:" + s1);
             }
         });
-        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-            @Override
-            public Notification getNotification(Context context, UMessage msg) {
-                for (Map.Entry entry : msg.extra.entrySet()) {
-                    Object key = entry.getKey();
-                    Object value = entry.getValue();
-                    Log.e(TAG, "key: " + key + "==value:" + value);
-                }
-                return super.getNotification(context, msg);
-            }
-        };
-        mPushAgent.setMessageHandler(messageHandler);
-
-        playMedia();
+//        UmengMessageHandler messageHandler = new UmengMessageHandler() {
+//            @Override
+//            public Notification getNotification(Context context, UMessage msg) {
+//                for (Map.Entry entry : msg.extra.entrySet()) {
+//                    Object key = entry.getKey();
+//                    Object value = entry.getValue();
+//                    Log.e(TAG, "key: " + key + "==value:" + value);
+//                }
+//                return super.getNotification(context, msg);
+//            }
+//        };
+//        mPushAgent.setMessageHandler(messageHandler);
     }
 
     private void playMedia() {

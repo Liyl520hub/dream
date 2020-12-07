@@ -27,6 +27,7 @@ import com.dream.cleaner.beans.my.MaterielTypeBean;
 import com.dream.cleaner.ui.my.adapter.ApplyMaterielItemAdapter;
 import com.dream.cleaner.ui.my.contract.ApplyMaterielContract;
 import com.dream.cleaner.ui.my.presenter.ApplyMaterielPresenter;
+import com.dream.cleaner.utils.SoftKeyboardFixerForFullscreen;
 import com.dream.common.base.BaseActivity;
 import com.dream.common.callback.MyToolbar;
 import com.dream.common.http.error.ErrorType;
@@ -132,6 +133,7 @@ public class ApplyMaterielActivity extends BaseActivity<ApplyMaterielPresenter> 
             clApplyEditInfo.setVisibility("2".equals(type) ? View.VISIBLE : View.GONE);
             clApplyInfo.setVisibility("2".equals(type) ? View.GONE : View.VISIBLE);
         }
+//        SoftKeyboardFixerForFullscreen.assistActivity(this);
     }
 
     private void setMaterielType(boolean isNewPeople) {

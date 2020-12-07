@@ -77,7 +77,9 @@
         <activity android:name=".ui.my.activity.ApplyStopReceivingActivity" />
         <activity android:name=".ui.my.activity.StopReceivingDetailActivity" />
         <activity android:name=".ui.my.activity.MaterielApplyListActivity" />
-        <activity android:name=".ui.my.activity.ApplyMaterielActivity" />
+        <activity
+            android:name=".ui.my.activity.ApplyMaterielActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.news.activity.NewsDetailsActivity" />
 
 
