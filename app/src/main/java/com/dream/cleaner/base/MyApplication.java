@@ -1,25 +1,20 @@
 package com.dream.cleaner.base;
 
 import android.app.Activity;
-import android.app.Dialog;
+import android.app.Notification;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 
 import androidx.multidex.MultiDex;
 
 import com.blankj.utilcode.util.ActivityUtils;
-import com.blankj.utilcode.util.AppUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.dream.cleaner.BuildConfig;
 import com.dream.cleaner.R;
 import com.dream.cleaner.ui.login.activity.LoginActivity;
-import com.dream.cleaner.ui.my.activity.UserInfoActivity;
 import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.UiUtil;
 import com.dream.cleaner.widget.pop.PopTip;
@@ -40,6 +35,10 @@ import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
 import com.umeng.message.PushAgent;
 import com.umeng.message.UTrack;
+import com.umeng.message.UmengMessageHandler;
+import com.umeng.message.entity.UMessage;
+
+import java.util.Map;
 
 import me.jessyan.autosize.AutoSize;
 import me.jessyan.autosize.AutoSizeConfig;
@@ -52,17 +51,26 @@ import me.jessyan.autosize.AutoSizeConfig;
 public class MyApplication extends BaseApplication {
 
     private static final String TAG = "MyApplication";
+    private MediaPlayer mediaPlayer;
 
     @Override
     public void onCreate() {
         super.onCreate();
         initAutoSize();
+        initUmeng();
+        registerGlobalErrorListener();
+
+
+    }
+
+    private void initUmeng() {
         //初始化友盟推送
         UMConfigure.init(this, "5f5e33a7b4739632429e3dad",
                 "cleaner", UMConfigure.DEVICE_TYPE_PHONE, "26658a6cb55df9d40d4a07adb24ee269");
         UMConfigure.setLogEnabled(true);
         //获取消息推送代理示例
         PushAgent mPushAgent = PushAgent.getInstance(this);
+        mPushAgent.setNotificaitonOnForeground(false);
 
         mPushAgent.register(new IUmengRegisterCallback() {
 
@@ -89,10 +97,33 @@ public class MyApplication extends BaseApplication {
                 Log.e(TAG, "注册失败：-------->  " + "s:" + s + ",s1:" + s1);
             }
         });
-        registerGlobalErrorListener();
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
+            @Override
+            public Notification getNotification(Context context, UMessage msg) {
+                for (Map.Entry entry : msg.extra.entrySet()) {
+                    Object key = entry.getKey();
+                    Object value = entry.getValue();
+                    Log.e(TAG, "key: " + key + "==value:" + value);
+                }
+                return super.getNotification(context, msg);
+            }
+        };
+        mPushAgent.setMessageHandler(messageHandler);
 
-
+        playMedia();
     }
+
+    private void playMedia() {
+        if (mediaPlayer != null) {
+            mediaPlayer.stop();
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+        mediaPlayer = MediaPlayer.create(this, R.raw.neworder);
+        mediaPlayer.setLooping(false);
+        mediaPlayer.start();
+    }
+
 
     //static 代码段可以防止内存泄露
     static {

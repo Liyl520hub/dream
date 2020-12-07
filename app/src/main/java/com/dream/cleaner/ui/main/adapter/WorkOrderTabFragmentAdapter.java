@@ -1,40 +1,22 @@
 package com.dream.cleaner.ui.main.adapter;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.net.Uri;
-import android.provider.Settings;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import androidx.core.app.ActivityCompat;
-
-import com.amap.api.services.core.LatLonPoint;
-import com.amap.api.services.route.DistanceResult;
-import com.amap.api.services.route.DistanceSearch;
 import com.blankj.utilcode.util.ConvertUtils;
 import com.blankj.utilcode.util.StringUtils;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.viewholder.BaseViewHolder;
 import com.dream.cleaner.R;
-import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.workorder.WorkOrderTabBean;
-import com.dream.cleaner.ui.my.activity.UserInfoActivity;
-import com.dream.cleaner.utils.InfoUtils;
 import com.dream.cleaner.utils.ShapeUtils;
 import com.dream.cleaner.widget.pop.PopTip;
-import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import io.reactivex.disposables.Disposable;
 
 /**
  * author : liyl
@@ -111,6 +93,7 @@ public class WorkOrderTabFragmentAdapter extends BaseQuickAdapter<WorkOrderTabBe
             rbStar1.setRating(Integer.parseInt(serviceScore));
             rbStar2.setRating(Integer.parseInt(cleanerScore));
         }
+        baseViewHolder.getView(R.id.tv_no_pay_status).setVisibility(workOrderTabBean.getCycleNoPayStatus().equals("1") ? View.VISIBLE : View.GONE);
 
     }
 
