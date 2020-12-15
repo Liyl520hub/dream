@@ -70,10 +70,9 @@ public class MyApplication extends BaseApplication {
         UMConfigure.setLogEnabled(true);
         //获取消息推送代理示例
         PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.setNotificaitonOnForeground(false);
-
+        mPushAgent.setNotificaitonOnForeground(true);
+        mPushAgent.setNoDisturbMode(0, 0, 0, 0);
         mPushAgent.register(new IUmengRegisterCallback() {
-
             @Override
             public void onSuccess(String deviceToken) {
                 //注册成功会返回deviceToken deviceToken是推送消息的唯一标志
@@ -82,10 +81,16 @@ public class MyApplication extends BaseApplication {
 //                mPushAgent.addAlias("dream","test",null);
                 String cleanerId = InfoUtils.getCleanerId();
                 if (!StringUtils.isEmpty(cleanerId)) {
-                    mPushAgent.setAlias(cleanerId, "test", new UTrack.ICallBack() {
+                    mPushAgent.deleteAlias(cleanerId, "test", new UTrack.ICallBack() {
                         @Override
                         public void onMessage(boolean b, String s) {
-//                            Log.d("ddddd", "onMessage: " + s);
+                            Log.e(TAG, "删除别名: " + s);
+                            mPushAgent.setAlias(cleanerId, "test", new UTrack.ICallBack() {
+                                @Override
+                                public void onMessage(boolean b, String s) {
+                                    Log.e(TAG, "设置别名: " + s);
+                                }
+                            });
                         }
                     });
                 }
@@ -97,18 +102,22 @@ public class MyApplication extends BaseApplication {
 //                Log.e(TAG, "注册失败：-------->  " + "s:" + s + ",s1:" + s1);
             }
         });
-//        UmengMessageHandler messageHandler = new UmengMessageHandler() {
-//            @Override
-//            public Notification getNotification(Context context, UMessage msg) {
-//                for (Map.Entry entry : msg.extra.entrySet()) {
-//                    Object key = entry.getKey();
-//                    Object value = entry.getValue();
-//                    Log.e(TAG, "key: " + key + "==value:" + value);
-//                }
-//                return super.getNotification(context, msg);
-//            }
-//        };
-//        mPushAgent.setMessageHandler(messageHandler);
+        UmengMessageHandler messageHandler = new UmengMessageHandler() {
+            @Override
+            public Notification getNotification(Context context, UMessage msg) {
+                Log.e(TAG, "getNotification: " + msg.getRaw().toString());
+                if (msg.extra != null) {
+                    String orderType = msg.extra.get("orderType");
+                    if (!StringUtils.isEmpty(orderType)) {
+                        if ("05".equals(orderType)) {
+                            playMedia();
+                        }
+                    }
+                }
+                return super.getNotification(context, msg);
+            }
+        };
+        mPushAgent.setMessageHandler(messageHandler);
     }
 
     private void playMedia() {

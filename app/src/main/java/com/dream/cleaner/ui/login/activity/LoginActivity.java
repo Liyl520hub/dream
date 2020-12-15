@@ -104,10 +104,6 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
         setDoubleClickExit(true);
         BusUtils.register(this);
         checkSubmitTv();
-
-        PushAgent.getInstance(this).onAppStart();
-
-
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -233,15 +229,27 @@ public class LoginActivity extends BaseActivity<LoginPresenter> implements Login
 
     @Override
     public void returnLoginBean(LoginBean loginBean) {
+        String cleanerId = loginBean.getCleaner().getId() + "";
         PushAgent mPushAgent = PushAgent.getInstance(this);
-
-        mPushAgent.addAlias(loginBean.getCleaner().getId() + "", "test", new UTrack.ICallBack() {
+        mPushAgent.deleteAlias(cleanerId, "test", new UTrack.ICallBack() {
             @Override
             public void onMessage(boolean b, String s) {
-//                Log.d("ddddd", "onMessage: " + s);
-//                SuperToast.showShortMessage(b+s+"--注册");
+                Log.e("登录界面", "删除别名: " + s);
+                mPushAgent.setAlias(cleanerId, "test", new UTrack.ICallBack() {
+                    @Override
+                    public void onMessage(boolean b, String s) {
+                        Log.e("登录界面", "设置别名: " + s);
+                    }
+                });
             }
         });
+//        mPushAgent.addAlias(loginBean.getCleaner().getId() + "", "test", new UTrack.ICallBack() {
+//            @Override
+//            public void onMessage(boolean b, String s) {
+//                Log.d("ddddd", "onMessage: " + s);
+//                SuperToast.showShortMessage(b+s+"--注册");
+//            }
+//        });
         InfoUtils.setLoginBean(loginBean);
         UiUtil.openActivity(this, MainActivity.class);
         finish();

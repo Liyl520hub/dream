@@ -30,7 +30,7 @@ public class ApplyMaterielItemAdapter extends BaseQuickAdapter<MaterielTypeBean,
     private boolean isDetail;
     private boolean isNew;
 
-    public ApplyMaterielItemAdapter(@Nullable List<MaterielTypeBean> data, boolean isDetail,boolean isNew) {
+    public ApplyMaterielItemAdapter(@Nullable List<MaterielTypeBean> data, boolean isDetail, boolean isNew) {
         super(R.layout.item_materiel_info, data);
         this.isDetail = isDetail;
         this.isNew = isNew;
@@ -41,6 +41,7 @@ public class ApplyMaterielItemAdapter extends BaseQuickAdapter<MaterielTypeBean,
         TextView textView = baseViewHolder.getView(R.id.tv_materiel_num);
         textView.setText(item.getMaterielName());
         EditText editText = baseViewHolder.getView(R.id.et_ma_bu_num);
+        baseViewHolder.setText(R.id.tv_ma_bu_type, item.getUnitType() + "");
         //是查看详情  不可编辑 取值getApplyNum
         if (isDetail) {
             editText.setBackground(null);
@@ -54,8 +55,9 @@ public class ApplyMaterielItemAdapter extends BaseQuickAdapter<MaterielTypeBean,
                 editText.setFocusable(false);
                 editText.setClickable(false);
                 editText.setText(item.getDefaultBase() + "");
-            }else {
+            } else {
                 editText.setClickable(true);
+                editText.setText(item.getApplyNum());
                 editText.setBackground(ResourceUtils.getDrawable(R.drawable.login_bg_edit_text));
                 editText.addTextChangedListener(new TextWatcher() {
                     @Override

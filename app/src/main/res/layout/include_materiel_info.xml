@@ -24,10 +24,6 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
 
         <TextView
             android:id="@+id/tv_materiel_name"
@@ -45,17 +41,24 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:layout_marginRight="20dp"
             android:layout_weight="1"
             android:gravity="center"
-            android:layout_marginRight="20dp"
             android:text="数量"
             android:textColor="@color/color_333333"
             android:textSize="17sp" />
 
         <TextView
+            android:id="@+id/tv_materiel_type"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="单位"
+            android:textColor="@color/color_333333"
+            android:textSize="17sp" />
     </LinearLayout>
 
 

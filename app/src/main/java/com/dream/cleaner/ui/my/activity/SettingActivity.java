@@ -114,8 +114,8 @@ public class SettingActivity extends BaseActivity<SettingActivityPresenter> impl
 
     private void checkVersion() {
         popVersionTip = new PopTip.Builder().
-                setType(2).
-                setMsg("有新版本可更新").
+                setType(1).
+                setMsg("已经是最新版本了~").
                 setSubmitClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -157,7 +157,7 @@ public class SettingActivity extends BaseActivity<SettingActivityPresenter> impl
                     @Override
                     public void onClick(View v) {
                         CacheDiskUtils.getInstance(Utils.getApp().getCacheDir().getPath()).clear();
-                        tvCache.setText("0Mb");
+                        tvCache.setText("0MB");
                         popCacheTip.dismiss();
                     }
                 }).build(SettingActivity.this);

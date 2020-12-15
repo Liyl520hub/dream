@@ -79,7 +79,7 @@ public class MaterielTypeBean {
     }
 
     public String getApplyNum() {
-        return applyNum == null ? "" : applyNum;
+        return applyNum == null ? "0" : applyNum;
     }
 
     public void setApplyNum(String applyNum) {
