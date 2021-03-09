@@ -4,7 +4,7 @@ import com.dream.cleaner.beans.my.ApplyMaterielBean;
 import com.dream.common.base.BaseContract;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/12
  * desc   :
  */

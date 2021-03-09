@@ -10,7 +10,7 @@ import com.dream.cleaner.R;
 
 
 /**
- * @author Liyalei
+ * @author admin
  */
 public class DataGenerator {
     public static final int[] mTabRes = new int[]{R.mipmap.menu_work_order, R.mipmap.menu_plan, R.mipmap.menu_news, R.mipmap.menu_my};

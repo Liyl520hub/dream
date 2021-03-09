@@ -4,7 +4,7 @@ package com.dream.common.base;
 import com.dream.common.http.error.ErrorType;
 
 /**
- * @author Liyalei
+ * @author admin
  */
 public interface BaseContract {
 

@@ -5,7 +5,7 @@ import com.dream.cleaner.beans.my.MyIncomeListBean;
 import com.dream.common.base.BaseContract;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/11
  * desc   :
  */

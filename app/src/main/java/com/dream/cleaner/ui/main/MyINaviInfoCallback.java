@@ -6,7 +6,7 @@ import com.amap.api.navi.INaviInfoCallback;
 import com.amap.api.navi.model.AMapNaviLocation;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/30
  * desc   :
  */

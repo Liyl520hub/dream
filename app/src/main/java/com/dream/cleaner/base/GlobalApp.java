@@ -3,7 +3,7 @@ package com.dream.cleaner.base;
 import android.os.Environment;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/16
  * desc   :全局静态字符串类
  */

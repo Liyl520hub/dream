@@ -11,7 +11,7 @@ import com.blankj.utilcode.util.ActivityUtils;
 import com.dream.common.R;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/16
  * desc   :网络加载框
  */

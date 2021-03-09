@@ -12,7 +12,7 @@ import com.dream.cleaner.R;
 /**
  * ui操作工具类
  *
- * @author Liyalei
+ * @author admin
  */
 public class UiUtil {
 

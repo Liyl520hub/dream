@@ -7,7 +7,7 @@ import com.blankj.utilcode.util.Utils;
 
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/15
  * desc   :Application基类
  */

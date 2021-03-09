@@ -74,7 +74,7 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/15
  * desc   :扫前准备   确认开始服务
  * 扫后拍照  确认完成服务

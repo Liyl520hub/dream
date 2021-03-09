@@ -44,7 +44,7 @@ import me.jessyan.autosize.AutoSize;
 import me.jessyan.autosize.AutoSizeConfig;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/15
  * desc   :app的Application
  */

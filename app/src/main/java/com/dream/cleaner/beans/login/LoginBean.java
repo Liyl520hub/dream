@@ -1,7 +1,7 @@
 package com.dream.cleaner.beans.login;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/16
  * desc   :
  */

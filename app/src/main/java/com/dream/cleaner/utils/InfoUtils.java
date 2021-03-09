@@ -5,7 +5,7 @@ import com.dream.cleaner.base.GlobalApp;
 import com.dream.cleaner.beans.login.LoginBean;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/8
  * desc   :个人信息Utils 存储Sp
  */

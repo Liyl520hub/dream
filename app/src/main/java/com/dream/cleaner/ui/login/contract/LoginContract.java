@@ -5,7 +5,7 @@ import com.dream.cleaner.beans.login.LoginBean;
 import com.dream.common.base.BaseContract;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/16
  * desc   :
  */

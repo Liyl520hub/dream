@@ -14,7 +14,7 @@ import com.dream.cleaner.ui.main.MainActivity;
 import com.dream.cleaner.ui.main.adapter.MainAdapter;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/23
  * desc   :
  */

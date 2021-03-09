@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 图片预览 Activity
  *
- * @author Liyalei
+ * @author admin
  */
 public class ImagePreviewActivity extends AppCompatActivity {
 

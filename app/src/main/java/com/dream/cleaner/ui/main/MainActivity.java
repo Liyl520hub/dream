@@ -40,7 +40,7 @@ import butterknife.BindView;
 import io.reactivex.disposables.Disposable;
 
 /**
- * @author Liyalei
+ * @author admin
  */
 public class MainActivity extends BaseActivity {
 

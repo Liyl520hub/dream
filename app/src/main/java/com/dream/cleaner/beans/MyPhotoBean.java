@@ -5,7 +5,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/15
  * desc   :扫钱准备适配器bean
  */

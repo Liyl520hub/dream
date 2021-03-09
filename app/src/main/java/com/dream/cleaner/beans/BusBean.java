@@ -1,7 +1,7 @@
 package com.dream.cleaner.beans;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/1
  * desc   :eventBus的消息类
  */

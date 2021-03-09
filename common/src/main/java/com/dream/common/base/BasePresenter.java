@@ -4,7 +4,7 @@ package com.dream.common.base;
 import com.dream.common.baserx.RxManager;
 
 /**
- * @author Liyalei
+ * @author admin
  */
 public abstract class BasePresenter<T extends BaseContract>{
 

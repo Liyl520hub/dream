@@ -12,7 +12,7 @@ import com.huantansheng.easyphotos.engine.ImageEngine;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/9/15
  * desc   :
  */

@@ -1,7 +1,7 @@
 package com.dream.common.http.error;
 
 /**
- * @author Liyalei
+ * @author admin
  * @Desc 自定义Api异常
  */
 public class ApiException extends Exception {

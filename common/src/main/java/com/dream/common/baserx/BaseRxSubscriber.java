@@ -27,7 +27,7 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * des:订阅封装
  *
- * @author Liyalei
+ * @author admin
  */
 
 public abstract class BaseRxSubscriber<R, T extends BaseBean<R>> implements Observer<R> {

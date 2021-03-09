@@ -31,7 +31,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/16
  * desc   :重置密码
  */

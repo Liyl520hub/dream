@@ -7,7 +7,7 @@ import androidx.core.content.res.ResourcesCompat;
 import com.blankj.utilcode.util.Utils;
 
 /**
- * @author : Liyalei
+ * @author : admin
  * date   : 2020/8/16
  * desc   :代码编写shape
  */
